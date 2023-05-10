@@ -1,25 +1,12 @@
-import Todo from '@/db/models/todo';
+import Todo from '@/db/models/Todo';
 import {dbConnect} from "@/db/dbConnect";
 
-export default async function handler(req, res) {
-  if (req.method === "POST") {
-    try {
-      await dbConnect();
-
-      const { title, description } = req.body;
-
-      const newTodo = new Todo({
-        title,
-        description,
-      });
-
-      const createdTodo = await newTodo.save();
-
-      res.status(201).json(createdTodo);
-    } catch (error) {
-      res.status(500).json({ message: "Something went wrong." });
-    }
-  } else {
-    res.status(405).json({ message: "Method not allowed." });
+export const GET  = async (request) => {
+  try {
+    await dbConnect()
+    const todos = await Todo.find({})
+    return new Response(JSON.stringify(todos), {status: 200})
+  } catch(err){
+    return new Response('Failed to fetch all todos', {status: 500})
   }
 }

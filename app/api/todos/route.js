@@ -1,4 +1,4 @@
-import Todo from '@/db/todo'
+import Todo from '@/db/models/Todo'
 import { dbConnect } from "@/db/dbConnect";
 
 //get all todos
