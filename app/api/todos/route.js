@@ -1,5 +1,5 @@
 import Todo from '@/db/todo'
-import { dbConnect } from "@db/dbConnect";
+import { dbConnect } from "@/db/dbConnect";
 
 //get all todos
 export const GET = async (request) => {
