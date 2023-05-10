@@ -22,9 +22,10 @@ export const PATCH = async(request, { params }) => {
     const foundTodo = await Todo.findById(params.id)
     if(!foundTodo) return new Response(`Todo does not exist`, {status: 404})
 
-    foundTodo.title = title
-    foundTodo.description = description
-    foundTodo.completed = completed
+    //Updated any field if provided
+    if(title) foundTodo.title = title;
+    if(description) foundTodo.description = description;
+    if(completed !== undefined) foundTodo.completed = completed
 
     return new Response('Updated successfully',{status: 200})
   }catch(err){
