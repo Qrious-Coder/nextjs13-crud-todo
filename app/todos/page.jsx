@@ -31,7 +31,7 @@ const TodosPage = () => {
 
   const handleAdd = async (formData) => {
     try {
-      const response = await fetch('/api/todos', {
+      const response = await fetch('/api/todos/new', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
