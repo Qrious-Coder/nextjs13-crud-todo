@@ -16,7 +16,7 @@ export const GET = async(request, { params }) =>{
 }
 
 export const PATCH = async(request, { params }) => {
-  const { title, description, completed } = await request.json()
+  const { title, priority , completed } = await request.json()
   try{
     await dbConnect()
 
@@ -25,7 +25,7 @@ export const PATCH = async(request, { params }) => {
 
     //Updated any field if provided
     if(title) foundTodo.title = title;
-    if(description) foundTodo.description = description;
+    if(priority) foundTodo.priority = priority;
     if(completed !== undefined) foundTodo.completed = completed
 
     await foundTodo.save()

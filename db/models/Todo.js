@@ -5,8 +5,9 @@ const TodoSchema = new Schema({
     type: String,
     required: true
   },
-  description: {
+  priority: {
     type: String,
+    enum: ['Important and urgent', 'Important but NOT urgent', 'NOT important but urgent', 'NOT important and NOT urgent'],
     required: true
   },
   completed: {
