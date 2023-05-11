@@ -1,13 +1,42 @@
-// redux/actions/todoActions.js
-export const ADD_TODO = 'ADD_TODO';
-export const DELETE_TODO = 'DELETE_TODO';
+export const todoActionTypes = {
+  GET_TODO_REQUEST = 'GET_TODO_REQUEST',
+  GET_TODO_SUCCESS = 'GET_TODO_SUCCESS',
+  GET_TODO_FAILURE = 'GET_TODO_FAILURE',
 
-export const addTodo = (todo) => ({
-  type: ADD_TODO,
-  payload: todo,
-});
+  EDIT_TODO_REQUEST = 'EDIT_TODO_REQUEST',
+  EDIT_TODO_SUCCESS = 'EDIT_TODO_SUCCESS',
+  EDIT_TODO_FAILURE = 'EDIT_TODO_FAILURE'
+}
 
-export const deleteTodo = (todoId) => ({
-  type: DELETE_TODO,
-  payload: todoId,
-});
+export const getAllTodos = () => async(dispatch) => {
+  try{
+    const res = await axios.get('/api/todos')
+    const data = res.data
+    dispatch({
+      type: todoActionTypes.GET_TODO_SUCCESS,
+      payload: data
+    })
+
+  }catch(err){
+    dispatch({
+      type: todoActionTypes.GET_TODO_FAILURE,
+      payload: err
+    })
+  }
+}
+
+export const editTodo = (id, todo) => async(dispatch) => {
+  try{
+    await axios.patch(`/api/todos/${id}`, todo)
+    dispatch({
+      type: todoActionTypes.EDIT_TODO_SUCCESS,
+      payload: data
+    })
+
+  }catch(err){
+    dispatch({
+      type: todoActionTypes.EDIT_TODO_FAILURE,
+      payload: err
+    })
+  }
+}

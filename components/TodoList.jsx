@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+
 
 const TodoList = ({ todos, onDelete, onEdit }) => {
   return (
@@ -17,29 +17,12 @@ const TodoList = ({ todos, onDelete, onEdit }) => {
       </thead>
       <tbody>
       {todos.map((todo) => (
-        <tr key={todo._id} className="border-t">
-          {/*<td className="py-2 px-4 text-center border border-gradient">{todo._id}</td>*/}
-          <td className="py-2 px-4 text-center border border-gradient">{todo.title}</td>
-          <td className="py-2 px-4 text-center border border-gradient">{todo.description}</td>
-          <td className="py-2 px-4 text-center border border-gradient">
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => onEdit(todo._id, { completed: !todo.completed })}
-            />
-          </td>
-          <td className="py-2 px-4 text-center border border-gradient">{todo.date}</td>
-          <td className="py-2 px-4 text-center border border-gradient">
-            <button className="outline_btn flex justify-center" onClick={() => onEdit(todo._id, todo)}>
-              <AiOutlineEdit />
-            </button>
-          </td>
-          <td className="py-2 px-4 text-center border border-gradient">
-            <button className="outline_btn flex justify-center" onClick={() => onDelete(todo._id)}>
-              <AiOutlineDelete />
-            </button>
-          </td>
-        </tr>
+          <TodoItem
+            todo = { todo }
+            key = { todo._id }
+            onDelete = { onDelete }
+            onEdit = { onEdit } 
+          />
       ))}
       </tbody>
     </table>

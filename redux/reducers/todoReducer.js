@@ -1,18 +1,23 @@
 // redux/reducers/todoReducer.js
-import { ADD_TODO, DELETE_TODO } from '../actions/todoActions';
+import { todoActionTypes } from '@/redux/actions/todoActions'
 
 const initialState = {
-  todos: [],
+  todoList: [],
+  todoItem: '',
+  error: null,
+  loading: false
 };
 
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TODO:
+    case todoActionTypes.EDIT_TODO_SUCCESS:
+      let editTodoId = state.todoList.findIndex( item => item._id.includes(action.payload._id))
+      Object.assign(state.todoList[editTodoId], action.payload )
       return {
         ...state,
-        todos: [...state.todos, action.payload],
+        loading: true,
       };
-    case DELETE_TODO:
+    case DELETE:
       return {
         ...state,
         todos: state.todos.filter((todo) => todo.id !== action.payload),
