@@ -28,7 +28,6 @@ export const getAllTodos = () => async(dispatch) => {
   try{
     const res = await axios.get('/api/todos')
     const data = res.data
-    console.log(data)
     dispatch({
       type: todoActionTypes.GET_TODO_SUCCESS,
       payload: data
@@ -42,17 +41,18 @@ export const getAllTodos = () => async(dispatch) => {
   }
 }
 
-export const createTodo = (todo) => async(dispatch) => {
+export const createTodo = (formTodo) => async(dispatch) => {
   dispatch({ type: todoActionTypes.ADD_TODO_REQUEST })
   try{
-    await axios.post(`/api/todos/new`, todo)
+    const res = await axios.post(`/api/todos/new`, formTodo)
+    const data = res.data
     dispatch({
-      type: todoActionTypes.DELETE_TODO_SUCCESS,
-      payload: todo
+      type: todoActionTypes.ADD_TODO_SUCCESS,
+      payload: data
     })
   }catch(err){
     dispatch({
-      type: todoActionTypes.GET_TODO_FAILURE,
+      type: todoActionTypes.ADD_TODO_FAILURE,
       payload: err
     })
   }
@@ -63,11 +63,10 @@ export const editTodo = (id, todo) => async(dispatch) => {
     type: todoActionTypes.EDIT_TODO_REQUEST
   })
   try{
-    const res = await axios.patch(`/api/todos/${id}`, todo)
-    const data = res.data
+    await axios.patch(`/api/todos/${id}`, todo)
     dispatch({
       type: todoActionTypes.EDIT_TODO_SUCCESS,
-      payload: data
+      payload: todo
     })
 
   }catch(err){
@@ -90,7 +89,7 @@ export const deleteTodo = (id) => async(dispatch) => {
     })
   }catch(err){
     dispatch({
-      type: todoActionTypes.GET_TODO_FAILURE,
+      type: todoActionTypes.DELETE_TODO_FAILURE,
       payload: err
     })
   }

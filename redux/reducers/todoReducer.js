@@ -12,18 +12,18 @@ const todoReducer = (state = initialState, action) => {
     case todoActionTypes.GET_TODO_REQUEST:
       return {
         ...state,
-        loading: false,
+        loading: true,
       }
     case todoActionTypes.GET_TODO_SUCCESS:
       return {
         ...state,
-        loading: true,
+        loading: false,
         todoList: action.payload,
       }
     case todoActionTypes.GET_TODO_FAILURE:
       return {
         ...state,
-        loading: true,
+        loading: false,
         error: action.payload
       }
     case todoActionTypes.ADD_TODO_REQUEST:
@@ -53,12 +53,12 @@ const todoReducer = (state = initialState, action) => {
       Object.assign(state.todoList[editTodoId], action.payload )
       return {
         ...state,
-        loading: true,
+        loading: false,
       };
     case todoActionTypes.EDIT_TODO_FAILURE:
       return {
         ...state,
-        loading: true,
+        loading: false,
         error: action.payload
       }
     case todoActionTypes.DELETE_TODO_REQUEST:
@@ -69,7 +69,8 @@ const todoReducer = (state = initialState, action) => {
     case todoActionTypes.DELETE_TODO_SUCCESS:
       return {
         ...state,
-        todos: state.todos.filter((todo) => todo.id !== action.payload),
+        todos: state.todoList.filter((todo) => todo._id !== action.payload),
+        loading: false,
       };
     case todoActionTypes.DELETE_TODO_FAILURE:
       return {
