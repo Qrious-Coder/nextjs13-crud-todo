@@ -1,9 +1,9 @@
 'use client'
 import {useEffect} from 'react';
-import TodoForm from "@components/TodoForm";
-import TodoList from "@components/TodoList";
+import TodoForm from "@/components/TodoForm";
+import TodoList from "@/components/TodoList";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllTodos, editTodo, deleteTodo, createTodo } from "@redux/actions/todoActions";
+import { getAllTodos, editTodo, deleteTodo, createTodo } from "@/redux/actions/todoActions";
 
 const TodosPage = () => {
   const dispatch = useDispatch()
