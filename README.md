@@ -1,4 +1,6 @@
 #Use Next.js 13 to build and deploy a CRUD application
+
+### ref: https://farhanfarooq.com/tutorials/build-an-authentication-system-with-nextauth-and-mongodb
 ## Project structure
 ├── components/
 │   ├── EntryForm.jsx
