@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import EntryForm from "@components/EntryForm";
+import EntryForm from "@/components/EntryForm";
 
 const EntryPage = () => {
   return (
