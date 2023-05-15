@@ -43,7 +43,7 @@ const EntryForm = () => {
       const result = await res.json();
       if (res.ok) {
         setFormData({ name: "", email: "", password: "" });
-        router.push("/");
+        router.push("/todos");
       } else {
         setError(result.error);
       }
@@ -67,7 +67,7 @@ const EntryForm = () => {
       }
 
       setFormData({ email: "", password: "" });
-      router.push("/");
+      router.push("/todos");
     }
   };
 

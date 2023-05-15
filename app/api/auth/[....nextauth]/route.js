@@ -20,7 +20,7 @@ export default NextAuth({
       // Authorize callback is ran upon calling the signin function
       authorize: async (credentials) => {
         dbConnect()
-        const user = await User.findOne({email: credentials.email}).select('+password')
+        const user = await User.findOne({email: credentials?.email}).select('+password')
         if(!user) { throw new Error('Invalid user')}
 
         const pwValid = await user.comparePassword(credentials.password)

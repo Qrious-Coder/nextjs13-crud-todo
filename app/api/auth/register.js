@@ -1,18 +1,16 @@
 import User from '@/models/User'
 import {dbConnect} from "@db/dbConnect"
-import handler from "@/utils/handlers";
 
-handler.post(createUser)
+export async function POST(req, res){
+  try{
+    dbConnect()
+    const data = req.body;
+    const { name , email, password} = data
 
-async function createUser(req, res){
-  const data = req.body;
-  const { name, email, password } = data
-  console.log('route data',data)
-  dbConnect()
-
-  const user = await User.create(req.body)
-  res.status(201).json({message: 'Registered successfully'})
-
+    await User.create( data )
+    res.status(201).json({message: "register successfully"})
+  } catch(err){
+    console.log( err)
+    res.status(501).json({message: "failed"})
+  }
 }
-
-export default handler;
