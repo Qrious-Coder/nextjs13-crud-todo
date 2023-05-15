@@ -16,7 +16,7 @@ const Nav = ({ session }) => {
           </ul>
         </div>
         <div className="flex items-center space-x-4">
-          {session.authenticated ? (
+          {session?.authenticated ? (
             <div className="flex items-center space-x-4">
               <span className="text-white">Hello, {session?.session?.user?.name || 'Unknown'}</span>
               <button
@@ -28,11 +28,11 @@ const Nav = ({ session }) => {
             </div>
           ) : (
             <>
-              <Link href="/entry">
-                <a className="text-white">Register</a>
+              <Link className="text-white" href="/entry">
+                Register
               </Link>
-              <Link href="/entry">
-                <a className="text-white">Sign In</a>
+              <Link className="text-white" href="/entry">
+                Sign In
               </Link>
             </>
           )}

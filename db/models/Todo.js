@@ -15,7 +15,7 @@ const TodoSchema = new Schema({
     default: false
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User'
   },
   createdAt: {
