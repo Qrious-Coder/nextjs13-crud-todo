@@ -76,4 +76,5 @@
 2. From useSession extract user.name passed to <Nav/> as a props.
 
 ## only the todos belonging to the logged-in user are fetched and saved to the database
-1. 
+1. POST data including userId?
+2. Search how to CRUD with authentication
