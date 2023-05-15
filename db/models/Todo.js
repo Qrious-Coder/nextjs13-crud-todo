@@ -14,10 +14,10 @@ const TodoSchema = new Schema({
     type: Boolean,
     default: false
   },
-  // user: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'User'
-  // },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   createdAt: {
     type: Date,
     default: Date.now

@@ -4,7 +4,6 @@
 ```
 ├── components/
 │   ├── EntryForm.jsx
-│   ├── LoginBtn.jsx
 │   ├── Nav.jsx
 │   ├── TodoForm.jsx
 │   ├── TodoItem.jsx
@@ -13,14 +12,23 @@
 │   ├── api/
 │   │ 	├── auth
 │   │	│ 	├── [...nextauth]
-│   │	│ 	│  	├── route.js
+│   │	│ 	│  	   └── route.js
+│   │	│ 	├── hello
+│   │	│ 	│  	   └── route.js
+│   │	│ 	├── register
+│   │	│ 	│  	   └── route.js
+│   │	│ 	├── session
+│   │	│ 	│  	   └── route.js
 │   │ 	├── todos/
-│   │	│ 	├── [id].js
-│   │	│ 	├── route.js
+│   │	│ 	├── [id]/
+│   │	│ 	│  	   └── route.js
+│   │	│ 	├── new/
+│   │	│ 	│  	   └── route.js
+│   │	│ 	└── route.js
 │   ├── entry/
-│   │ 	├── page.js
+│   │ 	└── page.js
 │   ├── todos/
-│   │ 	├── page.js
+│   │   └── page.js
 │   ├── layout.js
 │   └── page.js
 ├── db/
@@ -46,8 +54,9 @@
     ├── globals.css
     └── tailwind.css
 ```
-## Credential authentication with next-auth/next-connect/MongoDB, 
-### ref: https://fullstackdigital.io/blog/authentication-starter-kit-for-next-js-and-mongodb/
+## Credential authentication with next-auth/next-connect/MongoDB
+### ref1: https://fullstackdigital.io/blog/authentication-starter-kit-for-next-js-and-mongodb/
+### ref2: https://github.com/wpcodevo/nextauth-nextjs13-prisma/blob/main/src/app/api/auth/%5B...nextauth%5D/route.ts
 #### Database
 1. npm i mongoose next-auth next-connect validator bcrypt
 2. Create a user model with mongoose
@@ -62,4 +71,8 @@
    - callback: get token and user info
    - pages: '/login'
 #### Frontend:
+1. import {useSession} from "next-auth/react" to todosPage and homePage
+2. From useSession extract user.name passed to <Nav/> as a props.
+
+## only the todos belonging to the logged-in user are fetched and saved to the database
 1. 

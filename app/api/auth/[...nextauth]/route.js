@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import User from '@/db/models/User'
 import {dbConnect} from "@/db/dbConnect";
 
-export default NextAuth({
+export const authOptions = {
   // Enable JSON Web Tokens
   session: {
     jwt: true
@@ -17,7 +17,7 @@ export default NextAuth({
         email: {label: "Email", type: "email"},
         password: {label: "Password", type: "password"}
       },
-      // Authorize callback is ran upon calling the signin function
+
       authorize: async (credentials) => {
         dbConnect()
         const user = await User.findOne({email: credentials?.email}).select('+password')
@@ -55,4 +55,7 @@ export default NextAuth({
   pages: {
     signIn: '/entry',
   },
-})
+}
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

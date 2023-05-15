@@ -26,7 +26,7 @@ const TodoForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="glassmorphism w-full flex items-center justify-between my-4">
-      <div className="relative flex items-center flex-grow">
+      <div className="relative flex items-center flex-grow" style={{ width: '70%' }}>
         <RiFileTextLine className="absolute left-3 text-gray-500" />
         <input
           type="text"
@@ -38,7 +38,7 @@ const TodoForm = () => {
           style={{ color: 'gray', fontSize: '14px', paddingLeft: '30px' }}
         />
       </div>
-      <div className="relative flex items-center flex-grow ml-3">
+      <div className="relative flex items-center flex-grow ml-3" style={{ width: '70%' }}>
         <RiFlashlightLine className="absolute left-3 text-gray-500" />
         <select
           name="priority"
@@ -53,10 +53,10 @@ const TodoForm = () => {
           <option value="NOT important and NOT urgent">NOT important and NOT urgent</option>
         </select>
       </div>
-      <button type="button" className="black_btn ml-3" onClick={handleSearch}>
+      <button type="button" className="form_btn mt-3 ml-3" onClick={handleSearch}>
         <RiSearchLine />
       </button>
-      <button type="submit" className="black_btn ml-3">
+      <button type="submit" className="form_btn gradient_btn mt-3 ml-3">
         <RiAddLine />
       </button>
     </form>

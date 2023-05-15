@@ -1,37 +1,44 @@
 import React from 'react';
-import Link from 'next/link'
-import { useSession, signOut,signIn, signUp } from 'next-auth/react'
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
+import { FaCheckSquare } from 'react-icons/fa';
 
-const Nav = () => {
-  const { data } = useSession()
-  console.log(`data:`, data)
+const Nav = ({ session }) => {
   return (
-    <div>
-      <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-        {data?.user ? (
-
-          <li className="nav-item">
-            <span> Hello {session?.user?.email || "Unknown"} </span>
-            <button className="btn btn-danger btn-sm" onClick={signOut}>
-              Logout
-            </button>
-          </li>
-        ) : (
-          <>
-            <li className="nav-item">
-              <Link className="nav-link" href="/entry">
-                Register
+    <nav className="fixed top-0 w-full bg-gray-900 bg-opacity-90 shadow-md">
+      <div className="flex justify-between items-center px-4 py-2">
+        <div className="flex items-center space-x-2">
+          <FaCheckSquare className="text-white text-3xl transform rotate-[-10deg] -translate-y-1" />
+          <span className="text-white text-xl font-bold">Nextjs TODO</span>
+          <ul className="flex space-x-4 text-white">
+            <li>Today</li>
+            <li>Yesterday</li>
+          </ul>
+        </div>
+        <div className="flex items-center space-x-4">
+          {session.authenticated ? (
+            <div className="flex items-center space-x-4">
+              <span className="text-white">Hello, {session?.session?.user?.name || 'Unknown'}</span>
+              <button
+                className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-md"
+                onClick={() => signOut()}
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link href="/entry">
+                <a className="text-white">Register</a>
               </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" href="/entry">
-                <button onClick={() => signIn()}>Sign In</button>
+              <Link href="/entry">
+                <a className="text-white">Sign In</a>
               </Link>
-            </li>
-          </>
-        )}
-      </ul>
-    </div>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
 
