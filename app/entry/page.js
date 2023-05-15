@@ -1,13 +1,27 @@
 'use client'
-import React from 'react';
 import EntryForm from "@/components/EntryForm";
+import { getSession } from 'next-auth/react';
+import {useRouter} from 'next/navigation'
+import {useState, useEffect} from "react";
 
 const EntryPage = () => {
-  return (
-    <>
-      <EntryForm />
-    </>
-  );
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() =>{
+    getSession().then((session) =>{
+      if(session) {
+        router.push('/todos')
+      } else {
+        setIsLoading(false)
+      }
+    })
+  }, [router])
+
+  if(isLoading) {
+    return <p>Loading...</p>
+  }
+  return <EntryForm />
 };
 
 export default EntryPage;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RiFileTextLine, RiFlashlightLine, RiSearchLine, RiAddLine } from 'react-icons/ri';
-import { createTodo, searchTodo } from '@redux/actions/todoActions';
+import { createTodo, searchTodo } from '@/redux/actions/todoActions';
 import { useDispatch } from 'react-redux';
 
 const TodoForm = () => {

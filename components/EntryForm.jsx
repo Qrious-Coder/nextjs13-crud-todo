@@ -1,9 +1,19 @@
+'use client'
 import { useState } from 'react';
-import { signIn, register } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
 const EntryForm = () => {
-  const [formData, setFormData] = useState({});
+  const router  = useRouter()
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+
+
+  const [error, setError] = useState(null)
   const [isLogin, setIsLogin] = useState(true);
 
   const handleFormChange = (e) => {
@@ -15,33 +25,49 @@ const EntryForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (isLogin) {
-      const result = await signIn('credentials', {
-        ...formData,
-        redirect: false,
-      });
-
-      if (result.error) {
-        // Handle login error
-        console.log('Login error:', result.error);
-      } else {
-        // User logged in successfully
-        console.log('User logged in:', result);
+    const { name, email, password }= formData
+    if (!isLogin) {
+      //Register
+      if(!name || !email || !password){
+        setError("All fields are required");
+        return;
       }
+      const res = await fetch('/api/auth/register', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({name, email, password}),
+      })
+
+      const result = await res.json();
+      if (res.ok) {
+        setFormData({ name: "", email: "", password: "" });
+        router.push("/");
+      } else {
+        setError(result.error);
+      }
+
+      return result;
+
     } else {
-      const result = await register({
-        ...formData,
-        redirect: false,
-      });
-
-      if (result.error) {
-        // Handle registration error
-        console.log('Registration error:', result.error);
-      } else {
-        // User registered successfully
-        console.log('User registered:', result);
+      //login
+      if (!email || !password) {
+        setError("All fields are required");
+        return;
       }
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+      if (res.error) {
+        setError(res.error);
+        return;
+      }
+
+      setFormData({ email: "", password: "" });
+      router.push("/");
     }
   };
 
@@ -61,7 +87,7 @@ const EntryForm = () => {
               </span>
               <input
                 type="text"
-                name="username"
+                name="name"
                 placeholder="Username"
                 className="w-full border border-gray-300 rounded-md py-2 px-10 mb-4 text-white bg-gray-700"
                 onChange={handleFormChange}
@@ -95,7 +121,7 @@ const EntryForm = () => {
               required
             />
           </div>
-
+          {error && <p className="text-danger text-center">{error}</p>}
           <button
             type="submit"
             className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white rounded-md py-2 px-4 mb-4 border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"

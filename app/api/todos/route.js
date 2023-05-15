@@ -1,7 +1,7 @@
 import Todo from '@/db/models/Todo'
 import { dbConnect } from "@/db/dbConnect";
 
-//get all todos
+//Todo: user next-connect later
 export const GET = async (request) => {
   try {
     await dbConnect()

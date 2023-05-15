@@ -1,39 +1,51 @@
 import { Schema, model, models } from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
+import validator from 'validator'
 
 const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true
+    name: {
+      type: String,
+      required: true,
+      unique: [true, "Username already exists"],
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: [true, "Account already exists"],
+      validate: [validator.isEmail, 'Please enter a valid email']
+    },
+    password: {
+      type: String,
+      required: true,
+      minLength: [6, "Must be at least 6 characters long"],
+      select: false, //don't send back password after request
+    },
+    role: {
+      type: String,
+      default: 'user',
+      enum: {
+        values: [
+          'user',
+          'admin'
+        ],
+      }
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-});
+  { timestamps: true }
+);
 
-UserSchema.pre('save', async function(next) {
-  try {
-    if (!this.isModified('password')) {
-      return next();
-    }
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(this.password, salt);
-
-    this.password = hashedPassword;
-
-    return next();
-  } catch (err) {
-    return next(err);
+// ENCRYPTION
+UserSchema.pre('save', async function(next){
+  if(!this.isModified('password')){
+    next()
   }
-});
+  this.password = await bcrypt.hash(this.password, 10)
+  next()
+})
+
+UserSchema.methods.comparePassword = async function(enteredPassword){
+  return await bcrypt.compare(enteredPassword, this.password)
+}
 
 const User = models.User || model('User', UserSchema);
 
