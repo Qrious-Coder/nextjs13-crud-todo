@@ -1,4 +1,6 @@
+'use client'
 import axios from 'axios'
+import { getSession } from 'next-auth/react';
 export const todoActionTypes = {
   GET_TODO_REQUEST: 'GET_TODO_REQUEST',
   GET_TODO_SUCCESS: 'GET_TODO_SUCCESS',
@@ -26,7 +28,15 @@ export const getAllTodos = () => async(dispatch) => {
     type: todoActionTypes.GET_TODO_REQUEST
   })
   try{
-    const res = await axios.get('/api/todos')
+    const { data: session } = useSession();
+    console.log(`sess:`, session)
+    const token = session?.user.token;
+
+    const res = await axios.get('/api/todos', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     const data = res.data
     dispatch({
       type: todoActionTypes.GET_TODO_SUCCESS,
@@ -44,7 +54,13 @@ export const getAllTodos = () => async(dispatch) => {
 export const createTodo = (formTodo) => async(dispatch) => {
   dispatch({ type: todoActionTypes.ADD_TODO_REQUEST })
   try{
-    const res = await axios.post(`/api/todos/new`, formTodo)
+    const session = await getSession();
+    const token = session?.accessToken;
+    const res = await axios.post(`/api/todos/new`, formTodo, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     const data = res.data
     dispatch({
       type: todoActionTypes.ADD_TODO_SUCCESS,
@@ -64,7 +80,13 @@ export const editTodo = (id, todo) => async(dispatch) => {
     type: todoActionTypes.EDIT_TODO_REQUEST
   })
   try{
-    await axios.patch(`/api/todos/${id}`, todo)
+    const session = await getSession();
+    const token = session?.accessToken;
+    await axios.patch(`/api/todos/${id}`, todo, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     dispatch({
       type: todoActionTypes.EDIT_TODO_SUCCESS,
       payload: todo
@@ -83,7 +105,13 @@ export const deleteTodo = (id) => async(dispatch) => {
     type: todoActionTypes.DELETE_TODO_REQUEST
   })
   try{
-    await axios.delete(`/api/todos/${id}`)
+    const session = await getSession();
+    const token = session?.accessToken;
+    await axios.delete(`/api/todos/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     dispatch({
       type: todoActionTypes.DELETE_TODO_SUCCESS,
       payload: id

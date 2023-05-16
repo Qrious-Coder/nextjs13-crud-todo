@@ -1,14 +1,20 @@
 import Todo from '@/db/models/Todo';
 import {dbConnect} from "@/db/dbConnect";
+import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 
-export const POST  = async (request) => {
+export const POST  = requireAuth(async (request) => {
   const { title, priority } = await request.json()
   try {
     await dbConnect()
-    const newTodo = new Todo({title, priority})
+    const newTodo = new Todo({
+      title,
+      priority,
+      user: request.user._id, // Assign the authenticated user's ID to the 'user' field
+    });
     await newTodo.save()
     return new Response(JSON.stringify(newTodo ), {status: 201})
   } catch(err){
+    console.error(err);
     return new Response('Failed to fetch all todos', {status: 500})
   }
-}
+})

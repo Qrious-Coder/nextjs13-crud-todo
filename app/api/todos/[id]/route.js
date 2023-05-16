@@ -1,26 +1,27 @@
 import Todo from '@/db/models/Todo';
 import {dbConnect} from "@/db/dbConnect";
+import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 
 //Fetch 1 todo
 
-export const GET = async(request, { params }) =>{
+export const GET = requireAuth(async(request, { params }) =>{
   try{
     await dbConnect()
-    const foundTodo = await Todo.findById(params.id)
+    const foundTodo = await Todo.findById({ _id: params.id, user: request.user._id })
     if(!foundTodo) return new Response(`Todo does not exist`, {status: 404})
     return new Response(JSON.stringify(foundTodo), {status: 200})
   }catch(err){
     console.log(err)
     return new Response(`Server error`, {status: 500})
   }
-}
+})
 
-export const PATCH = async(request, { params }) => {
+export const PATCH = requireAuth(async(request, { params }) => {
   const { title, priority , completed } = await request.json()
   try{
     await dbConnect()
 
-    const foundTodo = await Todo.findById(params.id)
+    const foundTodo = await Todo.findById({ _id: params.id, user: request.user._id })
     if(!foundTodo) return new Response(`Todo does not exist`, {status: 404})
 
     //Updated any field if provided
@@ -34,15 +35,18 @@ export const PATCH = async(request, { params }) => {
     console.log(err)
     return new Response(`server error!`, {status: 500})
   }
-}
+})
 
-export const DELETE = async(request, { params }) => {
+export const DELETE = requireAuth(async(request, { params }) => {
   try{
     await dbConnect()
-    await Todo.findByIdAndRemove(params.id)
+    const deletedTodo = await Todo.findOneAndDelete({ _id: params.id, user: request.user._id });
+    if(!deletedTodo){
+      return new Response(`Todo does not exist`, { status: 404 });
+    }
     return new Response(`Deleted successfully`,{status: 200})
   }catch(err){
     console.log(err)
     return new Response(`server error!`, {status: 500})
   }
-}
+})

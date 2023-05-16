@@ -1,9 +1,25 @@
 'use client'
 import Nav from '@/components/Nav'
-import {useSession} from "next-auth/react";
+import {getSession} from "next-auth/react";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 const Page = () => {
-  const { data: session, status } = useSession()
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
+  useEffect(() =>{
+    getSession().then((session) =>{
+      if(session) {
+        router.push('/todos')
+      } else {
+        setIsLoading(false)
+      }
+    })
+  }, [router])
+
+  if(isLoading) {
+    return <p>Loading...</p>
+  }
   if (status === 'loading') {
     return <div>Loading session...</div>;
   }
