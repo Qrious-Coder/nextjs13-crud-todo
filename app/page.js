@@ -20,9 +20,7 @@ const Page = () => {
   if(isLoading) {
     return <p>Loading...</p>
   }
-  if (status === 'loading') {
-    return <div>Loading session...</div>;
-  }
+
   return (<section className='w-full flex-center flex-col'>
     <Nav session ={ session }/>
     <div className="content">

@@ -1,6 +1,6 @@
 'use client'
 import axios from 'axios'
-import { getSession } from 'next-auth/react';
+import { getCookie } from 'next-auth/react';
 export const todoActionTypes = {
   GET_TODO_REQUEST: 'GET_TODO_REQUEST',
   GET_TODO_SUCCESS: 'GET_TODO_SUCCESS',
@@ -28,10 +28,10 @@ export const getAllTodos = () => async(dispatch) => {
     type: todoActionTypes.GET_TODO_REQUEST
   })
   try{
-    const { data: session } = useSession();
-    console.log(`sess:`, session)
-    const token = session?.user.token;
-
+    const token = await getCookie('next-auth.session-token');
+    //Another wat to get token from session
+    // const { data: session } = await useSession();
+    // const token = session?.accessToken;
     const res = await axios.get('/api/todos', {
       headers: {
         Authorization: `Bearer ${token}`
@@ -54,8 +54,8 @@ export const getAllTodos = () => async(dispatch) => {
 export const createTodo = (formTodo) => async(dispatch) => {
   dispatch({ type: todoActionTypes.ADD_TODO_REQUEST })
   try{
-    const session = await getSession();
-    const token = session?.accessToken;
+    const token = await getCookie('next-auth.session-token');
+    // const token = session?.accessToken;
     const res = await axios.post(`/api/todos/new`, formTodo, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -80,8 +80,7 @@ export const editTodo = (id, todo) => async(dispatch) => {
     type: todoActionTypes.EDIT_TODO_REQUEST
   })
   try{
-    const session = await getSession();
-    const token = session?.accessToken;
+    const token = await getCookie('next-auth.session-token');
     await axios.patch(`/api/todos/${id}`, todo, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -105,8 +104,7 @@ export const deleteTodo = (id) => async(dispatch) => {
     type: todoActionTypes.DELETE_TODO_REQUEST
   })
   try{
-    const session = await getSession();
-    const token = session?.accessToken;
+    const token = await getCookie('next-auth.session-token');
     await axios.delete(`/api/todos/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,

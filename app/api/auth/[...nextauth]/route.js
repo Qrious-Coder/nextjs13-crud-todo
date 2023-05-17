@@ -3,11 +3,16 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import User from '@/db/models/User'
 import {dbConnect} from "@/db/dbConnect";
+import {generateAccessToken} from "@/app/utils/token";
 
 export const authOptions = {
   // Enable JSON Web Tokens
+  // session: {
+  //   strategy: "jwt",
+  // },
   session: {
-    jwt: true
+    jwt: true,
+    accessToken: true // Add this line to enable access token
   },
 
   providers: [
@@ -41,6 +46,7 @@ export const authOptions = {
           email: user.email,
           role: user.role,
         }
+        token.accessToken = await generateAccessToken(user);
       }
       return token
     },

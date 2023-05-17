@@ -13,10 +13,11 @@ const RootLayout= ({children}) => (
   <html lang={'en'}>
   <body>
     <Provider>
+      <ReduxProvider store={store}>
       <div className='main'>
         <div className='gradient'/>
       </div>
-      <ReduxProvider store={store}>
+
         <main className='app'>
           { children }
         </main>

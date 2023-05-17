@@ -12,10 +12,12 @@ const TodosPage = () => {
   const { todoList } = useSelector( state => state.todo )
   const { data: session, status } = useSession()
 
-  console.log(`session:`, session)
+  // console.log(`session:`, session)
   useEffect(()=>{
-    dispatch(getAllTodos())
-  }, [dispatch])
+    if(status === 'authenticated'){
+      dispatch(getAllTodos())
+    }
+  }, [session, status])
 
   const handleDelete = async (id) => {
     dispatch(deleteTodo(id))

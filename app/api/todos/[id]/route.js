@@ -2,8 +2,6 @@ import Todo from '@/db/models/Todo';
 import {dbConnect} from "@/db/dbConnect";
 import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 
-//Fetch 1 todo
-
 export const GET = requireAuth(async(request, { params }) =>{
   try{
     await dbConnect()
