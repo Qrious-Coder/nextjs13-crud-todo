@@ -31,8 +31,8 @@ export const getAllTodos = () => async(dispatch) => {
   // const token = await getCookie('next-auth.session-token');
     
     //Problem: cannot not retrieve the token from next-auth
-    const { data: session } = useSession();
-  const accessToken = session?.accessToken;
+    const session = useSession().data;
+    const token = session?.accessToken;
     const res = await axios.get('/api/todos', {
       headers: {
         Authorization: `Bearer ${token}`
