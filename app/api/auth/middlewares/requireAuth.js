@@ -4,20 +4,11 @@ import jwt from "jsonwebtoken";
 export const requireAuth = (handler) => {
   return async (req) => {
     try {
-      const token = String(req?.headers?.authorization?.replace('Bearer ', ''));
-      console.log('token at middleware', token )
-      if (!token || !token.startsWith('Bearer ')) {
-        return new Response('Unauthorized', { status: 401 });
-      }
-
-
-      // const accessToken = token.substring(7);
-
-      // const token = await getToken({
-      //   req: req,
-      //   secret: secret,
-      //   raw: true,
-      // });
+      const token = await getToken({
+        req: req,
+        secret: secret,
+        raw: true,
+      });
 
       // Verify the access token using your secret key
       const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
@@ -31,7 +22,7 @@ export const requireAuth = (handler) => {
       return handler(req);
     } catch (err) {
       console.error("Auth error:", err);
-      return new Response({ message: "Access denied" }, { status: 500 });
+      return new Response("Access denied" , { status: 500 });
     }
   };
 };
