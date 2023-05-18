@@ -38,20 +38,14 @@ export const authOptions = {
 
   //If user found, run callback to return token with user info
   callbacks: {
-    async jwt({token, user}){
-      if (user) {
-        token.user = {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        }
-        token.accessToken = await generateAccessToken(user);
-      }
+    
+    async jwt({token, user, account}){
+      //User returned undefined
       return token
     },
 
-    async session({ session, token }) {
+    async session({ session, token, user }) {
+      console.log(`session`, session )
       if (token?._id) {
         session.user = token.user;
       }
