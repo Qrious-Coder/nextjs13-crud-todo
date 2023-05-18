@@ -1,13 +1,13 @@
 import { verify } from 'jsonwebtoken';
-import { Response } from 'next';
 
 export const requireAuth = (handler) => {
-  return async (req) => {
+  return async (req, res, next) => {
     try {
       const token = req.headers.authorization?.split(' ')[1];
 
+      console.log('token', token);
       if (!token) {
-        return new Response('Unauthorized', { status: 401 });
+        return res.status(401).send('Unauthorized');
       }
 
       const secretKey = process.env.SECRET_KEY; // Replace with your actual secret key
@@ -17,14 +17,14 @@ export const requireAuth = (handler) => {
       console.log('decodedToken', decodedToken);
 
       if (!decodedToken) {
-        return new Response('Unauthorized', { status: 401 });
+        return res.status(401).send('Unauthorized');
       }
 
       req.user = decodedToken.user; // Assuming the user object is present in the token
-      return handler(req);
+      return handler(req, res, next);
     } catch (err) {
       console.error('Auth error:', err);
-      return new Response('Access denied', { status: 500 });
+      return res.status(500).send('Access denied');
     }
   };
 };

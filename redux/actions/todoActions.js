@@ -1,6 +1,6 @@
 'use client'
 import axios from 'axios'
-import { getCookie } from 'next-auth/react';
+import {getCookie, useSession} from 'next-auth/react';
 export const todoActionTypes = {
   GET_TODO_REQUEST: 'GET_TODO_REQUEST',
   GET_TODO_SUCCESS: 'GET_TODO_SUCCESS',
@@ -28,17 +28,16 @@ export const getAllTodos = () => async(dispatch) => {
     type: todoActionTypes.GET_TODO_REQUEST
   })
   try{
-  // const token = await getCookie('next-auth.session-token');
-    
-    //Problem: cannot not retrieve the token from next-auth
-    const session = useSession().data;
-    const token = session?.accessToken;
+    const accessToken =localStorage.getItem('token')
+
+    console.log(`frontend accessToken`,typeof accessToken)
     const res = await axios.get('/api/todos', {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ` + accessToken
       }
     })
     const data = res.data
+
     dispatch({
       type: todoActionTypes.GET_TODO_SUCCESS,
       payload: data
@@ -56,12 +55,11 @@ export const createTodo = (formTodo) => async(dispatch) => {
   dispatch({ type: todoActionTypes.ADD_TODO_REQUEST })
   try{
 //     const token = await getCookie('next-auth.session-token');
-    const { data: session } = await useSession();
-    const token = session?.accessToken;
+    const accessToken =localStorage.getItem('token')
 
     const res = await axios.post(`/api/todos/new`, formTodo, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
     const data = res.data
@@ -83,13 +81,12 @@ export const editTodo = (id, todo) => async(dispatch) => {
     type: todoActionTypes.EDIT_TODO_REQUEST
   })
   try{
-  // const token = await getCookie('next-auth.session-token');
-    const { data: session } = await useSession();
-    const token = session?.accessToken;
+
+    const accessToken =localStorage.getItem('token')
 
     await axios.patch(`/api/todos/${id}`, todo, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     })
     dispatch({
@@ -111,12 +108,11 @@ export const deleteTodo = (id) => async(dispatch) => {
   })
   try{
      // const token = await getCookie('next-auth.session-token');
-    const { data: session } = await useSession();
-    const token = session?.accessToken;
-    
+    const accessToken =localStorage.getItem('token')
+
     await axios.delete(`/api/todos/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     })
     dispatch({

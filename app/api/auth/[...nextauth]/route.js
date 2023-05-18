@@ -2,8 +2,8 @@ import NextAuth from 'next-auth'
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import User from '@/db/models/User'
-import {dbConnect} from "@/db/dbConnect";
-import {generateAccessToken} from "@/app/utils/token";
+import { dbConnect } from "@/db/dbConnect";
+import { generateAccessToken } from "@/utils/token";
 
 export const authOptions = {
   // Enable JSON Web Tokens
@@ -30,30 +30,34 @@ export const authOptions = {
 
         const pwValid = await user.comparePassword(credentials.password)
         if(!pwValid){ throw new Error("Wrong password!") }
+        // Generate the access token
+        const accessToken = generateAccessToken(user);
 
-        return user
+        // Return the user and access token
+        return { user, accessToken };
+        // return user
       }
     })
   ],
 
   //If user found, run callback to return token with user info
   callbacks: {
-    
-    async jwt({token, user, account}){
-      if(user){
-        token.sub = user.id
-      }
-      return token
-    },
-
     async session({ session, token, user }) {
-      console.log(`session`, session )
-      if (user) {
-        session.user.id = token.user.sub;
-        session.accessToken = generateAccessToken(session.user)
+      console.log(session)
+      if (session) {
+        session.user.id = token.sub;
+        session.accessToken = token.accessToken; // Access the accessToken from the token
       }
       return session;
     },
+
+    async jwt({ token, user, account }) {
+      if (user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
+
   },
   pages: {
     signIn: '/entry',
