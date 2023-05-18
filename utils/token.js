@@ -1,4 +1,5 @@
 import { verify } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 
 export const verifyToken = (token, secretKey) => {
   try {
@@ -9,3 +10,11 @@ export const verifyToken = (token, secretKey) => {
     return null;
   }
 };
+
+
+export const generateAccessToken = (user) => {
+  const secretKey = process.env.SECRET_KEY; // Replace with your actual secret key
+  const token = sign({ sub: user.id }, secretKey, { expiresIn: '1h' }); // Customize the expiration as needed
+  return token;
+};
+
