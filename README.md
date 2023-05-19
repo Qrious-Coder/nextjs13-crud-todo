@@ -77,5 +77,6 @@
 
 ## only the todos belonging to the logged-in user are fetched and saved to the database
 ### ref1: https://github.com/MelvinManni/next-mongoose 
+### ref2: https://remaster.com/blog/next-auth-jwt-session 
 1. POST data including userId?
 2. Search how to CRUD with authentication
