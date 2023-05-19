@@ -13,6 +13,7 @@ const Page = () => {
         router.push('/todos')
       } else {
         setIsLoading(false)
+        router.push('/')
       }
     })
   }, [router])

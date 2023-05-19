@@ -43,7 +43,6 @@ export const authOptions = {
   //If user found, run callback to return token with user info
   callbacks: {
     async session({ session, token, user }) {
-      console.log(session)
       if (session) {
         session.user.id = token.sub;
         session.accessToken = token.accessToken; // Access the accessToken from the token

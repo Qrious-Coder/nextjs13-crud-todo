@@ -12,19 +12,11 @@ const TodosPage = () => {
   const dispatch = useDispatch()
   const { todoList } = useSelector( state => state.todo )
   const { data: session, status } = useSession()
-  const [accessToken, setAccessToken] = useState(null);
-  // const csrfToken = nextAuth.csrfToken();
-  // console.log(`session:`, session)
 
-  const sessionToken = context.req.cookies['next-auth.session-token'];
-
-  console.log(`sessionToken `, sessionToken )
   useEffect(()=>{
     if(status === 'authenticated'){
-      console.log(``, session.session.accessToken)
       dispatch(getAllTodos())
-      localStorage.setItem('token', JSON.stringify(session.session.accessToken))
-      setAccessToken(localStorage.getItem('token'));
+      localStorage.setItem('token', 'Bearer ' + session?.session.accessToken)
     }
   }, [session])
 
