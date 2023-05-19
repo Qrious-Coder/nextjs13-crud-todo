@@ -14,7 +14,7 @@ export const verifyToken = (token, secretKey) => {
 
 export const generateAccessToken = (user) => {
   const secretKey = process.env.SECRET_KEY; // Replace with your actual secret key
-  const token = sign({ sub: user.id }, secretKey, { expiresIn: '1h' }); // Customize the expiration as needed
+  const token = sign({ sub: user.id }, secretKey, { expiresIn: '3d' }); // Customize the expiration as needed
   return token;
 };
 
