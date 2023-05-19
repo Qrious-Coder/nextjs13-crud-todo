@@ -5,8 +5,16 @@ const secretKey = process.env.SECRET_KEY; // Replace with your actual secret key
 export const requireAuth = (handler) => {
   return async (req) => {
     try {
-      const token = req.headers.authorization?.split(' ')[1];
+      //Todo: save token to cookies
+      // Or learn to decode next-auth-session-cookies
+      const authorizationHeader = 
+        req.headers instanceof headers
+          ? req.headers.get('authorization')
+          : req.headers.authorization
+      const token = authorizationHeader?.split(' ')[1];
+
       //BUG: can't get token from headers
+      // req.headers is an Object which cannot extract [authorization]
       token = 'token'
 
       console.log('token', token);

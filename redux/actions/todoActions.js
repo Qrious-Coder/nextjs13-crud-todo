@@ -33,7 +33,7 @@ export const getAllTodos = () => async(dispatch) => {
     console.log(`frontend accessToken`,typeof accessToken)
     const res = await axios.get('/api/todos', {
       headers: {
-        Authorization: `Bearer ` + accessToken
+        Authorization: accessToken
       }
     })
     const data = res.data
@@ -59,7 +59,7 @@ export const createTodo = (formTodo) => async(dispatch) => {
 
     const res = await axios.post(`/api/todos/new`, formTodo, {
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: accessToken
       }
     })
     const data = res.data
@@ -86,7 +86,7 @@ export const editTodo = (id, todo) => async(dispatch) => {
 
     await axios.patch(`/api/todos/${id}`, todo, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: accessToken
       },
     })
     dispatch({
@@ -112,7 +112,7 @@ export const deleteTodo = (id) => async(dispatch) => {
 
     await axios.delete(`/api/todos/${id}`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: accessToken
       },
     })
     dispatch({
