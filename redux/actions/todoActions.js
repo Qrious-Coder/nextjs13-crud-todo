@@ -55,7 +55,7 @@ export const getAllTodos = () => async(dispatch) => {
   }
 }
 
-export const getAllTodosWithFeatures = () => async(dispatch) => {
+export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy = null) => async(dispatch) => {
   dispatch({
     type: todoActionTypes.GET_TODO_FEATURE_REQUEST
   })
@@ -70,6 +70,8 @@ export const getAllTodosWithFeatures = () => async(dispatch) => {
       params: {
         priority,
         status,
+        page: 1,
+        limit: 10,
         sortBy
       }
     })
