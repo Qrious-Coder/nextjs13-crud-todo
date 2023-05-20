@@ -5,7 +5,7 @@ import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 export const GET = requireAuth(async (req) => {
   try {
     await dbConnect();
-    const { priority, status, page, limit, sortBy } = req.query
+    const { priority = null, status = null, page = 1, limit = 10, sortBy = null } = req.query
     const query = { user: req.user._id }
     
     //Filter by priorty and status
