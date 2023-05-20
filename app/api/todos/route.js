@@ -7,8 +7,14 @@ export const GET = requireAuth(async (req) => {
     
     console.log(`@@@ =========> param`, req.url.split('?')[1])
     await dbConnect();
-    const { priority = null, status = null, page = 1, limit = 10, sortBy = null } = req.query
-    const query = { user: req.user._id }
+    const queryParams = new URLSearchParams(req.url.split('?')[1]);
+    const priority = queryParams.get('priority') || null;
+    const status = queryParams.get('status') || null;
+    const page = queryParams.get('page') || 1;
+    const limit = queryParams.get('limit') || 10;
+    const sortBy = queryParams.get('sortBy') || null;
+
+    const query = { user: req.user._id };
     
     //Filter by priorty and status
     if(priority){
