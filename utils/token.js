@@ -1,20 +1,11 @@
-import { verify } from 'jsonwebtoken';
 import { sign } from 'jsonwebtoken';
 
-export const verifyToken = (token, secretKey) => {
-  try {
-    const decodedToken = verify(token, secretKey);
-    return decodedToken;
-  } catch (error) {
-    console.error('Token verification failed:', error);
-    return null;
-  }
-};
-
+const secretKey = process.env.SECRET_KEY; // Replace with your actual secret key
 
 export const generateAccessToken = (user) => {
-  const secretKey = process.env.SECRET_KEY; // Replace with your actual secret key
-  const token = sign({ sub: user.id }, secretKey, { expiresIn: '3d' }); // Customize the expiration as needed
+  console.log(`generateAccessToken`, user)
+
+  const token = sign({ sub: user._id }, secretKey, { expiresIn: '3d' }); // Customize the expiration as needed
   return token;
 };
 

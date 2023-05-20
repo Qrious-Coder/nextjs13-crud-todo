@@ -30,7 +30,7 @@ export const getAllTodos = () => async(dispatch) => {
   try{
     const accessToken =localStorage.getItem('token')
 
-    console.log(`frontend accessToken`,typeof accessToken)
+    console.log(`frontend accessToken`,accessToken)
     const res = await axios.get('/api/todos', {
       headers: {
         Authorization: accessToken

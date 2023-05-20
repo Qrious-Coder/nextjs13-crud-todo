@@ -14,7 +14,6 @@ const EntryPage = () => {
         router.push('/todos')
       } else {
         setIsLoading(false)
-        router.push('/entry')
       }
     })
   }, [router])

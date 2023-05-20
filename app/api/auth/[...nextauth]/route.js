@@ -7,12 +7,12 @@ import { generateAccessToken } from "@/utils/token";
 
 export const authOptions = {
   // Enable JSON Web Tokens
-  // session: {
-  //   strategy: "jwt",
-  // },
   session: {
     jwt: true,
     accessToken: true // Add this line to enable access token
+  },
+  jwt:{
+    secret: process.env.SECRET_KEY
   },
 
   providers: [
@@ -30,33 +30,33 @@ export const authOptions = {
 
         const pwValid = await user.comparePassword(credentials.password)
         if(!pwValid){ throw new Error("Wrong password!") }
-        // Generate the access token
-        const accessToken = generateAccessToken(user);
 
-        // Return the user and access token
-        return { user, accessToken };
-        // return user
+        return user;
       }
     })
   ],
 
   //If user found, run callback to return token with user info
   callbacks: {
-    async session({ session, token, user }) {
-      if (session) {
-        session.user.id = token.sub;
-        session.accessToken = token.accessToken; // Access the accessToken from the token
-      }
-      return session;
-    },
-
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       if (user) {
-        token.sub = user.id;
+        token.user = {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        }
+        token.accessToken = generateAccessToken(user)
       }
       return token;
     },
-
+    async session({ session, token }) {
+      if(token){
+        session.user = token.user
+        session.accessToken = token.accessToken
+      }
+      return session
+    },
   },
   pages: {
     signIn: '/entry',
