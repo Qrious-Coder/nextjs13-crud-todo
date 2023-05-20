@@ -33,18 +33,13 @@ const todoReducer = (state = initialState, action) => {
       }
       
     case todoActionTypes.GET_TODO_SUCCESS:
+    case todoActionTypes.GET_TODO_FEATURE_SUCCESS:  
       return {
         ...state,
         loading: false,
         todoList: action.payload,
       }
-      
-    case todoActionTypes.GET_TODO_FEATURE_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        todoList: action.payload,
-      }  
+       
     case todoActionTypes.ADD_TODO_SUCCESS:
       return {
         ...state,
