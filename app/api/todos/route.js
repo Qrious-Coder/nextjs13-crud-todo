@@ -4,6 +4,8 @@ import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 
 export const GET = requireAuth(async (req) => {
   try {
+    
+    console.log(`@@@ =========> param`, req.url.split('?')[1])
     await dbConnect();
     const { priority = null, status = null, page = 1, limit = 10, sortBy = null } = req.query
     const query = { user: req.user._id }
