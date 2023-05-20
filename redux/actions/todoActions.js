@@ -6,6 +6,10 @@ export const todoActionTypes = {
   GET_TODO_SUCCESS: 'GET_TODO_SUCCESS',
   GET_TODO_FAILURE: 'GET_TODO_FAILURE',
 
+  GET_TODO_REQUEST: 'GET_TODO_FEATURE_REQUEST',
+  GET_TODO_SUCCESS: 'GET_TODO_FEATURE_SUCCESS',
+  GET_TODO_FAILURE: 'GET_TODO_FEATURE_FAILURE',
+  
   ADD_TODO_REQUEST: 'ADD_TODO_REQUEST',
   ADD_TODO_SUCCESS: 'ADD_TODO_SUCCESS',
   ADD_TODO_FAILURE: 'ADD_TODO_FAILURE',
@@ -51,12 +55,45 @@ export const getAllTodos = () => async(dispatch) => {
   }
 }
 
+export const getAllTodosWithFeatures = () => async(dispatch) => {
+  dispatch({
+    type: todoActionTypes.GET_TODO_FEATURE_REQUEST
+  })
+  try{
+    const accessToken =localStorage.getItem('token')
+
+    console.log(`frontend accessToken`,typeof accessToken)
+    const res = await axios.get('/api/todos', {
+      headers: {
+        Authorization: accessToken
+      },
+      params: {
+        priority,
+        status,
+        sortBy
+      }
+    })
+    const data = res.data
+
+    dispatch({
+      type: todoActionTypes.GET_TODO_FEATURE_SUCCESS,
+      payload: data
+    })
+
+  }catch(err){
+    dispatch({
+      type: todoActionTypes.GET_TODO_FEATURE_FAILURE,
+      payload: err
+    })
+  }
+}
+
+
 export const createTodo = (formTodo) => async(dispatch) => {
   dispatch({ type: todoActionTypes.ADD_TODO_REQUEST })
   try{
 //     const token = await getCookie('next-auth.session-token');
     const accessToken =localStorage.getItem('token')
-
     const res = await axios.post(`/api/todos/new`, formTodo, {
       headers: {
         Authorization: accessToken
