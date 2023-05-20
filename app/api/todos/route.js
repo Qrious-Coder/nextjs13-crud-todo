@@ -1,4 +1,4 @@
-import Todo from "@/app/api/auth/middleware/requireAuth"
+import Todo from "@/db/models/Todo"
 import { dbConnect } from "@/db/dbConnect";
 import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 
