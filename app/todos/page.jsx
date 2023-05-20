@@ -7,9 +7,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllTodos, editTodo, deleteTodo, createTodo } from "@/redux/actions/todoActions";
 import {useSession} from "next-auth/react";
 import { nextAuth } from "next-auth";
+import {useRouter} from "next/navigation";
 
 const TodosPage = () => {
   const dispatch = useDispatch()
+  const router = useRouter();
   const { todoList } = useSelector( state => state.todo )
   const { data: session, status } = useSession()
 
@@ -17,6 +19,8 @@ const TodosPage = () => {
     if(status === 'authenticated'){
       dispatch(getAllTodos())
       localStorage.setItem('token', 'Bearer ' + session?.session.accessToken)
+    }else{
+      router.push('/')
     }
   }, [session])
 

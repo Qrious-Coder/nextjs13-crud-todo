@@ -4,7 +4,7 @@ import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 
 export const GET = requireAuth(async (req) => {
   try {
-    
+
     console.log(`@@@ =========> param`, req.url.split('?')[1])
     await dbConnect();
     const queryParams = new URLSearchParams(req.url.split('?')[1]);
@@ -15,20 +15,20 @@ export const GET = requireAuth(async (req) => {
     const sortBy = queryParams.get('sortBy') || null;
 
     const query = { user: req.user._id };
-    
+
     //Filter by priorty and status
     if(priority){
       query.priority = priority
     }
-    
+
     if(status){
       if( status === 'completed'){
         query.completed = true
       }else if(status === 'uncompleted'){
         query.completed = false
-      }  
+      }
     }
-    
+
     //Pagination
     const pageNumber = parseInt(page) || 1;
     const pageSize = parseInt(limit) || 10;
@@ -45,9 +45,9 @@ export const GET = requireAuth(async (req) => {
       const sortOrder = sortBy.charAt(0) === "-" ? -1 : 1;
       todos = todos.sort({ [sortField]: sortOrder });
     }
-    
+
     return new Response(JSON.stringify(todos), { status: 200 });
-    
+
   } catch (error) {
     console.error(error);
     return new Response(`Fetching failed: ${error}`, { status: 500 });
