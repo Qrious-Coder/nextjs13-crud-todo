@@ -4,10 +4,10 @@ import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
 import Nav from "@/components/Nav";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllTodos, editTodo, deleteTodo, createTodo } from "@/redux/actions/todoActions";
+import {getAllTodos, editTodo, deleteTodo, createTodo, getAllTodosWithFeatures} from "@/redux/actions/todoActions";
 import {useSession} from "next-auth/react";
-import { nextAuth } from "next-auth";
 import {useRouter} from "next/navigation";
+import { saveAccessToken } from '@/utils/token'
 
 const TodosPage = () => {
   const dispatch = useDispatch()
@@ -17,8 +17,9 @@ const TodosPage = () => {
 
   useEffect(()=>{
     if(status === 'authenticated'){
-      dispatch(getAllTodos())
-      localStorage.setItem('token', 'Bearer ' + session?.session.accessToken)
+      // dispatch(getAllTodos())
+      dispatch(getAllTodosWithFeatures())
+      saveAccessToken(session?.session.accessToken)
     }else{
       router.push('/')
     }

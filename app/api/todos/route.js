@@ -1,26 +1,55 @@
+import Todo from "@/db/models/Todo"
 import { dbConnect } from "@/db/dbConnect";
 import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
-import Todo from '@/db/models/Todo'
 
 export const GET = requireAuth(async (req) => {
   try {
+
+    console.log(`@@@ =========> param`, req.url.split('?')[1])
     await dbConnect();
-    const todos = await Todo.find({ user: req.user._id} );
+    const queryParams = new URLSearchParams(req.url.split('?')[1]);
+    const priority = queryParams.get('priority') || null;
+    const status = queryParams.get('status') || null;
+    const page = queryParams.get('page') || 1;
+    const limit = queryParams.get('limit') || 10;
+    const sortBy = queryParams.get('sortBy') || null;
+
+    const query = { user: req.user._id };
+
+    //Filter by priorty and status
+    if(priority){
+      query.priority = priority
+    }
+
+    if(status){
+      if( status === 'completed'){
+        query.completed = true
+      }else if(status === 'uncompleted'){
+        query.completed = false
+      }
+    }
+
+    //Pagination
+    const pageNumber = parseInt(page) || 1;
+    const pageSize = parseInt(limit) || 10;
+    const skip = (pageNumber - 1) * pageSize;
+
+    // Fetch todos, applied filtering and pagination
+    let todos = await Todo.find(query)
+      .skip(skip)
+      .limit(pageSize);
+
+    //Sorting
+    if (sortBy) {
+      const sortField = sortBy.substring(1);
+      const sortOrder = sortBy.charAt(0) === "-" ? -1 : 1;
+      todos = todos.sort({ [sortField]: sortOrder });
+    }
+
     return new Response(JSON.stringify(todos), { status: 200 });
+
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify(error), { status: 500 });
+    return new Response(`Fetching failed: ${error}`, { status: 500 });
   }
 });
-
-// export const GET = async (req) => {
-//   try {
-//     await dbConnect();
-//     console.log(`@@@@@@@@@@@@@@@@@=====>`,req)
-//     const todos = await Todo.find({ user: '646248f40f1c25e0487bb730'} );
-//     return new Response(JSON.stringify(todos), { status: 200 });
-//   } catch (error) {
-//     console.error(error);
-//     return new Response(JSON.stringify(error), { status: 500 });
-//   }
-// };
