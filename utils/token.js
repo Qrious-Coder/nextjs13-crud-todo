@@ -7,6 +7,16 @@ export const generateAccessToken = (user) => {
   return token;
 };
 
+export const decodeToken = (token) => {
+  try {
+    const decodedToken = verify(token, secretKey);
+    return decodedToken;
+  } catch (err) {
+    console.error('Token decoding error:', err);
+    return null;
+  }
+};
+
 export const getAccessToken = () => {
   const accessToken = localStorage.getItem('token');
   return accessToken || '';
