@@ -46,9 +46,7 @@ const EntryForm = () => {
       } else {
         setError(result.error);
       }
-
       return result;
-
     } else {
       //todo: dispatch alert
       if (!email || !password) {

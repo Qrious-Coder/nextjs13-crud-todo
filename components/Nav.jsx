@@ -1,9 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+import { signOut as nextAuthSignOut } from 'next-auth/react';
 import { FaCheckSquare } from 'react-icons/fa';
+import { removeToken} from "@/utils/token";
 
 const Nav = ({ session }) => {
+  const signOut = async () => {
+    removeToken();
+    await nextAuthSignOut();
+  };
+
   return (
     <nav className="fixed top-0 w-full bg-gray-900 bg-opacity-90 shadow-md">
       <div className="flex justify-between items-center px-4 py-2">
@@ -28,10 +34,14 @@ const Nav = ({ session }) => {
             </div>
           ) : (
             <>
-              <Link className="text-white" href="/entry">
+              <Link
+                className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-md"
+                href="/entry">
                 Register
               </Link>
-              <Link className="text-white" href="/entry">
+              <Link
+                className="bg-gradient-to-r from-red-800 to-red-600 text-white px-4 py-2 rounded-md"
+                href="/entry">
                 Sign In
               </Link>
             </>

@@ -1,5 +1,4 @@
-import { verify } from 'jsonwebtoken';
-import { sign } from 'jsonwebtoken';
+import { verify, sign } from 'jsonwebtoken';
 
 const secretKey = process.env.SECRET_KEY;
 export const generateAccessToken = (user) => {
@@ -25,3 +24,7 @@ export const getAccessToken = () => {
 export const saveAccessToken = (accessToken) => {
   localStorage.setItem('token', 'Bearer ' + accessToken);
 }
+
+export const removeToken = () => {
+  localStorage.removeItem('token');
+};

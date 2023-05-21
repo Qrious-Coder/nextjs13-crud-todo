@@ -6,13 +6,9 @@ import { dbConnect } from "@/db/dbConnect";
 import { generateAccessToken } from "@/utils/token";
 
 export const authOptions = {
-  // Enable JSON Web Tokens
   session: {
     jwt: true,
-    accessToken: true // Add this line to enable access token
-  },
-  jwt:{
-    secret: process.env.SECRET_KEY
+    accessToken: true
   },
 
   providers: [
@@ -36,7 +32,6 @@ export const authOptions = {
     })
   ],
 
-  //If user found, run callback to return token with user info
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
