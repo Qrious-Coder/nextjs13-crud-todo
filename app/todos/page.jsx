@@ -38,15 +38,19 @@ const TodosPage = () => {
     dispatch(createTodo(formData))
   };
 
+  const handleFilter = (filter) => {
+    dispatch(getAllTodosWithFeatures(filter));
+  };
+
   if (status === 'loading') {
     return <div>Loading ...</div>;
   }
   return (
     <div className="todo-page">
-      {/*<h1>AccessToken: {accessToken}</h1>*/}
       <Nav session={ session }/>
       <TodoForm addTodo={ handleAdd }/>
-      <TodoList todos={ todoList } onDelete={ handleDelete } onEdit={ handleEdit }/>
+      <TodoList todos={ todoList } onDelete={ handleDelete }
+                onEdit={ handleEdit } onFilter={handleFilter}/>
     </div>
   );
 };
