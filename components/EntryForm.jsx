@@ -3,15 +3,16 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
+import { useDispatch} from "react-redux";
 
 const EntryForm = () => {
   const router  = useRouter()
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   });
-
 
   const [error, setError] = useState(null)
   const [isLogin, setIsLogin] = useState(true);
@@ -27,11 +28,11 @@ const EntryForm = () => {
     e.preventDefault();
     const { name, email, password }= formData
     if (!isLogin) {
-      //Register
       if(!name || !email || !password){
         setError("All fields are required");
         return;
       }
+
       const res = await fetch('/api/auth/register', {
         method: "POST",
         headers: {
@@ -51,11 +52,12 @@ const EntryForm = () => {
       return result;
 
     } else {
-      //login
+      //todo: dispatch alert
       if (!email || !password) {
         setError("All fields are required");
         return;
       }
+
       const res = await signIn("credentials", {
         redirect: false,
         email,
@@ -65,7 +67,6 @@ const EntryForm = () => {
         setError(res.error);
         return;
       }
-
       setFormData({ email: "", password: "" });
       router.push("/todos");
     }

@@ -1,6 +1,6 @@
 'use client'
 import Nav from '@/components/Nav'
-import {getSession, useSession} from "next-auth/react";
+import { useSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 const Page = () => {

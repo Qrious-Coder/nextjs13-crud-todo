@@ -1,14 +1,14 @@
 'use client'
 import axios from 'axios'
-import {getCookie, useSession} from 'next-auth/react';
+import { getAccessToken } from "@/utils/token";
 export const todoActionTypes = {
   GET_TODO_REQUEST: 'GET_TODO_REQUEST',
   GET_TODO_SUCCESS: 'GET_TODO_SUCCESS',
   GET_TODO_FAILURE: 'GET_TODO_FAILURE',
 
-  GET_TODO_REQUEST: 'GET_TODO_FEATURE_REQUEST',
-  GET_TODO_SUCCESS: 'GET_TODO_FEATURE_SUCCESS',
-  GET_TODO_FAILURE: 'GET_TODO_FEATURE_FAILURE',
+  GET_TODO_FEATURE_REQUEST: 'GET_TODO_FEATURE_REQUEST',
+  GET_TODO_FEATURE_SUCCESS: 'GET_TODO_FEATURE_SUCCESS',
+  GET_TODO_FEATURE_FAILURE: 'GET_TODO_FEATURE_FAILURE',
   
   ADD_TODO_REQUEST: 'ADD_TODO_REQUEST',
   ADD_TODO_SUCCESS: 'ADD_TODO_SUCCESS',
@@ -26,15 +26,12 @@ export const todoActionTypes = {
   SEARCH_TODO_SUCCESS: 'SEARCH_TODO_SUCCESS',
   SEARCH_TODO_FAILURE: 'SEARCH_TODO_FAILURE',
 }
-
+const accessToken = getAccessToken()
 export const getAllTodos = () => async(dispatch) => {
   dispatch({
     type: todoActionTypes.GET_TODO_REQUEST
   })
   try{
-    const accessToken =localStorage.getItem('token')
-
-    console.log(`frontend accessToken`,accessToken)
     const res = await axios.get('/api/todos', {
       headers: {
         Authorization: accessToken
@@ -60,9 +57,6 @@ export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy 
     type: todoActionTypes.GET_TODO_FEATURE_REQUEST
   })
   try{
-    const accessToken =localStorage.getItem('token')
-
-    console.log(`frontend accessToken`,typeof accessToken)
     const res = await axios.get('/api/todos', {
       headers: {
         Authorization: accessToken
@@ -94,8 +88,6 @@ export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy 
 export const createTodo = (formTodo) => async(dispatch) => {
   dispatch({ type: todoActionTypes.ADD_TODO_REQUEST })
   try{
-//     const token = await getCookie('next-auth.session-token');
-    const accessToken =localStorage.getItem('token')
     const res = await axios.post(`/api/todos/new`, formTodo, {
       headers: {
         Authorization: accessToken
@@ -120,9 +112,6 @@ export const editTodo = (id, todo) => async(dispatch) => {
     type: todoActionTypes.EDIT_TODO_REQUEST
   })
   try{
-
-    const accessToken =localStorage.getItem('token')
-
     await axios.patch(`/api/todos/${id}`, todo, {
       headers: {
         Authorization: accessToken
@@ -146,9 +135,6 @@ export const deleteTodo = (id) => async(dispatch) => {
     type: todoActionTypes.DELETE_TODO_REQUEST
   })
   try{
-     // const token = await getCookie('next-auth.session-token');
-    const accessToken =localStorage.getItem('token')
-
     await axios.delete(`/api/todos/${id}`, {
       headers: {
         Authorization: accessToken
