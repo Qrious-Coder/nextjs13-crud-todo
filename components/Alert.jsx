@@ -27,10 +27,10 @@ const Alert = ({ children }) => {
             !isShow && 'isHide'
           )}
         >
-          <span className='closeBtn' onClick={handleClose}>
+          {children ? renderChildEl() : alertText}
+         <span className='closeBtn' onClick={handleClose}>
             &times;
           </span>
-          {children ? renderChildEl() : alertText}
         </div>
       )}
     </>
