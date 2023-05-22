@@ -27,7 +27,7 @@ const Alert = ({ children }) => {
             !isShow && 'isHide'
           )}
         >
-          <span className={alertStyles.closeBtn} onClick={handleClose}>
+          <span className='closeBtn' onClick={handleClose}>
             &times;
           </span>
           {children ? renderChildEl() : alertText}
