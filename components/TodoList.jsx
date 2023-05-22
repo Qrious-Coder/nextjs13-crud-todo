@@ -13,9 +13,9 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
   };
   return (
     <>
-      <div>
+      <div className="w-full">
         <label htmlFor="filter">Filter By:</label>
-        <select id="filter" value={ filter } onChange={ handleFilterChange }>
+        <select className="filter_input" id="filter" value={ filter } onChange={ handleFilterChange }>
           <option value="">All</option>
           <option value="priority">Priority</option>
           <option value="status">Status</option>
