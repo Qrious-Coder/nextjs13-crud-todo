@@ -2,6 +2,9 @@
 import React from 'react';
 import TodoItem from './TodoItem'
 import { useState} from "react";
+import { RiArrowUpSLine, RiArrowDownSLine, RiFilter2Line } from 'react-icons/ri';
+import { AiOutlineFlag, AiOutlineCheckCircle, AiOutlineExclamationCircleAiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+import { BiTask } from 'react-icons/bi';
 
 const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
   const [filter, setFilter] = useState('');
