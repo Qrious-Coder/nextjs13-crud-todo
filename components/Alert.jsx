@@ -21,9 +21,10 @@ const Alert = ({ children }) => {
       {showAlert && (
         <div
           className={cs(
-            alertStyles.alert,
-            alertStyles[alertType],
-            !isShow && alertStyles.isHide
+            'alert',
+            'border-yellow-800',
+            ${alertType},
+            !isShow && 'isHide'
           )}
         >
           <span className={alertStyles.closeBtn} onClick={handleClose}>
