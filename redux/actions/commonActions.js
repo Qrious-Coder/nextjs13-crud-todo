@@ -15,7 +15,7 @@ export const clearAlert = () => async(dispatch) => {
 export const displayAlert = ({alertText, alertType}) =>
   async(dispatch) => {
     dispatch({
-      type: commonActions.SHOW_ALERT,
+      type: commonActionTypes.SHOW_ALERT,
       payload: {
         alertText,
         alertType
