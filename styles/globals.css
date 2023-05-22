@@ -334,9 +334,9 @@
   @apply w-full border border-gray-300 rounded-md py-2 px-3 mb-4 text-white bg-transparent focus:outline-none;
 }
 
-/*button[type="submit"] {*/
-/*  @apply bg-white text-black rounded-md py-2 px-4 mb-4 transition-all hover:bg-black hover:text-white;*/
-/*}*/
+button[type="submit"]
+  @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500;
+}
 
 .form_btn {
   @apply bg-white text-black rounded-md py-2 px-4 mb-4 transition-all hover:bg-black hover:text-white;
@@ -441,21 +441,25 @@ nav ul li a:hover {
 }
 
 .neutral {
-  @apply p-4 border rounded bg-gray-500 text-gray-800
+  @apply p-4 border rounded bg-gray-500 text-gray-800 rounded bg-opacity-25;
 }
 
 .danger {
-  @apply p-4 border rounded bg-red-500 text-red-800
+  @apply p-4 border rounded bg-red-500 text-red-800 bg-opacity-25;
 }
 
 .success {
-  @apply p-4 border rounded bg-green-500 text-green-800
+  @apply p-4 border rounded bg-green-500 text-green-800 bg-opacity-25;
 }
 
 .warning {
-  @apply p-4 border rounded bg-yellow-500 text-yellow-800
+  @apply p-4 border rounded bg-yellow-500 text-yellow-800 bg-opacity-25;
 }
 
 .alert.hide {
   display: none;
+}
+
+.closeBtn {
+  @apply absolute top-0 right-0 p-1 m-2 text-gray-800 rounded-full bg-white cursor-pointer;
 }
