@@ -437,24 +437,23 @@ nav ul li a:hover {
 /*-----------alert -----------*/
 
 .alert {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  background-color: var(--color-bg-secondary);
-  color: var(--color-text-primary);
+  @apply flex items-center justify-center
 }
 
-.alert.error {
-  background-color: #ff6a6a;
+.neutral {
+  @apply p-4 border rounded bg-gray-500 text-gray-800
 }
 
-.alert.success {
-  background-color: #58a6ff;
+.danger {
+  @apply p-4 border rounded bg-red-500 text-red-800
+}
+
+.success {
+  @apply p-4 border rounded bg-green-500 text-green-800
+}
+
+.warning {
+  @apply p-4 border rounded bg-yellow-500 text-yellow-800
 }
 
 .alert.hide {
