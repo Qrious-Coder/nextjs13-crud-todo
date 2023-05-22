@@ -26,8 +26,10 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
         <tr className="bg-black text-white">
           <th className="py-2 px-4 border-cyan-200 text-cyan-200">Task</th>
           <th className="py-2 px-4 border-cyan-200 text-cyan-200">Priority</th>
+          <th className="py-2 px-4 border-cyan-200 text-cyan-200">Action</th>
           <th className="py-2 px-4 border-cyan-200 text-cyan-200">Status</th>
           <th className="py-2 px-4 border-cyan-200 text-cyan-200">Date</th>
+          <th className="py-2 px-4 border-cyan-200 text-cyan-200">Note</th>
           <th className="py-2 px-4 border-cyan-200 text-cyan-200">Edit</th>
           <th className="py-2px-4 border-cyan-200 text-cyan-200">Delete</th>
         </tr>
