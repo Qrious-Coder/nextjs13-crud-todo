@@ -131,17 +131,8 @@
   @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 
-/* Nav Component */
-.logo_text {
-  @apply max-sm:hidden font-satoshi font-semibold text-lg text-black tracking-wide;
-}
-
-.dropdown {
-  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;
-}
-
-.dropdown_link {
-  @apply text-sm font-inter text-gray-700 hover:text-gray-500 font-medium;
+.filter_input {
+  @apply rounded-lg ml-1.5 mt-2 mb-2 p-1 text-sm text-gray-500 outline-0;
 }
 
 /* PromptCard Component */
@@ -171,8 +162,6 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   color: white;
 }
-
-
 
 /*----Add form styles----*/
 
