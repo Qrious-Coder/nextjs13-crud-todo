@@ -25,7 +25,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
 
   return (
     <tr key={curTodo._id} className="border-t">
-      <td className="py-2 px-4 text-center border border-gradient">
+      <td className="table_row">
         {editable ? (
           <input
             className="text_input"
@@ -38,7 +38,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
           curTodo.title
         )}
       </td>
-      <td className="py-2 px-4 text-center border border-gradient">
+      <td className="table_row">
         {editable ? (
           <select
             className="text_input"
@@ -46,16 +46,16 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
             value={curTodo.priority}
             onChange={(e) => handleInputChange(e)}
           >
-            <option value="NOT important and NOT urgent">NOT important and NOT urgent</option>
             <option value="Important and urgent">Important and urgent</option>
             <option value="Important but NOT urgent">Important but NOT urgent</option>
             <option value="NOT important but urgent">NOT important but urgent</option>
+            <option value="NOT important and NOT urgent">NOT important and NOT urgent</option>
           </select>
         ) : (
           curTodo.priority
         )}
       </td>
-      <td className="py-2 px-4 text-center border border-gradient">
+      <td className="table_row">
         <input
           className="text_input"
           type="checkbox"
@@ -63,8 +63,16 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
           onChange={() => onEdit(curTodo._id, { completed: !curTodo.completed })}
         />
       </td>
-      <td className="py-2 px-4 text-center border border-gradient">{curTodo.createdAt}</td>
-      <td className="py-2 px-4 text-center border border-gradient">
+      <td className="table_row">
+        <input
+          className="text_input"
+          type="checkbox"
+          checked={curTodo.completed}
+          onChange={() => onEdit(curTodo._id, { completed: !curTodo.completed })}
+        />
+      </td>
+      <td className="table_row">{curTodo.createdAt}</td>
+      <td className="table_row">
         {editable ? (
           <button className="outline_btn flex justify-center" onClick={() => handleSave(curTodo._id, todo)}>
             <AiOutlineSave />
@@ -75,7 +83,18 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
           </button>
         )}
       </td>
-      <td className="py-2 px-4 text-center border border-gradient">
+      <td className="table_row">
+        {editable ? (
+          <button className="outline_btn flex justify-center" onClick={() => handleSave(curTodo._id, todo)}>
+            <AiOutlineSave />
+          </button>
+        ) : (
+          <button className="outline_btn flex justify-center" onClick={() => handleEdit(curTodo._id)}>
+            <AiOutlineEdit />
+          </button>
+        )}
+      </td>
+      <td className="table_row">
         <button className="outline_btn flex justify-center" onClick={() => onDelete(curTodo._id)}>
           <AiOutlineDelete />
         </button>

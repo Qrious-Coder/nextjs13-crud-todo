@@ -88,33 +88,33 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
       </div>
       <table className="w-full border-collapse">
         <thead>
-          <tr className="bg-black text-white">
+          <tr className="bg-gray-900 text-white">
             {
               tabHeaderDate.map( item => {
                 return (
-                  <th className="py-2 px-4 border-2 border-cyan-200 text-cyan-200">
-                    <span>
-                      {item.icon}
-                    </span>
-                    {
-                      item.sort && 
-                      <span>
-                        <button className="text-cyan-200 mr-1">
-                          { item.sortUpIc }
-                        </button>
-                        <button className="text-cyan-200">
-                        { item.sortDownIc }
-                        </button>
-                      </span>
-                    }
-                    {
-                      item.filter && 
-                      <span>
-                      <button className="text-cyan-200 mr-1">
-                        {item.filterIc}
-                      </button>
-                    </span>
-                    }
+                  <th className="py-2 px-4 border border-purple-500 text-purple-500">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-3xl text-blue-500">
+                          {item.icon}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                      { item.sort && <span className="flex flex-col items-center">
+                          <button className="border-purple-500">
+                            { item.sortUpIc }
+                          </button>
+                          <button className="border-purple-500">
+                          { item.sortDownIc }
+                          </button>
+                        </span> }
+                      { item.filter &&
+                          <button className="border-purple-500 text-lg">
+                            {item.filterIc}
+                          </button> }
+                      </div>
+                    </div>
+
                   </th>
                 )
               })

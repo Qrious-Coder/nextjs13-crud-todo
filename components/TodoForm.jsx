@@ -26,7 +26,7 @@ const TodoForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="glassmorphism w-full flex items-center justify-between my-4">
+    <form onSubmit={ handleSubmit } className="glassmorphism w-full flex items-center justify-between my-4">
       <div className="relative flex items-center flex-grow" style={{ width: '70%' }}>
         <RiFileTextLine className="absolute left-3 text-gray-500" />
         <input

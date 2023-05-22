@@ -52,13 +52,14 @@
 .gradient {
   z-index: 3;
   max-width: 640px;
-  background-image: radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 0%),
-  radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
-  radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
-  radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%),
-  radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
-  radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
-  radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
+  background-image:
+    radial-gradient(at 27% 37%, hsl(261, 90%, 63%) 0px, transparent 0%),
+    radial-gradient(at 97% 21%, hsl(321, 90%, 72%) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsl(209, 90%, 63%) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, hsl(281, 90%, 67%) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, hsl(218, 56%, 74%) 0px, transparent 50%),
+    radial-gradient(at 33% 50%, hsl(336, 55%, 73%) 0px, transparent 50%),
+    radial-gradient(at 79% 53%, hsl(358, 55%, 79%) 0px, transparent 50%);
   position: absolute;
   content: "";
   width: 100%;
@@ -77,7 +78,7 @@
 }
 
 .outline_btn {
-  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border border-purple-700  bg-violet-400 py-1.5 px-5 text-purple-900 transition-all hover:bg-purple-600 hover:text-white text-center text-lg font-inter flex items-center justify-center;
 }
 
 .head_text {
@@ -101,25 +102,12 @@
 }
 
 .text_input {
-  @apply block w-full rounded-md border border-gray-200 bg-black bg-opacity-30 py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-white focus:outline-none focus:ring-0;
+  @apply block w-full rounded-md border border-purple-400 bg-gray-900 py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-white focus:outline-none focus:ring-0;
 }
 
-
-.copy_btn {
-  @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
-}
 
 .glassmorphism {
-  @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
-}
-
-.prompt_layout {
-  @apply space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3;
-}
-
-/* Feed Component */
-.feed {
-  @apply mt-16 mx-auto w-full max-w-xl flex justify-center items-center flex-col gap-2;
+  @apply rounded-xl bg-gray-800 outline outline-offset-2 outline-purple-700/50 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
 }
 
 /* ------------- Form ------------*/
@@ -154,13 +142,6 @@
 
 .flex-between {
   @apply flex justify-between items-center;
-}
-
-.gradient_btn {
-  padding: 0.5rem 1rem;
-  background: linear-gradient(to right, #ff7676, #ff6a6a);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  color: white;
 }
 
 /*----Add form styles----*/
@@ -306,11 +287,7 @@
 }
 
 .card {
-  @apply bg-gray-800 text-white rounded-lg shadow-lg p-6;
-}
-
- .card {
-  @apply bg-gray-900;
+  @apply bg-blue-50 text-white rounded-lg shadow-lg p-6;
 }
 
 .card h1 {
@@ -323,12 +300,15 @@
   @apply w-full border border-gray-300 rounded-md py-2 px-3 mb-4 text-white bg-transparent focus:outline-none;
 }
 
-button[type="submit"]
-  @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500;
+button[type="submit"], .nav_btn_signIn {
+  @apply text-white text-sm bg-gradient-to-br from-purple-600
+  to-blue-500 hover:bg-gradient-to-bl focus:ring-4
+  focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800
+  font-medium rounded-lg px-5 py-3 text-center mb-2;
 }
 
 .form_btn {
-  @apply bg-white text-black rounded-md py-2 px-4 mb-4 transition-all hover:bg-black hover:text-white;
+  @apply text-sm px-5 py-2.5 font-medium bg-blue-200 hover:bg-blue-300 hover:text-blue-600 text-blue-500 rounded-lg mb-2;
 }
 .card p {
   @apply text-center text-sm text-gray-400;
@@ -370,10 +350,8 @@ button[type="submit"]
   padding: 0.5rem 1rem;
 }
 
-.btn-danger {
-  background: linear-gradient(to right, #ff7676, #ff6a6a);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  color: white;
+.nav_btn_gradient_span {
+  @apply relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0
 }
 
 .btn-sm {
@@ -451,4 +429,10 @@ nav ul li a:hover {
 
 .closeBtn {
   @apply absolute top-0 right-0 p-1 m-2 text-gray-800 rounded-full bg-white cursor-pointer;
+}
+
+/*--------------totoItem----------*/
+
+.table_row {
+  @apply py-2 px-4 text-center border border-violet-400
 }
