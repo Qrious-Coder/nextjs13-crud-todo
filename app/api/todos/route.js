@@ -4,7 +4,6 @@ import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 
 export const GET = requireAuth(async (req) => {
   try {
-
     console.log(`@@@ =========> param`, req.url.split('?')[1])
     await dbConnect();
     const queryParams = new URLSearchParams(req.url.split('?')[1]);
@@ -53,3 +52,14 @@ export const GET = requireAuth(async (req) => {
     return new Response(`Fetching failed: ${error}`, { status: 500 });
   }
 });
+
+//Previous todo:
+// export const GET = requireAuth(async(req) => {
+//   try{
+//     let todos = await Todo.find({ user: req.user })
+//     return new Response(JSON.stringify(todos), {status: 200})
+//   } catch(err) {
+//     console.log(err);
+//     return new Response(`Fetching failed: ${error}`, { status: 500 });
+//   }
+// })

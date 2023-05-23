@@ -18,7 +18,7 @@ const UserSchema = new Schema({
       type: String,
       required: true,
       minLength: [6, "Must be at least 6 characters long"],
-      select: false, //don't send back password after request
+      select: false, //don't send password
     },
     role: {
       type: String,

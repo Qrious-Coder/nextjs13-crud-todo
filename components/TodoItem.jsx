@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai';
 import { editTodo } from '@/redux/actions/todoActions';
+import {  actionTypes, prioTypes } from '@/utils/todoTypes'
 
 const TodoItem = ({ todo, onEdit, onDelete }) => {
   const dispatch = useDispatch();
@@ -23,8 +24,13 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
     setEditableTodoId(id);
   };
 
+  const handleNote = (id) => {
+    alert('t')
+  }
+
   return (
     <tr key={curTodo._id} className="border-t">
+      {/* ------------- task --------------*/}
       <td className="table_row">
         {editable ? (
           <input
@@ -38,6 +44,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
           curTodo.title
         )}
       </td>
+      {/* ------------- priority --------------*/}
       <td className="table_row">
         {editable ? (
           <select
@@ -46,15 +53,20 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
             value={curTodo.priority}
             onChange={(e) => handleInputChange(e)}
           >
-            <option value="Important and urgent">Important and urgent</option>
-            <option value="Important but NOT urgent">Important but NOT urgent</option>
-            <option value="NOT important but urgent">NOT important but urgent</option>
-            <option value="NOT important and NOT urgent">NOT important and NOT urgent</option>
+            <option value={ 1 }>{ prioTypes[1] }</option>
+            <option value={ 2 }>{ prioTypes[2] }</option>
+            <option value={ 3 }>{ prioTypes[3] }</option>
+            <option value={ 4 }>{ prioTypes[4] }</option>
           </select>
         ) : (
           curTodo.priority
         )}
       </td>
+      {/* ------------- action --------------*/}
+      <td className="table_row">
+        {actionTypes[ curTodo.priority ]}
+      </td>
+      {/* ------------- status --------------*/}
       <td className="table_row">
         <input
           className="text_input"
@@ -63,15 +75,14 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
           onChange={() => onEdit(curTodo._id, { completed: !curTodo.completed })}
         />
       </td>
-      <td className="table_row">
-        <input
-          className="text_input"
-          type="checkbox"
-          checked={curTodo.completed}
-          onChange={() => onEdit(curTodo._id, { completed: !curTodo.completed })}
-        />
-      </td>
+     {/* ------------- date: delete later --------------*/}
       <td className="table_row">{curTodo.createdAt}</td>
+      {/* ------------- Add note--------------*/}
+      <td className="table_row">
+        <button className="outline_btn flex justify-center" onClick={() => handleNote(curTodo._id)}>
+          <AiOutlineDelete />
+        </button>
+      </td>
       <td className="table_row">
         {editable ? (
           <button className="outline_btn flex justify-center" onClick={() => handleSave(curTodo._id, todo)}>

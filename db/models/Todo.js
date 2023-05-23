@@ -6,9 +6,32 @@ const TodoSchema = new Schema({
     required: true
   },
   priority: {
-    type: String,
-    enum: ['Important and urgent', 'Important but NOT urgent', 'NOT important but urgent', 'NOT important and NOT urgent'],
+    type: Number,
+    enum: [1, 2, 3, 4],
     required: true
+  },
+  action: {
+    type: Number,
+    required: true,
+    default: () => {
+      switch(this.history){
+        case 1:
+          this.action = 1;
+          break;
+        case 2:
+          this.action = 2;
+          break;
+        case 3:
+          this.action = 3;
+          break;
+        case 4:
+          this.action = 4;
+          break;
+        default:
+          this.action = null;
+          break;
+      }
+    }
   },
   completed: {
     type: Boolean,
@@ -25,6 +48,6 @@ const TodoSchema = new Schema({
   }
 });
 
-const Todo = models.Todo || model('Todo', TodoSchema);
 
+const Todo = models.Todo || model('Todo', TodoSchema);
 export default Todo;
