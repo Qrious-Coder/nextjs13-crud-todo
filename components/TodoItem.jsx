@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai';
+import { FaStickyNote } from 'react-icons/fa';
 import { editTodo } from '@/redux/actions/todoActions';
 import {  actionTypes, prioTypes } from '@/utils/todoTypes'
 
@@ -25,7 +26,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
   };
 
   const handleNote = (id) => {
-    alert('t')
+    alert('The function is still under development!')
   }
 
   return (
@@ -64,7 +65,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
       </td>
       {/* ------------- action --------------*/}
       <td className="table_row">
-        {actionTypes[ curTodo.priority ]}
+        {actionTypes[ curTodo.action ]} 
       </td>
       {/* ------------- status --------------*/}
       <td className="table_row">
@@ -75,14 +76,15 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
           onChange={() => onEdit(curTodo._id, { completed: !curTodo.completed })}
         />
       </td>
-     {/* ------------- date: delete later --------------*/}
+     {/* ------------- Date --------------*/}
       <td className="table_row">{curTodo.createdAt}</td>
       {/* ------------- Add note--------------*/}
       <td className="table_row">
         <button className="outline_btn flex justify-center" onClick={() => handleNote(curTodo._id)}>
-          <AiOutlineDelete />
+          <FaStickyNote />
         </button>
       </td>
+       {/* ------------- Edit --------------*/}
       <td className="table_row">
         {editable ? (
           <button className="outline_btn flex justify-center" onClick={() => handleSave(curTodo._id, todo)}>
@@ -94,17 +96,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
           </button>
         )}
       </td>
-      <td className="table_row">
-        {editable ? (
-          <button className="outline_btn flex justify-center" onClick={() => handleSave(curTodo._id, todo)}>
-            <AiOutlineSave />
-          </button>
-        ) : (
-          <button className="outline_btn flex justify-center" onClick={() => handleEdit(curTodo._id)}>
-            <AiOutlineEdit />
-          </button>
-        )}
-      </td>
+       {/* ------------- Delete --------------*/}
       <td className="table_row">
         <button className="outline_btn flex justify-center" onClick={() => onDelete(curTodo._id)}>
           <AiOutlineDelete />
