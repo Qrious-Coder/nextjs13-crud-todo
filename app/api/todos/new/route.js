@@ -9,7 +9,7 @@ export const POST  = requireAuth(async (request) => {
     const newTodo = new Todo({
       title,
       priority,
-      user: request.user._id, // Assign the authenticated user's ID to the 'user' field
+      user: request.user,
     });
     await newTodo.save()
     return new Response(JSON.stringify(newTodo ), {status: 201})

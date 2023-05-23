@@ -4,16 +4,16 @@ import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 
 export const GET = requireAuth(async (req) => {
   try {
-    console.log(`@@@ =========> param`, req.url.split('?')[1])
     await dbConnect();
     const queryParams = new URLSearchParams(req.url.split('?')[1]);
+    console.log(`@@@ =========> param`, req.url.split('?')[1])
     const priority = queryParams.get('priority') || null;
     const status = queryParams.get('status') || null;
     const page = queryParams.get('page') || 1;
     const limit = queryParams.get('limit') || 10;
     const sortBy = queryParams.get('sortBy') || null;
 
-    const query = { user: req.user._id };
+    const query = { user: req.user };
 
     //Filter by priorty and status
     if(priority){
@@ -53,7 +53,7 @@ export const GET = requireAuth(async (req) => {
   }
 });
 
-//Previous todo:
+//**Previous GET request:
 // export const GET = requireAuth(async(req) => {
 //   try{
 //     let todos = await Todo.find({ user: req.user })
@@ -63,3 +63,4 @@ export const GET = requireAuth(async (req) => {
 //     return new Response(`Fetching failed: ${error}`, { status: 500 });
 //   }
 // })
+//

@@ -2,10 +2,12 @@ import Todo from '@/db/models/Todo';
 import {dbConnect} from "@/db/dbConnect";
 import { requireAuth } from "@/app/api/auth/middlewares/requireAuth";
 
-export const GET = requireAuth(async(request, { params }) =>{
+export const GET = requireAuth(async(request) =>{
   try{
     await dbConnect()
-    const foundTodo = await Todo.findById({ _id: params.id, user: request.user._id })
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const id = url.pathname.split('/').pop();
+    const foundTodo = await Todo.findById({ _id: id, user: request.user })
     if(!foundTodo) return new Response(`Todo does not exist`, {status: 404})
     return new Response(JSON.stringify(foundTodo), {status: 200})
   }catch(err){
@@ -14,12 +16,14 @@ export const GET = requireAuth(async(request, { params }) =>{
   }
 })
 
-export const PATCH = requireAuth(async(request, { params }) => {
-  const { title, priority , completed } = await request.json()
+export const PATCH = requireAuth(async(req ) => {
+  const { title, priority , completed } = await req.json()
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  const id = url.pathname.split('/').pop();
+
   try{
     await dbConnect()
-
-    const foundTodo = await Todo.findById({ _id: params.id, user: request.user._id })
+    const foundTodo = await Todo.findById({ _id: id, user: req.user })
     if(!foundTodo) return new Response(`Todo does not exist`, {status: 404})
 
     //Updated any field if provided
@@ -35,10 +39,13 @@ export const PATCH = requireAuth(async(request, { params }) => {
   }
 })
 
-export const DELETE = requireAuth(async(request, { params }) => {
+export const DELETE = requireAuth(async(req) => {
   try{
     await dbConnect()
-    const deletedTodo = await Todo.findOneAndDelete({ _id: params.id, user: request.user._id });
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const id = url.pathname.split('/').pop();
+
+    const deletedTodo = await Todo.findOneAndDelete({ _id: id, user: req.user });
     if(!deletedTodo){
       return new Response(`Todo does not exist`, { status: 404 });
     }

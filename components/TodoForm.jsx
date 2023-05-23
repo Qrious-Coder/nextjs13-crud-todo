@@ -9,7 +9,7 @@ const TodoForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     title: '',
-    priority: 'NOT important and NOT urgent',
+    priority: 4,
   });
 
   const handleChange = (e) => {
@@ -19,7 +19,7 @@ const TodoForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createTodo(formData));
-    setFormData({ title: '', priority: 'NOT important and NOT urgent' });
+    setFormData({ title: '', priority: 4 });
   };
 
   const handleSearch = () => {

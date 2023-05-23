@@ -22,6 +22,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
   };
 
   const handleEdit = (id) => {
+    dispatch(editTodo(id, curTodo));
     setEditableTodoId(id);
   };
 
@@ -38,6 +39,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
             className="text_input"
             type="text"
             name="title"
+            style={{ color: '#ffffff' }}
             value={curTodo.title}
             onChange={(e) => handleInputChange(e)}
           />
@@ -49,8 +51,9 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
       <td className="table_row">
         {editable ? (
           <select
-            className="text_input"
+            className="text_input text-white"
             name="priority"
+            style={{ color: '#ffffff' }}
             value={curTodo.priority}
             onChange={(e) => handleInputChange(e)}
           >

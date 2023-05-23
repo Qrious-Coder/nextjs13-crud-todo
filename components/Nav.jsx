@@ -15,8 +15,8 @@ const Nav = ({ session }) => {
       <div className="flex justify-between items-center px-4 py-2">
         <div className="flex items-center">
           <FaCheckSquare className="text-3xl text-blue-600 transform rotate-[-10deg] -translate-y-1" />
-          <div class="p-2">
-            <h1 class="inline-block bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 bg-clip-text text-3xl text-transparent">
+          <div className="p-2">
+            <h1 className="inline-block bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 bg-clip-text text-3xl text-transparent">
               Nextjs TODO
             </h1>
           </div>

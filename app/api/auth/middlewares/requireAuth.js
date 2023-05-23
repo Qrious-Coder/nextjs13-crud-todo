@@ -9,7 +9,6 @@ export const requireAuth = (handler) => {
           ? req.headers.get('authorization')
           : req.headers.authorization
       let token = authorizationHeader?.split(' ')[1];
-
       if (!token) {
         return new Response( 'No token found!', { status: 401 })
       }
@@ -20,6 +19,7 @@ export const requireAuth = (handler) => {
       }
 
       req.user = decodedToken.sub;
+
       return handler(req);
     } catch (err) {
       console.error('Auth error:', err);

@@ -6,30 +6,25 @@ const TodoSchema = new Schema({
     required: true
   },
   priority: {
-    type: Number,
+    type: String,
     enum: [1, 2, 3, 4],
     required: true
   },
   action: {
-    type: Number,
+    type:  String,
     required: true,
-    default: () => {
-      switch(this.history){
-        case 1:
-          this.action = 1;
-          break;
-        case 2:
-          this.action = 2;
-          break;
-        case 3:
-          this.action = 3;
-          break;
-        case 4:
-          this.action = 4;
-          break;
+    default: function() {
+      switch (this.priority) {
+        case '1':
+          return 1;
+        case '2':
+          return 2;
+        case '3':
+          return 3;
+        case '4':
+          return 4;
         default:
-          this.action = null;
-          break;
+          return null;
       }
     }
   },

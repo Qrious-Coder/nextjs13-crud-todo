@@ -21,7 +21,7 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
       text: 'Task',
       icon: <BiTask />,
       sort: true,
-      filter: false
+      position: 'center'
     },
     {
       text: 'Priority',
@@ -29,15 +29,15 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
       sort: true,
       sortUpIc: <RiArrowUpSLine/>,
       sortDownIc: <RiArrowDownSLine/>,
-      filter: true,
-      filterIc: <RiFilter2Line/>
+      position: 'between'
     },
     {
       text: 'Action',
       icon: <AiOutlineThunderbolt />,
-      sort: false,
-      filter: true,
-      filterIc: <RiFilter2Line/>
+      sort: true,
+      sortUpIc: <RiArrowUpSLine/>,
+      sortDownIc: <RiArrowDownSLine/>,
+      position: 'between'
     },
     {
       text: 'Status',
@@ -45,8 +45,7 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
       sort: true,
       sortUpIc: <RiArrowUpSLine/>,
       sortDownIc: <RiArrowDownSLine/>,
-      filter: true,
-      filterIc: <RiFilter2Line/>
+      position: 'between'
     },
     {
       text: 'Date',
@@ -54,26 +53,25 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
       sort: true,
       sortUpIc: <RiArrowUpSLine/>,
       sortDownIc: <RiArrowDownSLine/>,
-      filter: true,
-      filterIc: <RiFilter2Line/>
+      position: 'between'
     },
     {
       text: 'Note',
       icon: <AiOutlineFileAdd />,
       sort: false,
-      filter: false
+      position: 'center'
     },
     {
       text: 'Edit',
       icon: <AiOutlineEdit />,
       sort: false,
-      filter: false
+      position: 'center'
     },
     {
       text: 'Delete',
       icon: <AiOutlineDelete />,
       sort: false,
-      filter: false
+      position: 'center'
     },
   ]
   return (
@@ -89,18 +87,17 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-gray-900 text-white">
-            {
-              tabHeaderDate.map( item => {
+            {tabHeaderDate.map( (item,idx) => {
                 return (
-                  <th className="py-2 px-4 border border-purple-500 text-purple-500">
-                    <div className="flex items-center justify-between">
+                  <th key={ idx } className="py-2 px-4 border border-purple-500 text-purple-500">
+                    <div className={`flex items-center justify-${item.position}`}>
                       <div>
                         <span className="text-3xl text-blue-500">
                           {item.icon}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between">
-                      { item.sort && <span className="flex flex-col items-center">
+                      <div>
+                      { item.sort && <span className="flex flex-col">
                           <button className="border-purple-500">
                             { item.sortUpIc }
                           </button>
@@ -108,16 +105,10 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
                           { item.sortDownIc }
                           </button>
                         </span> }
-                      { item.filter &&
-                          <button className="border-purple-500 text-lg">
-                            {item.filterIc}
-                          </button> }
                       </div>
                     </div>
-
                   </th>
-                )
-              })
+                )})
             }
           </tr>
         </thead>

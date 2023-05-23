@@ -102,7 +102,9 @@
 }
 
 .text_input {
-  @apply block w-full rounded-md border border-purple-400 bg-gray-900 py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-white focus:outline-none focus:ring-0;
+  @apply block w-full rounded-md border border-purple-400
+  bg-gray-900 py-2.5 font-satoshi pl-5 pr-12 text-sm
+  shadow-lg font-medium focus:border-purple-500 focus:outline-none focus:ring-0;
 }
 
 

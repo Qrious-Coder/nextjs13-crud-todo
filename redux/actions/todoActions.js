@@ -98,7 +98,7 @@ export const createTodo = (formTodo) => async(dispatch) => {
       type: todoActionTypes.ADD_TODO_SUCCESS,
       payload: data
     })
-    dispatch(getAllTodos())
+    dispatch(getAllTodosWithFeatures())
   }catch(err){
     dispatch({
       type: todoActionTypes.ADD_TODO_FAILURE,
@@ -121,7 +121,7 @@ export const editTodo = (id, todo) => async(dispatch) => {
       type: todoActionTypes.EDIT_TODO_SUCCESS,
       payload: todo
     })
-    dispatch(getAllTodos())
+    dispatch(getAllTodosWithFeatures())
   }catch(err){
     dispatch({
       type: todoActionTypes.EDIT_TODO_FAILURE,
@@ -144,7 +144,7 @@ export const deleteTodo = (id) => async(dispatch) => {
       type: todoActionTypes.DELETE_TODO_SUCCESS,
       payload: id
     })
-    dispatch(getAllTodos())
+    dispatch(getAllTodosWithFeatures())
   }catch(err){
     dispatch({
       type: todoActionTypes.DELETE_TODO_FAILURE,
