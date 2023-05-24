@@ -14,6 +14,7 @@ export const todoActionTypes = {
   ADD_TODO_SUCCESS: 'ADD_TODO_SUCCESS',
   ADD_TODO_FAILURE: 'ADD_TODO_FAILURE',
 
+  SET_TODO_EDITABLE: 'SET_TODO_EDITABLE',
   EDIT_TODO_REQUEST: 'EDIT_TODO_REQUEST',
   EDIT_TODO_SUCCESS: 'EDIT_TODO_SUCCESS',
   EDIT_TODO_FAILURE: 'EDIT_TODO_FAILURE',
@@ -105,6 +106,13 @@ export const createTodo = (formTodo) => async(dispatch) => {
       payload: err
     })
   }
+}
+
+export const setEditableTodo = (id) => async(dispatch) => {
+  dispatch({ 
+    type: todoActionTypes.SET_TODO_EDITABLE,
+    payload: id
+  })
 }
 
 export const editTodo = (id, todo) => async(dispatch) => {

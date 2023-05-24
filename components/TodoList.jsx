@@ -74,6 +74,8 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
       position: 'center'
     },
   ]
+
+  
   return (
     <>
       <div className="w-full">

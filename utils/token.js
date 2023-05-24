@@ -17,14 +17,20 @@ export const decodeToken = (token) => {
 };
 
 export const getAccessToken = () => {
-  const accessToken = localStorage.getItem('token');
+  if( typeof window !== 'undefined' ){
+    const accessToken = localStorage.getItem('token');
+  }
   return accessToken || '';
 }
 
 export const saveAccessToken = (accessToken) => {
-  localStorage.setItem('token', 'Bearer ' + accessToken);
+  if( typeof window !== 'undefined' ){
+    localStorage.setItem('token', 'Bearer ' + accessToken);
+  }
 }
 
 export const removeToken = () => {
+  if( typeof window !== 'undefined' ){
   localStorage.removeItem('token');
+  }
 };

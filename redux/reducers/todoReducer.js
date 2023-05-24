@@ -1,14 +1,15 @@
 import { todoActionTypes } from '@/redux/actions/todoActions'
 
 const initialState = {
+  editableTodoId: '',
   todoList: [],
   todoItem: '',
   error: null,
   loading: false
 };
 
-const todoReducer = (state = initialState, action) => {
-  switch (action.type) {
+const todoReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
     case todoActionTypes.GET_TODO_REQUEST:
     case todoActionTypes.GET_TODO_FEATURE_REQUEST:
     case todoActionTypes.ADD_TODO_REQUEST:
@@ -29,7 +30,7 @@ const todoReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: payload
       }
       
     case todoActionTypes.GET_TODO_SUCCESS:
@@ -37,19 +38,24 @@ const todoReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        todoList: action.payload,
+        todoList: payload,
       }
        
     case todoActionTypes.ADD_TODO_SUCCESS:
       return {
         ...state,
-        ...action.payload,
+        ...payload,
         loading: false
       }
- 
+    case todoActionTypes.SET_TODO_EDITABLE:
+      return {
+        ...state,
+        editableTodoId: payload,
+        loading: false
+      }
     case todoActionTypes.EDIT_TODO_SUCCESS:
-      let editTodoId = state.todoList.findIndex( item => item._id.includes(action.payload._id))
-      Object.assign(state.todoList[editTodoId], action.payload )
+      let editTodoId = state.todoList.findIndex( item => item._id.includes(payload._id))
+      Object.assign(state.todoList[editTodoId], payload )
       return {
         ...state,
         loading: false,
@@ -59,12 +65,12 @@ const todoReducer = (state = initialState, action) => {
     case todoActionTypes.DELETE_TODO_SUCCESS:
       return {
         ...state,
-        todos: state.todoList.filter((todo) => todo._id !== action.payload),
+        todos: state.todoList.filter((todo) => todo._id !== payload),
         loading: false,
       };
     
     case todoActionTypes.SEARCH_TODO_SUCCESS:
-      const { title } = action.payload;
+      const { title } = payload;
       const filteredList = state.todoList.filter(
         (todo) => todo.title.toLowerCase().includes(title.toLowerCase())
       );

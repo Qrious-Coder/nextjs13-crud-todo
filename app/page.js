@@ -14,7 +14,7 @@ const Page = () => {
       } else {
         setIsLoading(false)
       }
-  }, [router])
+  }, [])
 
   if(isLoading) {
     return <p>Loading...</p>

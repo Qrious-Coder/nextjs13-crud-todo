@@ -5,7 +5,6 @@ import commonReducer from "@/redux/reducers/commonReducer";
 const rootReducer = combineReducers({
     common: commonReducer,
     todo: todoReducer,
-
 })
 
 export default rootReducer

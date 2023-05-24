@@ -1,29 +1,20 @@
 'use client'
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai';
-import { FaStickyNote } from 'react-icons/fa';
-import { editTodo } from '@/redux/actions/todoActions';
-import {  actionTypes, prioTypes } from '@/utils/todoTypes'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai'
+import { FaStickyNote } from 'react-icons/fa'
+import { setEditableTodo } from '@/redux/actions/todoActions'
+import { actionTypes, prioTypes } from '@/utils/todoTypes'
+
 
 const TodoItem = ({ todo, onEdit, onDelete }) => {
   const dispatch = useDispatch();
-  const [editableTodoId, setEditableTodoId] = useState('');
   const [curTodo, setCurTodo] = useState(todo);
-  const editable = editableTodoId === curTodo._id;
+  const { editableTodoId } = useSelector(state => state.todo)
+  const IsEditable = editableTodoId === curTodo._id;
 
   const handleInputChange = (e) => {
     setCurTodo({ ...curTodo, [e.target.name]: e.target.value });
-  };
-
-  const handleSave = (id) => {
-    dispatch(editTodo(id, curTodo));
-    setEditableTodoId(null);
-  };
-
-  const handleEdit = (id) => {
-    dispatch(editTodo(id, curTodo));
-    setEditableTodoId(id);
   };
 
   const handleNote = (id) => {
@@ -34,7 +25,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
     <tr key={curTodo._id} className="border-t">
       {/* ------------- task --------------*/}
       <td className="table_row">
-        {editable ? (
+        {IsEditable ? (
           <input
             className="text_input"
             type="text"
@@ -49,7 +40,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
       </td>
       {/* ------------- priority --------------*/}
       <td className="table_row">
-        {editable ? (
+        {IsEditable ? (
           <select
             className="text_input text-white"
             name="priority"
@@ -89,12 +80,12 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
       </td>
        {/* ------------- Edit --------------*/}
       <td className="table_row">
-        {editable ? (
-          <button className="outline_btn flex justify-center" onClick={() => handleSave(curTodo._id, todo)}>
+        {IsEditable ? (
+          <button className="outline_btn flex justify-center" onClick={ () => onEdit(curTodo._id, curTodo)}>
             <AiOutlineSave />
           </button>
         ) : (
-          <button className="outline_btn flex justify-center" onClick={() => handleEdit(curTodo._id)}>
+          <button className="outline_btn flex justify-center" onClick={ () => dispatch(setEditableTodo(curTodo._id)) }>
             <AiOutlineEdit />
           </button>
         )}
