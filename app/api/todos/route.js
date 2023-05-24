@@ -41,8 +41,17 @@ export const GET = requireAuth(async (req) => {
     //Sorting
     if (sortBy) {
       const sortField = sortBy.substring(1);
-      const sortOrder = sortBy.charAt(0) === "-" ? -1 : 1;
-      todos = todos.sort({ [sortField]: sortOrder });
+      const sortDirection = sortBy.charAt(0) === "-" ? -1 : 1;
+    
+      todos = todos.sort((a, b) => {
+        if (a[sortField] < b[sortField]) {
+          return -1 * sortDirection;
+        }
+        if (a[sortField] > b[sortField]) {
+          return 1 * sortDirection;
+        }
+        return 0;
+      });
     }
 
     return new Response(JSON.stringify(todos), { status: 200 });

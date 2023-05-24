@@ -6,8 +6,11 @@ import { RiArrowUpSLine, RiArrowDownSLine, RiFilter2Line } from 'react-icons/ri'
 import { AiOutlineFlag,  AiOutlineThunderbolt, AiOutlineCheckCircle, AiFillDownSquare, AiTwotoneCalendar,
   AiOutlineFileAdd, AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { BiTask } from 'react-icons/bi';
+import { useDispatch } from 'react-redux'
+import { getAllTodosWithFeatures } from '@/redux/actions/todoActions'
 
 const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
+  const dispatch = useDispatch()
   const [filter, setFilter] = useState('');
 
   const handleFilterChange = (e) => {
@@ -16,6 +19,9 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
     onFilter(selectedFilter);
   };
 
+  const handleSort = (sortBy) => {
+      dispatch(getAllTodosWithFeatures(sortBy))
+  }
   const tabHeaderDate = [
     {
       text: 'Task',
@@ -34,7 +40,7 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
     {
       text: 'Action',
       icon: <AiOutlineThunderbolt />,
-      sort: true,
+      sort: false,
       sortUpIc: <RiArrowUpSLine/>,
       sortDownIc: <RiArrowDownSLine/>,
       position: 'between'
@@ -50,7 +56,7 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
     {
       text: 'Date',
       icon: <AiTwotoneCalendar />,
-      sort: true,
+      sort: false,
       sortUpIc: <RiArrowUpSLine/>,
       sortDownIc: <RiArrowDownSLine/>,
       position: 'between'
@@ -100,10 +106,12 @@ const TodoList = ({ todos, onDelete, onEdit, onFilter }) => {
                       </div>
                       <div>
                       { item.sort && <span className="flex flex-col">
-                          <button className="border-purple-500">
+                          <button className="border-purple-500"
+                            onClick = { () => handleSort(`-${item.text}`) }>
                             { item.sortUpIc }
                           </button>
-                          <button className="border-purple-500">
+                          <button className="border-purple-500"
+                            onClick = { () => handleSort(`${item.text}`) }>
                           { item.sortDownIc }
                           </button>
                         </span> }
