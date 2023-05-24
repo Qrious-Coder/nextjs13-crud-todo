@@ -30,8 +30,8 @@ const TodosPage = () => {
     dispatch(deleteTodo(id))
   };
 
-  const handleEdit = (id, data) => {
-    dispatch(editTodo(id, data))
+  const handleEdit = (id, todo) => {
+    dispatch(editTodo(id, todo))
   };
 
   const handleAdd = async (formData) => {

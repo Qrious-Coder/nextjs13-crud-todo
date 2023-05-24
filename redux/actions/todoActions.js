@@ -85,7 +85,6 @@ export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy 
   }
 }
 
-
 export const createTodo = (formTodo) => async(dispatch) => {
   dispatch({ type: todoActionTypes.ADD_TODO_REQUEST })
   try{
@@ -120,14 +119,16 @@ export const editTodo = (id, todo) => async(dispatch) => {
     type: todoActionTypes.EDIT_TODO_REQUEST
   })
   try{
-    await axios.patch(`/api/todos/${id}`, todo, {
+    const res = await axios.patch(`/api/todos/${id}`, todo, {
       headers: {
         Authorization: accessToken
       },
     })
+
+    const updatedTodo = res.data
     dispatch({
       type: todoActionTypes.EDIT_TODO_SUCCESS,
-      payload: todo
+      payload: updatedTodo
     })
     dispatch(getAllTodosWithFeatures())
   }catch(err){

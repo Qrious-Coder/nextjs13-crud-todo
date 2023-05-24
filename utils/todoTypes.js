@@ -1,5 +1,5 @@
 import { TbSquareRoundedNumber1, TbSquareRoundedNumber2, 
-    TbSquareRoundedNumber3, TbSquareRoundedNumber4 } from 'react'
+    TbSquareRoundedNumber3, TbSquareRoundedNumber4 } from 'react-icons/tb'
 
 export const prioTypes = {
     1: 'Important and urgent',
@@ -9,10 +9,10 @@ export const prioTypes = {
 }
 
 export const prioIcons = {
-    1: <TbSquareRoundedNumber1 />,
-    2: <TbSquareRoundedNumber2 />,
-    3: <TbSquareRoundedNumber3 />,
-    4: <TbSquareRoundedNumber4 />
+    1: <TbSquareRoundedNumber1 style={{ color: 'red', fontSize: '32px'}}/>,
+    2: <TbSquareRoundedNumber2 style={{ color: 'yellow', fontSize: '32px'}}/>,
+    3: <TbSquareRoundedNumber3 style={{ color: 'green', fontSize: '32px'}}/>,
+    4: <TbSquareRoundedNumber4 style={{ color: 'grey', fontSize: '32px'}}/>
 }
 
 export const actionTypes = {

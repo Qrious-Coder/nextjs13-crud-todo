@@ -28,11 +28,14 @@ export const PATCH = requireAuth(async(req ) => {
 
     //Updated any field if provided
     if(title) foundTodo.title = title;
-    if(priority) foundTodo.priority = priority;
+    if(priority) {
+      foundTodo.priority = priority
+      foundTodo.action = priority
+    }
     if(completed !== undefined) foundTodo.completed = completed
 
     await foundTodo.save()
-    return new Response('Updated successfully',{status: 200})
+    return new Response(JSON.stringify(foundTodo),{status: 200})
   }catch(err){
     console.log(err)
     return new Response(`server error!`, {status: 500})

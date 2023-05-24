@@ -58,10 +58,10 @@ const todoReducer = (state = initialState, { type, payload }) => {
       Object.assign(state.todoList[editTodoId], payload )
       return {
         ...state,
+        editableTodoId: '',
         loading: false,
       };
-   
-   
+
     case todoActionTypes.DELETE_TODO_SUCCESS:
       return {
         ...state,

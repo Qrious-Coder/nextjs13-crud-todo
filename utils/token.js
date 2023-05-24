@@ -17,8 +17,9 @@ export const decodeToken = (token) => {
 };
 
 export const getAccessToken = () => {
+  let accessToken;
   if( typeof window !== 'undefined' ){
-    const accessToken = localStorage.getItem('token');
+    accessToken = localStorage.getItem('token');
   }
   return accessToken || '';
 }

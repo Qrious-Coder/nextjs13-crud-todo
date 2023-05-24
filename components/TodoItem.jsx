@@ -6,7 +6,6 @@ import { FaStickyNote } from 'react-icons/fa'
 import { setEditableTodo } from '@/redux/actions/todoActions'
 import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
 
-
 const TodoItem = ({ todo, onEdit, onDelete }) => {
   const dispatch = useDispatch();
   const [curTodo, setCurTodo] = useState(todo);
@@ -16,6 +15,12 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
   const handleInputChange = (e) => {
     setCurTodo({ ...curTodo, [e.target.name]: e.target.value });
   };
+
+  const handleCheckboxChange = () => {
+    const updatedTodo = { ...curTodo, completed: !curTodo.completed };
+    setCurTodo(updatedTodo);
+    onEdit(curTodo._id, updatedTodo);
+  }
 
   const handleNote = (id) => {
     alert('The function is still under development!')
@@ -66,8 +71,8 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
         <input
           className="text_input"
           type="checkbox"
-          checked={curTodo.completed}
-          onChange={() => onEdit(curTodo._id, { completed: !curTodo.completed })}
+          checked={curTodo.completed ===true}
+          onChange={ handleCheckboxChange }
         />
       </td>
      {/* ------------- Date --------------*/}
