@@ -41,14 +41,13 @@ export const GET = requireAuth(async (req) => {
     //Sorting
     if (sortBy) {
       const sortField = sortBy.substring(1);
-      const sortDirection = sortBy.charAt(0) === "-" ? -1 : 1;
     
       todos = todos.sort((a, b) => {
         if (a[sortField] < b[sortField]) {
-          return -1 * sortDirection;
+          return -1;
         }
         if (a[sortField] > b[sortField]) {
-          return 1 * sortDirection;
+          return 1;
         }
         return 0;
       });
