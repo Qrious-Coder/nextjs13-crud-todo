@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai'
 import { FaStickyNote } from 'react-icons/fa'
 import { setEditableTodo } from '@/redux/actions/todoActions'
-import { actionTypes, prioTypes } from '@/utils/todoTypes'
+import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
 
 
 const TodoItem = ({ todo, onEdit, onDelete }) => {
@@ -54,7 +54,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
             <option value={ 4 }>{ prioTypes[4] }</option>
           </select>
         ) : (
-          curTodo.priority
+          prioIcons[curTodo.priority]
         )}
       </td>
       {/* ------------- action --------------*/}
