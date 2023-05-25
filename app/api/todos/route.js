@@ -6,7 +6,7 @@ export const GET = requireAuth(async (req) => {
   try {
     await dbConnect();
     const queryParams = new URLSearchParams(req.url.split('?')[1]);
-    // console.log(`@@@ =========> param`, req.url.split('?')[1])
+    console.log(`@@@ =========> queryParams`, req.url.split('?')[1])
     const priority = queryParams.get('priority') || null;
     const status = queryParams.get('status') || null;
     const page = queryParams.get('page') || 1;
@@ -15,15 +15,14 @@ export const GET = requireAuth(async (req) => {
 
     const query = { user: req.user };
 
-    //Filter by priorty and status
     if(priority){
       query.priority = priority
     }
 
     if(status){
-      if( status === 'completed'){
+      if( status === 'true'){
         query.completed = true
-      }else if(status === 'uncompleted'){
+      }else if(status === 'false'){
         query.completed = false
       }
     }
@@ -41,7 +40,6 @@ export const GET = requireAuth(async (req) => {
     //Sorting
     if (sortBy) {
       const sortField = sortBy.substring(1);
-      console.log(`sortField: `,sortField)
       todos = todos.sort((a, b) => {
         if (a[sortField] < b[sortField]) {
           return -1;

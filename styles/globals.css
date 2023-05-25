@@ -121,31 +121,6 @@
   @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 
-.filter_input {
-  @apply rounded-lg ml-1.5 mt-2 mb-2 p-1 text-sm text-gray-500 outline-0;
-}
-
-/* PromptCard Component */
-.prompt_card {
-  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
-}
-
-.flex-center {
-  @apply flex justify-center items-center;
-}
-
-.flex-start {
-  @apply flex justify-start items-start;
-}
-
-.flex-end {
-  @apply flex justify-end items-center;
-}
-
-.flex-between {
-  @apply flex justify-between items-center;
-}
-
 /*----Add form styles----*/
 
 .flex {
@@ -437,4 +412,12 @@ nav ul li a:hover {
 
 .table_row {
   @apply py-2 px-4 text-center border border-violet-400
+}
+
+/*--------------filter----------*/
+
+.filter_input {
+  @apply border border-purple-400 rounded-md
+  bg-gray-900 text-white ml-1 px-2 py-1
+  focus:border-violet-300 hover:border-violet-300
 }

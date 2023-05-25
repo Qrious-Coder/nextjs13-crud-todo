@@ -38,9 +38,9 @@ const TodosPage = () => {
     dispatch(createTodo(formData))
   };
 
-  const handleFilter = (filter) => {
-    dispatch(getAllTodosWithFeatures(filter));
-  };
+  // const handleFilter = (filter) => {
+  //   dispatch(getAllTodosWithFeatures(filter));
+  // };
 
   if (status === 'loading') {
     return <div>Loading ...</div>;
@@ -50,7 +50,9 @@ const TodosPage = () => {
       <Nav session={ session }/>
       <TodoForm addTodo={ handleAdd }/>
       <TodoList todos={ todoList } onDelete={ handleDelete }
-                onEdit={ handleEdit } onFilter={handleFilter}/>
+                onEdit={ handleEdit }
+                // onFilter={handleFilter}
+      />
     </div>
   );
 };
