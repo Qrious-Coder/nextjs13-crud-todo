@@ -9,29 +9,37 @@ export const Pagination = () => {
  const [curPage, setCurPage] = useState(1)
  const [limit, setLimit] = useState(5)
 
- useEffect(() => {
-   dispatch(getAllTodosWithFeatures(null, null, null, curPage, limit))
- }, [dispatch, curPage, limit])
+  useEffect(() => {
+    dispatch(getAllTodosWithFeatures(null, null, null, curPage, limit))
+  }, [dispatch, curPage, limit])
 
- const totalPages = Math.ceil(total/limit)
+  const totalPages = Math.ceil(total/limit)
 
- const handleLimitChange = (e) => {
-   setLimit(e.target.value)
-   setCurPage(1)
- }
+  const handleLimitChange = (e) => {
+    setLimit(e.target.value)
+    setCurPage(1)
+  }
 
- const handlePrevPage = () => {
-   setCurPage(curPage > 1 ? curPage - 1 : 1)
- }
+  const handlePrevPage = () => {
+    setCurPage(curPage > 1 ? curPage - 1 : 1)
+  }
+
+  const handleNextPage = () => {
+    setCurPage(curPage < totalPages ? curPage + 1 : totalPages)
+  }
+
+  const jumpToFirstPage = () => {
+    setCurPage(1)
+  }
  
- const handleNextPage = () => {
-   setCurPage(curPage < totalPages ? curPage + 1 : totalPages)
- }
+  const jumpToLastPage = () => {
+    setCurPage(totalPages)
+  }
 
  return (
    <div className="flex justify-end mt-2">
     <button 
-       onClick={handlePrevPage} 
+       onClick={ jumpToFirstPage } 
        disabled={curPage === 1}
        className={`${curPage === 1 ? 'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
                    transition-colors duration-200`}
@@ -65,9 +73,9 @@ export const Pagination = () => {
        <MdKeyboardArrowRight size={24} />
      </button>
      <button 
-       onClick={ handlePrevPage } 
-       disabled={curPage === 1}
-       className={`${curPage === 1 ? 'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
+       onClick={ jumpToLastPage } 
+       disabled={ curPage === totalPages }
+       className={`${curPage === totalPages ?  'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
                    transition-colors duration-200`}
      >
        <MdKeyboardDoubleArrowRight size={24} />
