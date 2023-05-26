@@ -57,10 +57,10 @@ export const Pagination = () => {
        <MdKeyboardArrowRight size={24} />
      </button>
      <select className='filter_input mr-2' value={limit} onChange={handleLimitChange}>
-       <option value={5}>5 per page</option>
-       <option value={10}>10 per page</option>
-       <option value={15}>15 per page</option>
-       <option value={20}>20 per page</option>
+       <option value={ 5 }>5</option>
+       <option value={ 10 }>10</option>
+       <option value={ 15 }>15</option>
+       <option value={ 20 }>20</option>
      </select>
      of {total} {total > 1 ? `${total} todos` : `${total} todo`}
    </div>
