@@ -37,6 +37,8 @@ export const GET = requireAuth(async (req) => {
       .skip(skip)
       .limit(pageSize);
 
+    const totalCount = await Todo.countDocuments(query)  
+
     //Sorting
     if (sortBy) {
       const sortField = sortBy.substring(1);
@@ -51,7 +53,7 @@ export const GET = requireAuth(async (req) => {
       });
     }
 
-    return new Response(JSON.stringify(todos), { status: 200 });
+    return new Response(JSON.stringify({ todos, totalCount }), { status: 200 });
 
   } catch (error) {
     console.error(error);

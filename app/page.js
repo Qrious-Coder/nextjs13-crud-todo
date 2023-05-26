@@ -3,6 +3,7 @@ import Nav from '@/components/Nav'
 import { useSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+
 const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();

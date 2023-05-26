@@ -70,11 +70,11 @@ export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy 
         sortBy
       }
     })
-    const data = res.data
+    const { todos, totalCount } = res.data
 
     dispatch({
       type: todoActionTypes.GET_TODO_FEATURE_SUCCESS,
-      payload: data
+      payload: { todos, totalCount }
     })
 
   }catch(err){

@@ -3,6 +3,7 @@ import { todoActionTypes } from '@/redux/actions/todoActions'
 const initialState = {
   editableTodoId: '',
   todoList: [],
+  total: 0,
   todoItem: '',
   error: null,
   loading: false
@@ -38,7 +39,8 @@ const todoReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        todoList: payload,
+        todoList: payload.todos,
+        total: payload.totalCount
       }
        
     case todoActionTypes.ADD_TODO_SUCCESS:
