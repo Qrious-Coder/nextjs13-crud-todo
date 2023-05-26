@@ -33,7 +33,7 @@ export const Pagination = () => {
     <div className="flex justify-end mt-2">
       <button onClick={ handlePrevPage } disabled={ currentPage === 1 }><MdKeyboardArrowLeft /></button>
       <span>{ curPage }</span>
-      <button onClick={ handleNextPage }><MdKeyboardArrowRight /> </button>
+      <button onClick={ handleNextPage } disabled={ currentPage === totalPages }><MdKeyboardArrowRight /> </button>
       <select className='filter_input' value={ limit } onChange={ handleLimitChange }>
         <option value={ 5 }>5 per page</option>
         <option value={ 10 }>10 per page</option>
