@@ -6,7 +6,6 @@ import { tabHeaderData } from '@/utils/todoData'
 import { useState} from "react";
 import { useDispatch } from 'react-redux'
 import { getAllTodosWithFeatures } from '@/redux/actions/todoActions'
-import { prioTypes } from "@/utils/todoTypes";
 
 const TodoList = ({ todos, onDelete, onEdit }) => {
   const dispatch = useDispatch()

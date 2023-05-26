@@ -26,10 +26,10 @@ export const Pagination = () => {
   return (
     <div className="pagination-controls">
       <select className='filter_input' value={ limit } onChange={ handleLimitChange }>
-        <option value={5}>5 per page</option>
-        <option value={10}>10 per page</option>
-        <option value={15}>15 per page</option>
-        <option value={20}>20 per page</option>
+        <option value={ 5 }>5 per page</option>
+        <option value={ 10 }>10 per page</option>
+        <option value={ 15 }>15 per page</option>
+        <option value={ 20 }>20 per page</option>
       </select>
 
       <button onClick={ handlePrevPage } disabled={ currentPage === 1 }>Prev</button>

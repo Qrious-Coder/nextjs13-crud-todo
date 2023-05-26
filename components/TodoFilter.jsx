@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RiFilter2Line } from 'react-icons/ri';
 import { useDispatch } from 'react-redux'
+import { prioTypes } from "@/utils/todoTypes";
 
 const TodoFilter = () => {
     const dispatch = useDispatch()
