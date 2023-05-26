@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllTodosWithFeatures } from '@/redux/actions/todoActions'
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md'
 
 export const Pagination = () => {
  const dispatch = useDispatch()
@@ -30,6 +30,14 @@ export const Pagination = () => {
 
  return (
    <div className="flex justify-end mt-2">
+    <button 
+       onClick={handlePrevPage} 
+       disabled={curPage === 1}
+       className={`${curPage === 1 ? 'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
+                   transition-colors duration-200`}
+     >
+       <MdKeyboardDoubleArrowLeft size={24} />
+     </button>
      <button 
        onClick={handlePrevPage} 
        disabled={curPage === 1}
@@ -40,7 +48,7 @@ export const Pagination = () => {
      </button>
      {Array.from({length: totalPages}, (_, index) => index + 1).map(page => (
        <button 
-         key={page}
+         key={ page }
          onClick={() => setCurPage(page)}
          className={`mx-1 px-3 rounded border border-purple-400 
                      ${curPage === page ? 'bg-purple-400 text-white' : ''}`}
@@ -49,20 +57,28 @@ export const Pagination = () => {
        </button>
      ))}
      <button 
-       onClick={handleNextPage} 
-       disabled={curPage === totalPages}
+       onClick={ handleNextPage } 
+       disabled={ curPage === totalPages }
        className={`${curPage === totalPages ? 'text-gray-400' : 'text-purple-400 hover:text-purple-500'}
                    transition-colors duration-200`}
      >
        <MdKeyboardArrowRight size={24} />
      </button>
-     <select className='filter_input mr-2' value={limit} onChange={handleLimitChange}>
+     <button 
+       onClick={ handlePrevPage } 
+       disabled={curPage === 1}
+       className={`${curPage === 1 ? 'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
+                   transition-colors duration-200`}
+     >
+       <MdKeyboardDoubleArrowRight size={24} />
+     </button>
+     <select className='filter_input ml-2' value={ limit } onChange={ handleLimitChange }>
        <option value={ 5 }>5</option>
        <option value={ 10 }>10</option>
        <option value={ 15 }>15</option>
        <option value={ 20 }>20</option>
      </select>
-     of {total} {total > 1 ? `${total} todos` : `${total} todo`}
+     <span className='ml-2 mt-2' >of {total > 1 ? ` ${total} todos` : ` ${total} todo`}</span>
    </div>
  )
 }
