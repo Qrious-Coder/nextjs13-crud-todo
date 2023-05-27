@@ -2,6 +2,9 @@
 import React, {useEffect, useState} from 'react';
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
+import TodoFilter from '@/components/TodoFilter';
+import Modal from "@/components/Modal";
+import Pagination from "@/components/Pagination";
 import Nav from "@/components/Nav";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -15,7 +18,7 @@ import {
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
 import { saveAccessToken } from '@/utils/token'
-import Modal from "@/components/Modal";
+
 
 const TodosPage = () => {
   const [ note, setNote] = useState('')
@@ -60,25 +63,22 @@ const TodosPage = () => {
   return (
     <div className="todo-page">
       <Nav session={ session }/>
-      <Modal isOpen={ showModal } onClose={ () => dispatch(closeModal()) }>
-        <h2 className="mb-4">Add Note</h2>
+      <Modal isOpen={ showModal }
+             onSave={ () => { dispatch(addNote( addNoteTodoId, note )) }}>
         <textarea
-          className="border p-2 mb-4 w-full"
+          className="p-2 mb-4 w-full h-full outline-none resize-none"
           value={ note }
+          placeholder={`Note something...`}
           onChange={(e) => setNote(e.target.value)}
         />
-        <button
-          className="px-4 py-2 bg-purple-700 text-white"
-          onClick={() => dispatch(addNote(addNoteTodoId, note))}
-        >
-          Save
-        </button>
       </Modal>
       <TodoForm addTodo={ handleAdd }/>
+      <TodoFilter />
       <TodoList todos={ todoList } onDelete={ handleDelete }
                 onEdit={ handleEdit }
-                // onFilter={handleFilter}
+        // onFilter={handleFilter}
       />
+      <Pagination />
     </div>
   );
 };

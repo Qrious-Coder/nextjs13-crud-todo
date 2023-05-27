@@ -93,6 +93,8 @@ const todoReducer = (state = initialState, { type, payload }) => {
       Object.assign(state.todoList[editNoteId], payload )
       return {
         ...state,
+        showModal: false,
+        addNoteTodoId: '',
         loading: false,
       };
 
@@ -102,13 +104,6 @@ const todoReducer = (state = initialState, { type, payload }) => {
         showModal: true,
         addNoteTodoId: payload,
       }
-    case todoActionTypes.CLOSE_MODAL:
-      return {
-        ...state,
-        showModal: false,
-        addNoteTodoId: '',
-      }
-
     default:
       return state;
   }
