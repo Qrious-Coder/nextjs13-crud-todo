@@ -54,7 +54,7 @@
     ├── globals.css
     └── tailwind.css
 ```
-## Credential authentication with next-auth/next-connect/MongoDB
+## Credential authentication with next-auth
 ### ref1: https://fullstackdigital.io/blog/authentication-starter-kit-for-next-js-and-mongodb/
 ### ref2: https://github.com/wpcodevo/nextauth-nextjs13-prisma/blob/main/src/app/api/auth/%5B...nextauth%5D/route.ts
 ### ref3: https://github.com/adrianhajdin/project_next_13_ai_prompt_sharing
@@ -69,14 +69,110 @@
 4. @[...nextauth].js : create a NextAuth function includes: 
    - session: Enable JSON Web Tokens
    - providers: use SSO or credentials(email and password)
-   - callback: get token and user info
-   - pages: '/login'
+   - callback: Add a customized accessToken and user info
+   - pages: '/entry'
 #### Frontend:
-1. import {useSession} from "next-auth/react" to todosPage and homePage
-2. From useSession extract user.name passed to <Nav/> as a props.
+1. import {useSession} from "next-auth/react" on todosPage and homePage
+2. Use useSession() hook to extract user.name, then pass to <Nav/> as a props.
+3. Save accessToken to localStorage. //***Todo: Optimized later with refreshToken saved to cookies
 
-## only the todos belonging to the logged-in user are fetched and saved to the database
-### ref1: https://github.com/MelvinManni/next-mongoose 
-### ref2: https://remaster.com/blog/next-auth-jwt-session 
-1. POST data including userId?
-2. Search how to CRUD with authentication
+## GET/PATCH/POST/DELETT/UPDATE todos with token
+#### ref1: https://github.com/MelvinManni/next-mongoose 
+#### ref2: https://remaster.com/blog/next-auth-jwt-session 
+1. On client-side, and add accessToken to `headers: { 'Authorization': accessToken}` GET/PATCH/POST/DELETT/UPDATE 
+2. On server-side:
+    - create api/auth/middlewares/requireAtth.js
+    - extract token from the header:
+    ```js
+        const authorizationHeader =
+        req.headers instanceof Headers
+          ? req.headers.get('authorization')
+          : req.headers.authorization
+      let token = authorizationHeader?.split(' ')[1];
+    ```
+    - Decode the token
+    ```js
+    const decodedToken = verify(token, secretKey);
+    ```
+    - extract user._id and add to req
+    ```js
+    req.user = decodedToken.sub;
+    ```
+    - NOTE: cannot get the [id] from url. For now use this way
+    ```js
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const id = url.pathname.split('/').pop();
+    ```
+## Create a simple modal to addNote
+1. Add the "note" field to your MongoDB model:
+
+```js
+import { Schema, model, models }  from 'mongoose';
+
+const TodoSchema = new Schema({
+ //...existing fields
+ note: {
+   type: String,
+   default: ''
+ },
+ //...existing fields
+});
+
+const Todo = models.Todo || model('Todo', TodoSchema);
+export default Todo;
+```
+
+- For the `PATCH` request in the `api/todos/[id]/route.js` file, include the "note" field:
+
+```js
+export const PATCH = requireAuth(async(req ) => {
+ const { title, priority , completed, note } = await req.json() //added note here
+    //...existing fields
+
+ try{
+ await dbConnect()
+ const foundTodo = await Todo.findById({ _id: id, user: req.user })
+ if(!foundTodo) return new Response(`Todo does not exist`, {status: 404})
+    //...existing fields
+ if(note) foundTodo.note = note  // update note field here
+
+ await foundTodo.save()
+ return new Response(JSON.stringify(foundTodo),{status: 200})
+ }catch(err){
+
+ }
+})
+```
+
+- Use the browser's built-in prompt function:
+
+```javascript
+const handleNote = (id) => {
+ let note = prompt("Please enter your note:"); // shows a simple input popup
+ if (note != null) {
+   onAddNote(id, note); // calls function to save note
+ }
+}
+```
+
+- Add onAddNote function
+
+```javascript
+const onAddNote = (id, note) => {
+ fetch(`/api/todos/${id}`, {
+   method: 'PATCH',
+   headers: {
+     'Content-Type': 'application/json',
+   },
+   body: JSON.stringify({ note }),
+ })
+ .then(response => response.json())
+ .then(data => {
+   // do something with the data
+ })
+ .catch((error) => {
+   console.error('Error:', error);
+ });
+}
+```
+## Create a sticker note 
