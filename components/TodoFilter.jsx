@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { RiFilter2Line } from 'react-icons/ri';
-import { useDispatch } from 'react-redux'
 import { prioTypes } from "@/utils/todoTypes";
+import { getAllTodosWithFeatures } from "@/redux/actions/todoActions";
 
 const TodoFilter = () => {
     const dispatch = useDispatch()
@@ -72,4 +72,4 @@ const TodoFilter = () => {
   );
 };
 
-export default Alert;
+export default TodoFilter;

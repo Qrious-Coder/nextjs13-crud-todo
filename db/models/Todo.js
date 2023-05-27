@@ -28,6 +28,10 @@ const TodoSchema = new Schema({
       }
     }
   },
+  note: {
+    type: String,
+    default: 'No notes added.'
+  },
   completed: {
     type: Boolean,
     default: false

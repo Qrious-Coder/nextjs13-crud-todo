@@ -1,11 +1,12 @@
 'use client'
-import React from 'react';
+import React, { useState} from 'react';
 import TodoItem from './TodoItem'
 import TodoFilter from './TodoFilter'
 import { tabHeaderData } from '@/utils/todoData'
-import { useState} from "react";
-import { useDispatch } from 'react-redux'
-import { getAllTodosWithFeatures } from '@/redux/actions/todoActions'
+import { useDispatch, useSelector  } from 'react-redux'
+import { getAllTodosWithFeatures} from '@/redux/actions/todoActions'
+import Pagination from "@/components/Pagination";
+import Modal from "@/components/Modal";
 
 const TodoList = ({ todos, onDelete, onEdit }) => {
   const dispatch = useDispatch()
@@ -59,6 +60,8 @@ const TodoList = ({ todos, onDelete, onEdit }) => {
         ))}
         </tbody>
       </table>
+      {/*-----------filter----------------*/}
+      <Pagination />
     </>
 
   );

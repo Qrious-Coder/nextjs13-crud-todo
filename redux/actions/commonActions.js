@@ -7,19 +7,19 @@ export const commonActionTypes = {
 
 export const clearAlert = () => async(dispatch) => {
   setTimeout(() =>
-      dispatch({
-        type: commonActionTypes.HIDE_ALERT,
-      })
-    , 3000)
-}
-export const displayAlert = ({alertText, alertType}) =>
-  async(dispatch) => {
     dispatch({
-      type: commonActionTypes.SHOW_ALERT,
-      payload: {
-        alertText,
-        alertType
-      }
+      type: commonActionTypes.HIDE_ALERT,
     })
-    dispatch(clearAlert())
-  }
+  , 3000)
+}
+export const displayAlert = ({alertText, alertType}) => async(dispatch) => {
+  dispatch({
+    type: commonActionTypes.SHOW_ALERT,
+    payload: {
+      alertText,
+      alertType
+    }
+  })
+  dispatch(clearAlert())
+}
+

@@ -1,6 +1,7 @@
 'use client'
 import axios from 'axios'
 import { getAccessToken } from "@/utils/token";
+import {commonActionTypes} from "@/redux/actions/commonActions";
 export const todoActionTypes = {
   GET_TODO_REQUEST: 'GET_TODO_REQUEST',
   GET_TODO_SUCCESS: 'GET_TODO_SUCCESS',
@@ -26,6 +27,14 @@ export const todoActionTypes = {
   SEARCH_TODO_REQUEST: 'SEARCH_TODO_REQUEST',
   SEARCH_TODO_SUCCESS: 'SEARCH_TODO_SUCCESS',
   SEARCH_TODO_FAILURE: 'SEARCH_TODO_FAILURE',
+
+  ADD_NOTE_REQUEST: 'ADD_NOTE_REQUEST',
+  ADD_NOTE_SUCCESS: 'ADD_NOTE_SUCCESS',
+  ADD_NOTE_FAILURE: 'ADD_NOTE_FAILURE',
+
+
+  SHOW_MODAL: 'SHOW_MODAL',
+  CLOSE_MODAL: 'CLOSE_MODAL'
 }
 const accessToken = getAccessToken()
 export const getAllTodos = () => async(dispatch) => {
@@ -170,3 +179,43 @@ export const searchTodo = (title) => async (dispatch) => {
     dispatch({ type: todoActionTypes.SEARCH_TODO_FAILURE, payload: err });
   }
 };
+
+export const addNote = (id, note) => async(dispatch) => {
+  dispatch({
+    type: todoActionTypes.ADD_NOTE_REQUEST
+  })
+  try{
+    const res = await axios.patch(`/api/todos/${id}`, JSON.stringify({ note }), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': accessToken
+      },
+    })
+
+    const updatedTodo = res.data
+    dispatch({
+      type: todoActionTypes.ADD_NOTE_SUCCESS,
+      payload: updatedTodo
+    })
+    dispatch(getAllTodosWithFeatures())
+
+  }catch(err){
+    dispatch({
+      type: todoActionTypes.ADD_NOTE_FAILURE,
+      payload: err
+    })
+  }
+}
+
+export const openModal = (id) => async(dispatch) => {
+  dispatch({
+    type: todoActionTypes.SHOW_MODAL,
+    payload: id
+  })
+}
+
+export const closeModal = () => async(dispatch) => {
+  dispatch({
+    type: todoActionTypes.CLOSE_MODAL
+  })
+}

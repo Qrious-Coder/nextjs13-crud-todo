@@ -1,12 +1,15 @@
 import { todoActionTypes } from '@/redux/actions/todoActions'
+import {commonActionTypes} from "@/redux/actions/commonActions";
 
 const initialState = {
   editableTodoId: '',
+  addNoteTodoId:'',
   todoList: [],
   total: 0,
   todoItem: '',
   error: null,
-  loading: false
+  loading: false,
+  showModal: false
 };
 
 const todoReducer = (state = initialState, { type, payload }) => {
@@ -16,7 +19,8 @@ const todoReducer = (state = initialState, { type, payload }) => {
     case todoActionTypes.ADD_TODO_REQUEST:
     case todoActionTypes.EDIT_TODO_REQUEST:
     case todoActionTypes.DELETE_TODO_REQUEST:
-    case todoActionTypes.SEARCH_TODO_REQUEST:  
+    case todoActionTypes.SEARCH_TODO_REQUEST:
+    case todoActionTypes.ADD_NOTE_REQUEST:
       return {
         ...state,
         loading: true,
@@ -27,7 +31,8 @@ const todoReducer = (state = initialState, { type, payload }) => {
     case todoActionTypes.ADD_TODO_FAILURE:
     case todoActionTypes.EDIT_TODO_FAILURE:  
     case todoActionTypes.DELETE_TODO_FAILURE:  
-    case todoActionTypes.SEARCH_TODO_FAILURE:  
+    case todoActionTypes.SEARCH_TODO_FAILURE:
+    case todoActionTypes.ADD_NOTE_FAILURE:
       return {
         ...state,
         loading: false,
@@ -82,6 +87,27 @@ const todoReducer = (state = initialState, { type, payload }) => {
         loading: false,
         todoList: filteredList,
       };
+
+    case todoActionTypes.ADD_NOTE_SUCCESS:
+      let editNoteId = state.todoList.findIndex( item => item._id.includes(payload._id))
+      Object.assign(state.todoList[editNoteId], payload )
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case todoActionTypes.SHOW_MODAL:
+      return {
+        ...state,
+        showModal: true,
+        addNoteTodoId: payload,
+      }
+    case todoActionTypes.CLOSE_MODAL:
+      return {
+        ...state,
+        showModal: false,
+        addNoteTodoId: '',
+      }
 
     default:
       return state;

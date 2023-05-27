@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllTodosWithFeatures } from '@/redux/actions/todoActions'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md'
 
-export const Pagination = () => {
+const Pagination = () => {
  const dispatch = useDispatch()
  const { total } = useSelector(state => state.todo)
  const [curPage, setCurPage] = useState(1)
@@ -90,3 +90,5 @@ export const Pagination = () => {
    </div>
  )
 }
+
+export default Pagination
