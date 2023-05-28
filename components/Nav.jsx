@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { signOut as nextAuthSignOut } from 'next-auth/react';
+import {signOut as nextAuthSignOut, useSession} from 'next-auth/react';
 import { FaCheckSquare } from 'react-icons/fa';
-import { removeToken} from "@/utils/token";
+import {removeToken, saveAccessToken, getAccessToken} from "@/utils/token";
+import {useRouter} from "next/navigation";
+import Loading from '@/components/Loading'
 
-const Nav = ({ session }) => {
+const Nav = () => {
+  const router = useRouter();
+  const { data: session, status } = useSession()
+
+  useEffect(() => {
+    if (!session && status !== 'loading') {
+      router.push('/');
+    } else {
+      saveAccessToken(session?.session.accessToken);
+      router.push('/todos');
+    }
+  }, [session, status]);
+
+
+  if(status === 'loading') {
+    return <Loading />
+  }
   const signOut = async () => {
-    removeToken();
     await nextAuthSignOut();
+    removeToken();
+    router.push('/entry')
   };
 
   return (

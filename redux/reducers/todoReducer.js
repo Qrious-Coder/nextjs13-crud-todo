@@ -1,5 +1,4 @@
 import { todoActionTypes } from '@/redux/actions/todoActions'
-import {commonActionTypes} from "@/redux/actions/commonActions";
 
 const initialState = {
   editableTodoId: '',
@@ -9,7 +8,10 @@ const initialState = {
   todoItem: '',
   error: null,
   loading: false,
-  showModal: false
+  showModal: false,
+
+  curPage: 1,
+  limit: 5,
 };
 
 const todoReducer = (state = initialState, { type, payload }) => {
@@ -93,7 +95,7 @@ const todoReducer = (state = initialState, { type, payload }) => {
       Object.assign(state.todoList[editNoteId], payload )
       return {
         ...state,
-        showModal: false,
+        showModal: false, //save and close modal
         addNoteTodoId: '',
         loading: false,
       };
@@ -104,6 +106,19 @@ const todoReducer = (state = initialState, { type, payload }) => {
         showModal: true,
         addNoteTodoId: payload,
       }
+
+    case todoActionTypes.SAVE_CURRENT_PAGE:
+      return {
+        ...state,
+        curPage: payload,
+        loading: false,
+      };
+    case todoActionTypes.SAVE_CURRENT_LIMIT:
+      return {
+        ...state,
+        limit: payload,
+        loading: false,
+      };
     default:
       return state;
   }

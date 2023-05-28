@@ -9,6 +9,7 @@ export const requireAuth = (handler) => {
           ? req.headers.get('authorization')
           : req.headers.authorization
       let token = authorizationHeader?.split(' ')[1];
+
       if (!token) {
         return new Response( 'No token found!', { status: 401 })
       }

@@ -1,7 +1,7 @@
 'use client'
 import axios from 'axios'
 import { getAccessToken } from "@/utils/token";
-import {commonActionTypes} from "@/redux/actions/commonActions";
+
 export const todoActionTypes = {
   GET_TODO_REQUEST: 'GET_TODO_REQUEST',
   GET_TODO_SUCCESS: 'GET_TODO_SUCCESS',
@@ -34,10 +34,29 @@ export const todoActionTypes = {
 
 
   SHOW_MODAL: 'SHOW_MODAL',
-  CLOSE_MODAL: 'CLOSE_MODAL'
+  CLOSE_MODAL: 'CLOSE_MODAL',
+
+  SAVE_CURRENT_PAGE: 'SAVE_CURRENT_PAGE',
+  SAVE_CURRENT_LIMIT: 'SAVE_CURRENT_LIMIT'
 }
-const accessToken = getAccessToken()
+
+export const saveCurPage = (curPage) => async(dispatch) => {
+  dispatch({
+    type: todoActionTypes.SAVE_CURRENT_PAGE,
+    payload: curPage
+  })
+}
+
+export const saveCurLimit = (limit) => async(dispatch) => {
+  dispatch({
+    type: todoActionTypes.SAVE_CURRENT_LIMIT,
+    payload: limit
+  })
+}
+
+
 export const getAllTodos = () => async(dispatch) => {
+  const accessToken = getAccessToken()
   dispatch({
     type: todoActionTypes.GET_TODO_REQUEST
   })
@@ -63,6 +82,7 @@ export const getAllTodos = () => async(dispatch) => {
 }
 
 export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy = null, page = 1, limit = 5) => async(dispatch) => {
+  const accessToken = getAccessToken()
   dispatch({
     type: todoActionTypes.GET_TODO_FEATURE_REQUEST
   })
@@ -95,6 +115,7 @@ export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy 
 }
 
 export const createTodo = (formTodo) => async(dispatch) => {
+  const accessToken = getAccessToken()
   dispatch({ type: todoActionTypes.ADD_TODO_REQUEST })
   try{
     const res = await axios.post(`/api/todos/new`, formTodo, {
@@ -124,6 +145,7 @@ export const setEditableTodo = (id) => async(dispatch) => {
 }
 
 export const editTodo = (id, todo) => async(dispatch) => {
+  const accessToken = getAccessToken()
   dispatch({
     type: todoActionTypes.EDIT_TODO_REQUEST
   })
@@ -149,6 +171,7 @@ export const editTodo = (id, todo) => async(dispatch) => {
 }
 
 export const deleteTodo = (id) => async(dispatch) => {
+  const accessToken = getAccessToken()
   dispatch({
     type: todoActionTypes.DELETE_TODO_REQUEST
   })
@@ -181,6 +204,7 @@ export const searchTodo = (title) => async (dispatch) => {
 };
 
 export const addNote = (id, note) => async(dispatch) => {
+  const accessToken = getAccessToken()
   dispatch({
     type: todoActionTypes.ADD_NOTE_REQUEST
   })
@@ -214,8 +238,3 @@ export const openModal = (id) => async(dispatch) => {
   })
 }
 
-export const closeModal = () => async(dispatch) => {
-  dispatch({
-    type: todoActionTypes.CLOSE_MODAL
-  })
-}

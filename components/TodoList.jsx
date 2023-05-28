@@ -2,16 +2,8 @@
 import React from 'react';
 import TodoItem from './TodoItem'
 import { tabHeaderData } from '@/utils/todoData'
-import { useDispatch } from 'react-redux'
-import { getAllTodosWithFeatures} from '@/redux/actions/todoActions'
 
-
-const TodoList = ({ todos, onDelete, onEdit }) => {
-  const dispatch = useDispatch()
-
-  const handleSort = (sortBy) => {
-      dispatch(getAllTodosWithFeatures(null,null, sortBy))
-  }
+const TodoList = ({ todos, onDelete, onEdit, onSort }) => {
   return (
     <table className="w-full border-collapse">
       <thead>
@@ -28,11 +20,11 @@ const TodoList = ({ todos, onDelete, onEdit }) => {
                     <div>
                     { item.sort && <span className="flex flex-col">
                         <button className="border-purple-500"
-                          onClick = { () => handleSort(`-${item.text}`) }>
+                          onClick = { () => onSort(`-${item.text}`) }>
                           { item.sortUpIc }
                         </button>
                         <button className="border-purple-500"
-                          onClick = { () => handleSort(`${item.text}`) }>
+                          onClick = { () => onSort(`${item.text}`) }>
                         { item.sortDownIc }
                         </button>
                       </span> }

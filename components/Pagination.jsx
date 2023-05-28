@@ -1,39 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllTodosWithFeatures } from '@/redux/actions/todoActions'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md'
+import { saveCurLimit, saveCurPage } from "@/redux/actions/todoActions";
 
 const Pagination = () => {
  const dispatch = useDispatch()
- const { total } = useSelector(state => state.todo)
- const [curPage, setCurPage] = useState(1)
- const [limit, setLimit] = useState(5)
-
-  useEffect(() => {
-    dispatch(getAllTodosWithFeatures(null, null, null, curPage, limit))
-  }, [dispatch, curPage, limit])
+ const { total, limit, curPage } = useSelector(state => state.todo)
 
   const totalPages = Math.ceil(total/limit)
 
+  const handlePageNum = (num) =>{
+    dispatch(saveCurPage(num))
+  }
   const handleLimitChange = (e) => {
-    setLimit(e.target.value)
-    setCurPage(1)
+    dispatch(saveCurLimit(e.target.value))
+    dispatch(saveCurPage(1))
   }
 
   const handlePrevPage = () => {
-    setCurPage(curPage > 1 ? curPage - 1 : 1)
+    let prePage = curPage > 1 ? curPage - 1 : 1
+    dispatch(saveCurPage(prePage))
   }
 
   const handleNextPage = () => {
-    setCurPage(curPage < totalPages ? curPage + 1 : totalPages)
+    let nextPage = curPage < totalPages ? curPage + 1 : totalPages
+    dispatch(saveCurPage(nextPage))
   }
 
   const jumpToFirstPage = () => {
-    setCurPage(1)
+    dispatch(saveCurPage(1))
   }
  
   const jumpToLastPage = () => {
-    setCurPage(totalPages)
+    dispatch(saveCurPage(totalPages))
   }
 
  return (
@@ -57,7 +56,7 @@ const Pagination = () => {
      {Array.from({length: totalPages}, (_, index) => index + 1).map(page => (
        <button 
          key={ page }
-         onClick={() => setCurPage(page)}
+         onClick={() => handlePageNum(page)}
          className={`mx-1 px-3 rounded border border-purple-400 
                      ${curPage === page ? 'bg-purple-400 text-white' : ''}`}
        >

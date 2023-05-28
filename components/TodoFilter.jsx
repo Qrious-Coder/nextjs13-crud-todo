@@ -11,9 +11,9 @@ const TodoFilter = () => {
     const [selectStatus, setSelectStatus ] = useState('All')
 
     const handleFilterChange = (e) => {
-        const selectedFilter = e.target.value;
-        setFilter(selectedFilter);
-    
+        setFilter(e.target.value);
+
+        //Default
         setSelectPriority('All')
         setSelectStatus('All')
     
@@ -21,14 +21,13 @@ const TodoFilter = () => {
       };
 
       const handlePrioritySubFilterChange = (e) => {
-        const value = e.target.value;
-        setSelectPriority(value)
+        setSelectPriority(e.target.value)
         dispatch(getAllTodosWithFeatures(value, null, null))
       }
     
       const handleStatusSubFilterChange = (e) =>{
-        const value = e.target.value
-        setSelectStatus(value)
+        // const value = e.target.value
+        setSelectStatus(e.target.value)
         dispatch(getAllTodosWithFeatures(null,value, null))
       }
       

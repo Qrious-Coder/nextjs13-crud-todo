@@ -1,25 +1,13 @@
 'use client'
 import EntryForm from "@/components/EntryForm";
-import { getSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation'
-import { useState, useEffect } from "react";
+import { useSession } from 'next-auth/react';
+import Loading from '@/components/Loading';
 
 const EntryPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+  const { status } = useSession()
 
-  useEffect(() =>{
-    getSession().then((session) =>{
-      if(session) {
-        router.push('/todos')
-      } else {
-        setIsLoading(false)
-      }
-    })
-  }, [router])
-
-  if(isLoading) {
-    return <p>Loading...</p>
+  if(status === 'loading') {
+    return <Loading />
   }
   return <EntryForm />
 };
