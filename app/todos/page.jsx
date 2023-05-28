@@ -21,7 +21,7 @@ const TodosPage = () => {
   const { showModal, addNoteTodoId, curPage, limit } = useSelector(state => state.todo)
 
   useEffect(() => {
-    alert(`Why keep dispatching?`)
+    // alert(`Why keep dispatching?`)
     handlePagination(curPage, limit)
   }, [ curPage, limit ])
 
