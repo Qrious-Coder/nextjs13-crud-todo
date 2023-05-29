@@ -58,8 +58,20 @@ const TodosPage = () => {
     dispatch(openModal(id))
   };
 
+
+  //AI suggested to useCallBack
+  // const handleSave = useCallback( () => {
+  //   dispatch(addNote(id, note))
+  //   setNote('')
+  // }, [dispatch])
+
   const handleSave =(id, note) => {
     dispatch(addNote( id, note ))
+    setNote('')
+  }
+
+  const handleClose =() => {
+    dispatch(closeModal())
   }
 
   const handlePagination = ( currentPage, limitPerPage  ) => {
@@ -69,7 +81,9 @@ const TodosPage = () => {
   return (
     <div className="todo-page">
       <Modal isOpen={ showModal }
-             onSave={ () => handleSave( addNoteTodoId, note) }>
+             onSave={ () => handleSave( addNoteTodoId, note) }
+             onClose={ handleClose }
+      >
         { !loading && <textarea
           className="p-2 mb-4 w-full h-full outline-none resize-none"
           value={ note }
@@ -84,8 +98,7 @@ const TodosPage = () => {
                 onEditableId = { handleEditableId }
                 onEdit={ handleEdit }
                 onSort={ handleSort }
-                onOpenNote = { handleOpenNote }
-      />
+                onOpenNote = { handleOpenNote } />
       <Pagination onPaginationChange={ handlePagination } />
     </div>
   );

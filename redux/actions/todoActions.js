@@ -245,6 +245,12 @@ export const openModal = (id) => async(dispatch) => {
   })
 }
 
+export const closeModal = () => {
+  return{
+    type: todoActionTypes.CLOSE_MODAL
+  }
+}
+
 export const getTodoById = (id) => async(dispatch) => {
   const accessToken = getAccessToken()
   dispatch({

@@ -113,7 +113,16 @@ const todoReducer = (state = initialState, { type, payload }) => {
         ...state,
         showModal: true,
         addNoteTodoId: payload,
+        loading: false,
       }
+
+    case todoActionTypes.CLOSE_MODAL:
+      return {
+        ...state,
+        showModal: true,
+        addNoteTodoId: '',
+        loading: false,
+      }  
 
     case todoActionTypes.SAVE_CURRENT_PAGE:
       return {
