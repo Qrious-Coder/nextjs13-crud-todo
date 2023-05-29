@@ -5,7 +5,7 @@ const initialState = {
   addNoteTodoId:'',
   todoList: [],
   total: 0,
-  todoItem: '',
+  currentTodo: null,
   error: null,
   loading: false,
   showModal: false,
@@ -16,33 +16,35 @@ const initialState = {
 
 const todoReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case todoActionTypes.GET_TODO_REQUEST:
-    case todoActionTypes.GET_TODO_FEATURE_REQUEST:
+    case todoActionTypes.GET_TODOS_REQUEST:
+    case todoActionTypes.GET_TODOS_FEATURE_REQUEST:
     case todoActionTypes.ADD_TODO_REQUEST:
     case todoActionTypes.EDIT_TODO_REQUEST:
     case todoActionTypes.DELETE_TODO_REQUEST:
     case todoActionTypes.SEARCH_TODO_REQUEST:
     case todoActionTypes.ADD_NOTE_REQUEST:
+    case todoActionTypes.GET_TODO_BY_ID_REQUEST:
       return {
         ...state,
         loading: true,
       }
   
-    case todoActionTypes.GET_TODO_FAILURE:
-    case todoActionTypes.GET_TODO_FEATURE_FAILURE:
+    case todoActionTypes.GET_TODOS_FAILURE:
+    case todoActionTypes.GET_TODOS_FEATURE_FAILURE:
     case todoActionTypes.ADD_TODO_FAILURE:
     case todoActionTypes.EDIT_TODO_FAILURE:  
     case todoActionTypes.DELETE_TODO_FAILURE:  
     case todoActionTypes.SEARCH_TODO_FAILURE:
     case todoActionTypes.ADD_NOTE_FAILURE:
+    case todoActionTypes.GET_TODO_BY_ID_FAILURE:  
       return {
         ...state,
         loading: false,
         error: payload
       }
       
-    case todoActionTypes.GET_TODO_SUCCESS:
-    case todoActionTypes.GET_TODO_FEATURE_SUCCESS:  
+    case todoActionTypes.GET_TODOS_SUCCESS:
+    case todoActionTypes.GET_TODOS_FEATURE_SUCCESS:  
       return {
         ...state,
         loading: false,
@@ -83,7 +85,13 @@ const todoReducer = (state = initialState, { type, payload }) => {
       const filteredList = state.todoList.filter(
         (todo) => todo.title.toLowerCase().includes(title.toLowerCase())
       );
-
+    
+    case todoActionTypes.GET_TODO_BY_ID_FAILURE:  
+      return {
+        ...state,
+        currentTodo: payload,
+        loading: false,
+      };
       return {
         ...state,
         loading: false,

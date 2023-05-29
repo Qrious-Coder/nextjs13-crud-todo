@@ -13,18 +13,25 @@ import {
   createTodo,
   getAllTodosWithFeatures,
   addNote,
-  openModal
+  openModal,
+  getTodoById
 } from "@/redux/actions/todoActions";
 
 const TodosPage = () => {
   const [ note, setNote] = useState('')
   const dispatch = useDispatch()
   const { todoList } = useSelector( state => state.todo )
-  const { showModal, addNoteTodoId, curPage, limit } = useSelector(state => state.todo)
+  const { showModal, addNoteTodoId, currentTodo, loading } = useSelector(state => state.todo)
 
   useEffect(() => {
     dispatch( getAllTodosWithFeatures() )
   }, [])
+
+  useEffect(() => {
+    if(currentTodo) {
+      setNote( currentTodo.note )
+    }
+  }, [currentTodo])
 
   const handleDelete = async (id) => {
     dispatch(deleteTodo(id))
@@ -47,6 +54,7 @@ const TodosPage = () => {
   }
 
   const handleOpenNote = async (id) => {
+    dispatch(getTodoById(id))
     dispatch(openModal(id))
   };
 
@@ -62,12 +70,12 @@ const TodosPage = () => {
     <div className="todo-page">
       <Modal isOpen={ showModal }
              onSave={ () => handleSave( addNoteTodoId, note) }>
-        <textarea
+        { !loading && <textarea
           className="p-2 mb-4 w-full h-full outline-none resize-none"
           value={ note }
           placeholder={`Note something...`}
           onChange={(e) => setNote(e.target.value)}
-        />
+        /> } 
       </Modal>
       <TodoForm addTodo={ handleAdd }/>
       <TodoFilter />

@@ -3,13 +3,13 @@ import axios from 'axios'
 import { getAccessToken } from "@/utils/token";
 
 export const todoActionTypes = {
-  GET_TODO_REQUEST: 'GET_TODO_REQUEST',
-  GET_TODO_SUCCESS: 'GET_TODO_SUCCESS',
-  GET_TODO_FAILURE: 'GET_TODO_FAILURE',
+  GET_TODOS_REQUEST: 'GET_TODOS_REQUEST',
+  GET_TODOS_SUCCESS: 'GET_TODOS_SUCCESS',
+  GET_TODOS_FAILURE: 'GET_TODOS_FAILURE',
 
-  GET_TODO_FEATURE_REQUEST: 'GET_TODO_FEATURE_REQUEST',
-  GET_TODO_FEATURE_SUCCESS: 'GET_TODO_FEATURE_SUCCESS',
-  GET_TODO_FEATURE_FAILURE: 'GET_TODO_FEATURE_FAILURE',
+  GET_TODOS_FEATURE_REQUEST: 'GET_TODOS_FEATURE_REQUEST',
+  GET_TODOS_FEATURE_SUCCESS: 'GET_TODOS_FEATURE_SUCCESS',
+  GET_TODOS_FEATURE_FAILURE: 'GET_TODOS_FEATURE_FAILURE',
 
   ADD_TODO_REQUEST: 'ADD_TODO_REQUEST',
   ADD_TODO_SUCCESS: 'ADD_TODO_SUCCESS',
@@ -37,7 +37,11 @@ export const todoActionTypes = {
   CLOSE_MODAL: 'CLOSE_MODAL',
 
   SAVE_CURRENT_PAGE: 'SAVE_CURRENT_PAGE',
-  SAVE_CURRENT_LIMIT: 'SAVE_CURRENT_LIMIT'
+  SAVE_CURRENT_LIMIT: 'SAVE_CURRENT_LIMIT',
+
+  GET_TODO_BY_ID_REQUEST: 'GET_TODO_BY_ID_REQUEST',
+  GET_TODO_BY_ID_SUCCESS: 'GET_TODO_BY_ID_SUCCESS',
+  GET_TODO_BY_ID_FAILURE: 'GET_TODO_BY_ID_FAILURE'
 }
 
 export const saveCurPage = (curPage) => async(dispatch) => {
@@ -57,7 +61,7 @@ export const saveCurLimit = (limit) => async(dispatch) => {
 export const getAllTodos = () => async(dispatch) => {
   const accessToken = getAccessToken()
   dispatch({
-    type: todoActionTypes.GET_TODO_REQUEST
+    type: todoActionTypes.GET_TODOS_REQUEST
   })
   try{
     const res = await axios.get('/api/todos', {
@@ -68,13 +72,13 @@ export const getAllTodos = () => async(dispatch) => {
     const data = res.data
 
     dispatch({
-      type: todoActionTypes.GET_TODO_SUCCESS,
+      type: todoActionTypes.GET_TODOS_SUCCESS,
       payload: data
     })
 
   }catch(err){
     dispatch({
-      type: todoActionTypes.GET_TODO_FAILURE,
+      type: todoActionTypes.GET_TODOS_FAILURE,
       payload: err
     })
   }
@@ -83,7 +87,7 @@ export const getAllTodos = () => async(dispatch) => {
 export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy = null, page = 1, limit = 5) => async(dispatch) => {
   const accessToken = getAccessToken()
   dispatch({
-    type: todoActionTypes.GET_TODO_FEATURE_REQUEST
+    type: todoActionTypes.GET_TODOS_FEATURE_REQUEST
   })
   try{
     const res = await axios.get('/api/todos', {
@@ -105,13 +109,13 @@ export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy 
     dispatch(saveCurPage(limit))
 
     dispatch({
-      type: todoActionTypes.GET_TODO_FEATURE_SUCCESS,
+      type: todoActionTypes.GET_TODOS_FEATURE_SUCCESS,
       payload: { todos, totalCount }
     })
 
   }catch(err){
     dispatch({
-      type: todoActionTypes.GET_TODO_FEATURE_FAILURE,
+      type: todoActionTypes.GET_TODOS_FEATURE_FAILURE,
       payload: err
     })
   }
@@ -241,3 +245,28 @@ export const openModal = (id) => async(dispatch) => {
   })
 }
 
+export const getTodoById = (id) => async(dispatch) => {
+  const accessToken = getAccessToken()
+  dispatch({
+    type: todoActionTypes.GET_TODO_BY_ID_REQUEST
+  })
+  try{
+    const res = await axios.get(`/api/todos/${id}`, {
+      headers: {
+        Authorization: accessToken
+      }
+    })
+    const todo = res.data
+
+    dispatch({
+      type: todoActionTypes.GET_TODO_BY_ID_SUCCESS,
+      payload: todo
+    })
+
+  }catch(err){
+    dispatch({
+      type: todoActionTypes.GET_TODO_BY_ID_FAILURE,
+      payload: err
+    })
+  }
+}
