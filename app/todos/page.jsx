@@ -7,11 +7,13 @@ import Modal from "@/components/Modal";
 import Pagination from "@/components/Pagination";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  setEditableTodo,
   editTodo,
   deleteTodo,
   createTodo,
   getAllTodosWithFeatures,
-  addNote
+  addNote,
+  openModal
 } from "@/redux/actions/todoActions";
 
 const TodosPage = () => {
@@ -28,6 +30,10 @@ const TodosPage = () => {
     dispatch(deleteTodo(id))
   };
 
+  const handleEditableId = async (id) => {
+    dispatch(setEditableTodo(id))
+  };
+
   const handleEdit = (id, todo) => {
     dispatch(editTodo(id, todo))
   };
@@ -39,6 +45,10 @@ const TodosPage = () => {
   const handleSort = (sortBy) => {
     dispatch(getAllTodosWithFeatures(null,null, sortBy))
   }
+
+  const handleOpenNote = async (id) => {
+    dispatch(openModal(id))
+  };
 
   const handleSave =(id, note) => {
     dispatch(addNote( id, note ))
@@ -63,8 +73,10 @@ const TodosPage = () => {
       <TodoFilter />
       <TodoList todos={ todoList }
                 onDelete={ handleDelete }
+                onEditableId = { handleEditableId }
                 onEdit={ handleEdit }
                 onSort={ handleSort }
+                onOpenNote = { handleOpenNote }
       />
       <Pagination onPaginationChange={ handlePagination } />
     </div>

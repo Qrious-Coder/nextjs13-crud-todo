@@ -3,7 +3,7 @@ import React from 'react';
 import TodoItem from './TodoItem'
 import { tabHeaderData } from '@/utils/todoData'
 
-const TodoList = ({ todos, onDelete, onEdit, onSort }) => {
+const TodoList = ({ todos, onDelete, onEdit, onSort, onEditableId,  onOpenNote  }) => {
   return (
     <table className="w-full border-collapse">
       <thead>
@@ -41,7 +41,9 @@ const TodoList = ({ todos, onDelete, onEdit, onSort }) => {
           todo = { todo }
           key = { todo._id }
           onDelete = { onDelete }
+          onEditableId = { onEditableId }
           onEdit = { onEdit }
+          onOpenNote = { onOpenNote }
         />
       ))}
       </tbody>

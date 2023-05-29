@@ -5,8 +5,8 @@ import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai'
 import { FaStickyNote } from 'react-icons/fa'
 import { setEditableTodo, openModal } from '@/redux/actions/todoActions'
 import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
-const TodoItem = ({ todo, onEdit, onDelete }) => {
-  const dispatch = useDispatch();
+
+const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
   const [curTodo, setCurTodo] = useState(todo);
   const { editableTodoId } = useSelector(state => state.todo)
   const IsEditable = editableTodoId === curTodo._id;
@@ -75,7 +75,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
         <td className="table_row">{curTodo.createdAt}</td>
         {/* ------------- Add note--------------*/}
         <td className="table_row">
-          <button className="outline_btn flex justify-center" onClick={() => dispatch(openModal(curTodo._id))}>
+          <button className="outline_btn flex justify-center" onClick={ () => onOpenNote(curTodo._id) }>
             <FaStickyNote />
           </button>
         </td>
@@ -86,7 +86,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
               <AiOutlineSave />
             </button>
           ) : (
-            <button className="outline_btn flex justify-center" onClick={ () => dispatch(setEditableTodo(curTodo._id)) }>
+            <button className="outline_btn flex justify-center" onClick={ () => onEditableId(curTodo._id) }>
               <AiOutlineEdit />
             </button>
           )}
