@@ -22,13 +22,13 @@ const TodoFilter = () => {
 
       const handlePrioritySubFilterChange = (e) => {
         setSelectPriority(e.target.value)
-        dispatch(getAllTodosWithFeatures(value, null, null))
+        dispatch(getAllTodosWithFeatures(e.target.value, null, null))
       }
     
       const handleStatusSubFilterChange = (e) =>{
         // const value = e.target.value
         setSelectStatus(e.target.value)
-        dispatch(getAllTodosWithFeatures(null,value, null))
+        dispatch(getAllTodosWithFeatures(null,e.target.value, null))
       }
       
   return (

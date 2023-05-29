@@ -98,7 +98,7 @@ const todoReducer = (state = initialState, { type, payload }) => {
       Object.assign(state.todoList[editNoteId], payload )
       return {
         ...state,
-        showModal: false, //save and close modal
+        showModal: false,
         addNoteTodoId: '',
         loading: false,
       };

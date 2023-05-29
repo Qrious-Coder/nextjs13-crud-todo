@@ -6,7 +6,7 @@ export const GET = requireAuth(async (req) => {
   try {
     await dbConnect();
     const queryParams = new URLSearchParams(req.url.split('?')[1]);
-    console.log(`@@@ =========> queryParams`, req.url.split('?')[1])
+    console.log(`@@@ =========> queryParams`, queryParams)
     const priority = queryParams.get('priority') || null;
     const status = queryParams.get('status') || null;
     const page = queryParams.get('page') || 1;
@@ -31,28 +31,31 @@ export const GET = requireAuth(async (req) => {
     const pageNumber = parseInt(page) || 1;
     const pageSize = parseInt(limit) || 10;
     const skip = (pageNumber - 1) * pageSize;
+    const totalCount = await Todo.countDocuments(query)
 
-    // Fetch todos, applied filtering and pagination
-    let todos = await Todo.find(query)
-      .skip(skip)
-      .limit(pageSize);
+    //Sort by mongoDB
+    let todos;
+    let sortField = sortBy;
+    let sortOrder = 1;
 
-    const totalCount = await Todo.countDocuments(query)  
-
-    //Sorting
-    if (sortBy) {
-      const sortField = sortBy.substring(1);
-      todos = todos.sort((a, b) => {
-        if (a[sortField] < b[sortField]) {
-          return -1;
-        }
-        if (a[sortField] > b[sortField]) {
-          return 1;
-        }
-        return 0;
-      });
+    if (sortBy && sortBy.startsWith('-')) {
+      sortField = sortBy.substring(1);
+      sortOrder = -1;
     }
 
+    if(sortBy){
+      todos = await Todo.find(query)
+        .sort({ [sortField]: sortOrder }) // sort by custom field
+        .skip(skip)
+        .limit(pageSize)
+    }else{
+      todos = await Todo.find(query)
+        .sort({ _id: -1}) //Default: Sort the latest document
+        .skip(skip)
+        .limit(pageSize)
+    }
+
+    console.log(`@@@@ result ====>`, todos)
     return new Response(JSON.stringify({ todos, totalCount }), { status: 200 });
 
   } catch (error) {

@@ -44,20 +44,6 @@ export const todoActionTypes = {
   GET_TODO_BY_ID_FAILURE: 'GET_TODO_BY_ID_FAILURE'
 }
 
-export const saveCurPage = (curPage) => async(dispatch) => {
-  dispatch({
-    type: todoActionTypes.SAVE_CURRENT_PAGE,
-    payload: curPage
-  })
-}
-
-export const saveCurLimit = (limit) => async(dispatch) => {
-  dispatch({
-    type: todoActionTypes.SAVE_CURRENT_LIMIT,
-    payload: limit
-  })
-}
-
 export const getAllTodos = () => async(dispatch) => {
   const accessToken = getAccessToken()
   dispatch({
@@ -249,6 +235,20 @@ export const closeModal = () => {
   return{
     type: todoActionTypes.CLOSE_MODAL
   }
+}
+
+export const saveCurPage = (curPage) => async(dispatch) => {
+  dispatch({
+    type: todoActionTypes.SAVE_CURRENT_PAGE,
+    payload: curPage
+  })
+}
+
+export const saveCurLimit = (limit) => async(dispatch) => {
+  dispatch({
+    type: todoActionTypes.SAVE_CURRENT_LIMIT,
+    payload: limit
+  })
 }
 
 export const getTodoById = (id) => async(dispatch) => {

@@ -3,7 +3,6 @@ import { AiOutlineFlag,  AiOutlineThunderbolt, AiOutlineCheckCircle, AiFillDownS
   AiOutlineFileAdd, AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { BiTask } from 'react-icons/bi';
 
-
 export const tabHeaderData = [
     {
       text: 'task',
@@ -28,7 +27,7 @@ export const tabHeaderData = [
       position: 'between'
     },
     {
-      text: 'status',
+      text: 'completed',
       icon: <AiFillDownSquare />,
       sort: true,
       sortUpIc: <RiArrowUpSLine/>,

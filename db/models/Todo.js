@@ -32,7 +32,7 @@ const TodoSchema = new Schema({
     type: String,
     default: ''
   },
-  completed: {
+  status: {
     type: Boolean,
     default: false
   },

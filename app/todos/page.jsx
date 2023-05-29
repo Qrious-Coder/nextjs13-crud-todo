@@ -19,6 +19,7 @@ import {
 } from "@/redux/actions/todoActions";
 
 const TodosPage = () => {
+  const [sortedField, setSortedField] = useState(null);
   const [ note, setNote] = useState('')
   const dispatch = useDispatch()
   const { todoList } = useSelector( state => state.todo )
@@ -53,13 +54,13 @@ const TodosPage = () => {
 
   const handleSort = (sortBy) => {
     dispatch(getAllTodosWithFeatures(null,null, sortBy))
+    setSortedField(sortBy); // update the sortedField state
   }
 
   const handleOpenNote = async (id) => {
     dispatch(getTodoById(id))
     dispatch(openModal(id))
   };
-
 
   //AI suggested to useCallBack
   // const handleSave = useCallback( () => {
@@ -96,6 +97,7 @@ const TodosPage = () => {
       <TodoForm addTodo={ handleAdd }/>
       <TodoFilter />
       <TodoList todos={ todoList }
+                sortedField={sortedField}
                 onDelete={ handleDelete }
                 onEditableId = { handleEditableId }
                 onEdit={ handleEdit }
