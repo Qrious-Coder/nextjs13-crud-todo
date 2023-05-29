@@ -63,8 +63,8 @@ const todoReducer = (state = initialState, { type, payload }) => {
         loading: false
       }
     case todoActionTypes.EDIT_TODO_SUCCESS:
-      let editTodoId = state.todoList.findIndex( item => item._id.includes(payload._id))
-      Object.assign(state.todoList[editTodoId], payload )
+      let addNoteTodoId = state.todoList.findIndex( item => item._id.includes(payload._id))
+      Object.assign(state.todoList[addNoteTodoId], payload )
       return {
         ...state,
         editableTodoId: '',
