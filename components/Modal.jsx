@@ -1,4 +1,3 @@
-// Modal.jsx
 import React, { useState } from 'react';
 import { RiSaveLine, RiSaveFill } from 'react-icons/ri';
 

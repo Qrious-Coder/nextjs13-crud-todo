@@ -1,64 +1,71 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md'
-import { saveCurLimit, saveCurPage } from "@/redux/actions/todoActions";
 
-const Pagination = () => {
- const dispatch = useDispatch()
- const { total, limit, curPage } = useSelector(state => state.todo)
+const Pagination = ({ onPaginationChange }) => {
+  const dispatch = useDispatch()
+  const { total, limit, curPage } = useSelector(state => state.todo)
+  const [ localCurPage, setLocalCurPage ] = useState( curPage )
+  const [ localLimit, setLocalLimit ] = useState( limit ) 
 
-  const totalPages = Math.ceil(total/limit)
+  const totalPages = Math.ceil(total/localLimit)
 
   const handlePageNum = (num) =>{
-    dispatch(saveCurPage(num))
+    setLocalCurPage(num)
+    onPaginationChange(num, localLimit)
   }
   const handleLimitChange = (e) => {
-    dispatch(saveCurLimit(e.target.value))
-    dispatch(saveCurPage(1))
+    setLocalLimit(e.target.value)
+    setLocalCurPage(1)
+    onPaginationChange(1, e.target.value)
   }
 
   const handlePrevPage = () => {
-    let prePage = curPage > 1 ? curPage - 1 : 1
-    dispatch(saveCurPage(prePage))
+    let prevPage = curPage > 1 ? curPage - 1 : 1
+    setLocalCurPage(prevPage)
+    onPaginationChange(prevPage, localLimit)
   }
 
   const handleNextPage = () => {
     let nextPage = curPage < totalPages ? curPage + 1 : totalPages
-    dispatch(saveCurPage(nextPage))
+    setLocalCurPage(nextPage)
+    onPaginationChange(nextPage, localLimit)
   }
 
   const jumpToFirstPage = () => {
-    dispatch(saveCurPage(1))
+    setLocalCurPage(1)
+    onPaginationChange(1, localLimit)
   }
  
   const jumpToLastPage = () => {
-    dispatch(saveCurPage(totalPages))
+    setLocalCurPage(totalPages)
+    onPaginationChange(totalPages, localLimit)
   }
 
  return (
    <div className="flex justify-end mt-2">
     <button 
        onClick={ jumpToFirstPage } 
-       disabled={curPage === 1}
-       className={`${curPage === 1 ? 'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
+       disabled={ localCurPage === 1 }
+       className={`${localCurPage === 1 ? 'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
                    transition-colors duration-200`}
      >
        <MdKeyboardDoubleArrowLeft size={24} />
      </button>
      <button 
-       onClick={handlePrevPage} 
-       disabled={curPage === 1}
-       className={`${curPage === 1 ? 'text-gray-400' : 'text-purple-400 hover:text-purple-500'}
+       onClick={ handlePrevPage } 
+       disabled={ localCurPage === 1 }
+       className={`${localCurPage === 1 ? 'text-gray-400' : 'text-purple-400 hover:text-purple-500'}
                    transition-colors duration-200`}
      >
        <MdKeyboardArrowLeft size={24} />
      </button>
-     {Array.from({length: totalPages}, (_, index) => index + 1).map(page => (
+     {Array.from({length: totalPages}, (_, index) => index + 1).map( (page, idx ) => (
        <button 
-         key={ page }
-         onClick={() => handlePageNum(page)}
+         key={ idx }
+         onClick={ () => handlePageNum(page) }
          className={`mx-1 px-3 rounded border border-purple-400 
-                     ${curPage === page ? 'bg-purple-400 text-white' : ''}`}
+                     ${ localCurPage === page ? 'bg-purple-400 text-white' : ''}` }
        >
          {page}
        </button>
@@ -73,13 +80,13 @@ const Pagination = () => {
      </button>
      <button 
        onClick={ jumpToLastPage } 
-       disabled={ curPage === totalPages }
-       className={`${curPage === totalPages ?  'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
+       disabled={ localCurPage === totalPages }
+       className={`${localCurPage === totalPages ?  'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
                    transition-colors duration-200`}
      >
        <MdKeyboardDoubleArrowRight size={24} />
      </button>
-     <select className='filter_input ml-2' value={ limit } onChange={ handleLimitChange }>
+     <select className='filter_input ml-2' value={ localLimit } onChange={ handleLimitChange }>
        <option value={ 5 }>5</option>
        <option value={ 10 }>10</option>
        <option value={ 15 }>15</option>

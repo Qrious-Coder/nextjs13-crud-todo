@@ -18,7 +18,6 @@ export const GET = requireAuth(async(req) =>{
 
 export const PATCH = requireAuth(async(req ) => {
   const data = await req.json()
-  console.log(`data:`, data)
   const { title, priority , completed, note } = data
   const url = new URL(req.url, `http://${req.headers.host}`);
   const id = url.pathname.split('/').pop();

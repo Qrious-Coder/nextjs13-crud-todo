@@ -54,7 +54,6 @@ export const saveCurLimit = (limit) => async(dispatch) => {
   })
 }
 
-
 export const getAllTodos = () => async(dispatch) => {
   const accessToken = getAccessToken()
   dispatch({
@@ -100,6 +99,10 @@ export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy 
       }
     })
     const { todos, totalCount } = res.data
+
+    //Pagination
+    dispatch(saveCurLimit(page))
+    dispatch(saveCurPage(limit))
 
     dispatch({
       type: todoActionTypes.GET_TODO_FEATURE_SUCCESS,

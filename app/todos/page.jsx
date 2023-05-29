@@ -21,9 +21,8 @@ const TodosPage = () => {
   const { showModal, addNoteTodoId, curPage, limit } = useSelector(state => state.todo)
 
   useEffect(() => {
-    // alert(`Why keep dispatching?`)
-    handlePagination(curPage, limit)
-  }, [ curPage, limit ])
+    dispatch( getAllTodosWithFeatures() )
+  }, [])
 
   const handleDelete = async (id) => {
     dispatch(deleteTodo(id))
@@ -67,7 +66,7 @@ const TodosPage = () => {
                 onEdit={ handleEdit }
                 onSort={ handleSort }
       />
-      <Pagination />
+      <Pagination onPaginationChange={ handlePagination } />
     </div>
   );
 };
