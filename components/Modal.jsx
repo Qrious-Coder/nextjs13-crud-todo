@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallBack } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { RiSaveLine, RiSaveFill, RiCloseLine, RiCloseFill } from 'react-icons/ri';
 
 const Modal = ({ isOpen, onSave, onClose, children }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isExitHovered, setIsExitHovered] = useState(false);
 
-  const handleKeyDown = useCallBack(() => (event) => {
+  const handleKeyDown = useCallback((event) => {
     if (event.key === 'Enter') {
       onSave();
     }

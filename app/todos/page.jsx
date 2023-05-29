@@ -14,6 +14,7 @@ import {
   getAllTodosWithFeatures,
   addNote,
   openModal,
+  closeModal,
   getTodoById
 } from "@/redux/actions/todoActions";
 
@@ -29,6 +30,7 @@ const TodosPage = () => {
 
   useEffect(() => {
     if(currentTodo) {
+      console.log('ahhhhhhh', currentTodo)
       setNote( currentTodo.note )
     }
   }, [currentTodo])

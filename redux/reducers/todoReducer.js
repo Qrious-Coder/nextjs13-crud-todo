@@ -86,16 +86,11 @@ const todoReducer = (state = initialState, { type, payload }) => {
         (todo) => todo.title.toLowerCase().includes(title.toLowerCase())
       );
     
-    case todoActionTypes.GET_TODO_BY_ID_FAILURE:  
+    case todoActionTypes.GET_TODO_BY_ID_SUCCESS:
       return {
         ...state,
         currentTodo: payload,
         loading: false,
-      };
-      return {
-        ...state,
-        loading: false,
-        todoList: filteredList,
       };
 
     case todoActionTypes.ADD_NOTE_SUCCESS:
@@ -119,7 +114,7 @@ const todoReducer = (state = initialState, { type, payload }) => {
     case todoActionTypes.CLOSE_MODAL:
       return {
         ...state,
-        showModal: true,
+        showModal: false,
         addNoteTodoId: '',
         loading: false,
       }  

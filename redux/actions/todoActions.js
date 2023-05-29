@@ -263,7 +263,6 @@ export const getTodoById = (id) => async(dispatch) => {
       }
     })
     const todo = res.data
-
     dispatch({
       type: todoActionTypes.GET_TODO_BY_ID_SUCCESS,
       payload: todo
