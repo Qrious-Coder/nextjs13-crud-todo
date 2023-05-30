@@ -3,7 +3,8 @@ import React, {useEffect, useState } from 'react';
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
 import TodoFilter from '@/components/TodoFilter';
-import Modal from "@/components/Modal";
+import Clock from '@/components/Clock';
+import TodoNote from "@/components/TodoNote";
 import Pagination from "@/components/Pagination";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -31,7 +32,6 @@ const TodosPage = () => {
 
   useEffect(() => {
     if(currentTodo) {
-      console.log('ahhhhhhh', currentTodo)
       setNote( currentTodo.note )
     }
   }, [currentTodo])
@@ -83,9 +83,9 @@ const TodosPage = () => {
 
   return (
     <div className="todo-page">
-      <Modal isOpen={ showModal }
-             onSave={ () => handleSave( addNoteTodoId, note) }
-             onClose={ handleClose }
+      <TodoNote isOpen={ showModal }
+                onSave={ () => handleSave( addNoteTodoId, note) }
+                onClose={ handleClose }
       >
         { !loading && <textarea
           className="p-2 mb-4 w-full h-full outline-none resize-none"
@@ -93,7 +93,7 @@ const TodosPage = () => {
           placeholder={`Note something...`}
           onChange={(e) => setNote(e.target.value)}
         /> } 
-      </Modal>
+      </TodoNote>
       <TodoForm addTodo={ handleAdd }/>
       <TodoFilter />
       <TodoList todos={ todoList }

@@ -1,12 +1,11 @@
 'use client'
 import { useState } from 'react';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
 const EntryForm = () => {
   const router  = useRouter()
-  const { data: session, status } = useSession()
   const [formData, setFormData] = useState({
     name: '',
     email: '',

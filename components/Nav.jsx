@@ -35,11 +35,12 @@ const Nav = () => {
         <div className="flex items-center">
           <FaCheckSquare className="text-3xl text-blue-600 transform rotate-[-10deg] -translate-y-1" />
           <div className="p-2">
-            <h1 className="inline-block bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 bg-clip-text text-3xl text-transparent">
+            <h1 className="inline-block bg-gradient-to-l from-blue-600 via-green-500 to-indigo-400 bg-clip-text text-3xl text-transparent">
               Nextjs TODO
             </h1>
           </div>
           <ul className="flex space-x-4 text-white">
+            <li>Home</li>
             <li>Today</li>
             <li>Yesterday</li>
           </ul>
