@@ -3,8 +3,8 @@ import React, {useEffect, useState } from 'react';
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
 import TodoFilter from '@/components/TodoFilter';
-import Clock from '@/components/Clock';
 import TodoNote from "@/components/TodoNote";
+import ProgressBar from "@/components/ProgressBar";
 import Pagination from "@/components/Pagination";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -94,6 +94,7 @@ const TodosPage = () => {
           onChange={(e) => setNote(e.target.value)}
         /> } 
       </TodoNote>
+      <ProgressBar />
       <TodoForm addTodo={ handleAdd }/>
       <TodoFilter />
       <TodoList todos={ todoList }

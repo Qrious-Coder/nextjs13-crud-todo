@@ -1,18 +1,27 @@
 'use client'
+import React, { useState, useEffect } from "react";
 import Clock from "@/components/Clock";
-import React from "react";
 import {useRouter} from "next/navigation";
-import { GiCuckooClock } from 'react-icons/gi';
+import Loading from '@/components/Loading';
+import { homeLeftData } from "@/utils/homeData";
 
 const Page = () => {
   const router = useRouter()
+  const [isClient, setClient] = useState(false);
+
+  useEffect(() => {
+    setClient(true);
+  }, []);
 
   const gotoEntryPage = () => {
     router.push('/entry') // replace entryPageLink with actual path
   }
 
   const gotoDemoPage = () => {
-    router.push('demoPageLink') // replace demoPageLink with actual path
+    router.push('demoPageLink') //Todo: create demo link
+  }
+  if (!isClient) {
+    return <Loading />
   }
 
   return (
@@ -21,7 +30,7 @@ const Page = () => {
         <div className="pl-10">
           <Clock />
           <div className="mt-5">
-            <button className="home_btn show_btn" onClick={gotoEntryPage}>
+            <button className="home_btn show_btn" onClick={ gotoEntryPage }>
               Yes, show me!
             </button>
             <button
@@ -33,8 +42,18 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="w-1/2 flex justify-center items-center">
-        <GiCuckooClock size={450} color={'#8b5cf6'}/>
+      <div className="w-1/2 flex justify-center items-center relative">
+        {homeLeftData.map((item, idx) => (
+          <div key={idx}
+               className={item.position}
+               style={{ top: item.top,
+                 left: item.left,
+                 animationName: item.animation,
+                 animationDuration: '2s',
+                 animationIterationCount: 'infinite'}}>
+              {item.icon}
+          </div>
+        ))}
       </div>
       <style jsx>{`
         .home_btn {
@@ -68,6 +87,23 @@ const Page = () => {
           background: var(--color);
           color: #d9f99d;
         }
+
+        @keyframes bounce1 {
+          0%   { transform: translateY(0); }
+          50%  { transform: translateY(-20px); }
+          100% { transform: translateY(0); }
+        }
+        @keyframes bounce2 {
+          0%   { transform: translateY(0); }
+          50%  { transform: translateY(-15px); }
+          100% { transform: translateY(0); }
+        }
+        @keyframes bounce3 {
+          0%   { transform: translateY(0); }
+          50%  { transform: translateY(-10px); }
+          100% { transform: translateY(0); }
+        } 
+        
       `}</style>
     </section>
   )
