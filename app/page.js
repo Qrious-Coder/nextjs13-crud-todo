@@ -14,10 +14,11 @@ const Page = () => {
   }, []);
 
   const gotoEntryPage = () => {
-    router.push('/entry') // replace entryPageLink with actual path
+    router.push('/entry')
   }
 
   const gotoDemoPage = () => {
+    alert('Sorry! This feature is still under development')
     router.push('demoPageLink') //Todo: create demo link
   }
   if (!isClient) {
@@ -102,8 +103,7 @@ const Page = () => {
           0%   { transform: translateY(0); }
           50%  { transform: translateY(-10px); }
           100% { transform: translateY(0); }
-        } 
-        
+        }
       `}</style>
     </section>
   )
