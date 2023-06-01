@@ -18,7 +18,7 @@ export const GET = requireAuth(async(req) =>{
 
 export const PATCH = requireAuth(async(req ) => {
   const data = await req.json()
-  const { title, priority , completed, note } = data
+  const { title, priority , status , note } = data
   const url = new URL(req.url, `http://${req.headers.host}`);
   const id = url.pathname.split('/').pop();
 
@@ -33,7 +33,7 @@ export const PATCH = requireAuth(async(req ) => {
       foundTodo.priority = priority
       foundTodo.action = priority
     }
-    if(completed !== undefined) foundTodo.completed = completed
+    if(status !== undefined) foundTodo.status = status
     if(note) foundTodo.note = note
 
     await foundTodo.save()

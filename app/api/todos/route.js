@@ -21,9 +21,9 @@ export const GET = requireAuth(async (req) => {
 
     if(status){
       if( status === 'true'){
-        query.completed = true
+        query.status = true
       }else if(status === 'false'){
-        query.completed = false
+        query.status = false
       }
     }
 
@@ -55,7 +55,6 @@ export const GET = requireAuth(async (req) => {
         .limit(pageSize)
     }
 
-    console.log(`@@@@ result ====>`, todos)
     return new Response(JSON.stringify({ todos, totalCount }), { status: 200 });
 
   } catch (error) {

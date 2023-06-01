@@ -25,7 +25,7 @@ function ProgressBar({ progress }) {
 
   return (
     <div className="relative mt-20">
-      <div className="w-full h-6 bg-violet-500 rounded-lg p-0.5 mb-5">
+      <div className="w-full h-6 outline outline-purple-400 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur rounded-lg p-0.5 mb-5">
         <div className={`h-full rounded-lg bg-gradient-to-r ${color}`} style={{width: `${progress}%`}}></div>
         <div className="absolute inset-0 flex justify-between w-full">
           {[0, 25, 50, 75, 100].map((item, index) => (

@@ -1,13 +1,12 @@
 'use client'
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai'
 import { FaStickyNote } from 'react-icons/fa'
-import { setEditableTodo, openModal } from '@/redux/actions/todoActions'
 import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
 
 const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
-  const [curTodo, setCurTodo] = useState(todo);
+  const [ curTodo, setCurTodo ] = useState(todo);
   const { editableTodoId } = useSelector(state => state.todo)
   const IsEditable = editableTodoId === curTodo._id;
 
@@ -16,7 +15,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
   };
 
   const handleCheckboxChange = () => {
-    const updatedTodo = { ...curTodo, completed: !curTodo.completed };
+    const updatedTodo = { ...curTodo, status: !curTodo.status };
     setCurTodo(updatedTodo);
     onEdit(curTodo._id, updatedTodo);
   }
@@ -67,7 +66,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
           <input
             className="text_input"
             type="checkbox"
-            checked={curTodo.completed ===true}
+            checked={curTodo.status === true}
             onChange={ handleCheckboxChange }
           />
         </td>

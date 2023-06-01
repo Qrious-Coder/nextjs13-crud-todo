@@ -13,6 +13,7 @@ import {
   deleteTodo,
   createTodo,
   getAllTodosWithFeatures,
+  getCompletedTodosCount,
   addNote,
   openModal,
   closeModal,
@@ -20,15 +21,19 @@ import {
 } from "@/redux/actions/todoActions";
 
 const TodosPage = () => {
-  const [sortedField, setSortedField] = useState(null);
-  const [ note, setNote] = useState('')
   const dispatch = useDispatch()
-  const { todoList } = useSelector( state => state.todo )
-  const { showModal, addNoteTodoId, currentTodo, loading } = useSelector(state => state.todo)
+  const [ sortedField, setSortedField ] = useState(null);
+  const [ note, setNote] = useState('')
+  const { todoList, showModal, addNoteTodoId,
+    currentTodo, loading, doneTodoCount, total } = useSelector(state => state.todo)
 
   useEffect(() => {
     dispatch( getAllTodosWithFeatures() )
   }, [])
+
+  useEffect(() => {
+    dispatch( getCompletedTodosCount() )
+  }, [doneTodoCount])
 
   useEffect(() => {
     if(currentTodo) {
@@ -81,6 +86,8 @@ const TodosPage = () => {
     dispatch(getAllTodosWithFeatures(null, null, null, currentPage, limitPerPage))
   }
 
+  const progress = todoList?.length > 0 ? parseFloat((( doneTodoCount/total ) * 100).toFixed(2)) : 0
+
   return (
     <div className="todo-page">
       <TodoNote isOpen={ showModal }
@@ -94,11 +101,11 @@ const TodosPage = () => {
           onChange={(e) => setNote(e.target.value)}
         /> } 
       </TodoNote>
-      <ProgressBar />
+      <ProgressBar progress = { progress }/>
       <TodoForm addTodo={ handleAdd }/>
       <TodoFilter />
       <TodoList todos={ todoList }
-                sortedField={sortedField}
+                sortedField={ sortedField }
                 onDelete={ handleDelete }
                 onEditableId = { handleEditableId }
                 onEdit={ handleEdit }

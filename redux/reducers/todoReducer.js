@@ -9,34 +9,20 @@ const initialState = {
   error: null,
   loading: false,
   showModal: false,
-
+  doneTodoCount: 0,
   curPage: 1,
   limit: 5,
 };
 
 const todoReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case todoActionTypes.GET_TODOS_REQUEST:
-    case todoActionTypes.GET_TODOS_FEATURE_REQUEST:
-    case todoActionTypes.ADD_TODO_REQUEST:
-    case todoActionTypes.EDIT_TODO_REQUEST:
-    case todoActionTypes.DELETE_TODO_REQUEST:
-    case todoActionTypes.SEARCH_TODO_REQUEST:
-    case todoActionTypes.ADD_NOTE_REQUEST:
-    case todoActionTypes.GET_TODO_BY_ID_REQUEST:
+    case todoActionTypes.SEND_TODOS_REQUEST:
       return {
         ...state,
         loading: true,
       }
   
-    case todoActionTypes.GET_TODOS_FAILURE:
-    case todoActionTypes.GET_TODOS_FEATURE_FAILURE:
-    case todoActionTypes.ADD_TODO_FAILURE:
-    case todoActionTypes.EDIT_TODO_FAILURE:  
-    case todoActionTypes.DELETE_TODO_FAILURE:  
-    case todoActionTypes.SEARCH_TODO_FAILURE:
-    case todoActionTypes.ADD_NOTE_FAILURE:
-    case todoActionTypes.GET_TODO_BY_ID_FAILURE:  
+    case todoActionTypes.SEND_TODOS_FAILURE:
       return {
         ...state,
         loading: false,
@@ -85,7 +71,12 @@ const todoReducer = (state = initialState, { type, payload }) => {
       const filteredList = state.todoList.filter(
         (todo) => todo.title.toLowerCase().includes(title.toLowerCase())
       );
-    
+      return {
+        ...state,
+        todos: filteredList,
+        loading: false,
+      };
+
     case todoActionTypes.GET_TODO_BY_ID_SUCCESS:
       return {
         ...state,
@@ -129,6 +120,12 @@ const todoReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         limit: payload,
+        loading: false,
+      };
+    case todoActionTypes.GET_COMPLETED_TODO_SUCCESS:
+      return {
+        ...state,
+        doneTodoCount: payload,
         loading: false,
       };
     default:
