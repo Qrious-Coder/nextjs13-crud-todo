@@ -26,13 +26,12 @@ const Clock = () => {
       </h1>
       <div className="flex space-x-4">
         {['hours', 'minutes', 'seconds'].map((unit, i) => (
-          <>
-            <span key={i} className="flex flex-col items-center justify-center relative bg-gray-700 shadow-lg rounded-lg h-24 w-16 p-2">
+          <span key={i} >
+            <span className="flex flex-col items-center justify-center relative bg-gray-700 shadow-lg rounded-lg h-24 w-16 p-2">
               <span className={`text-3xl font-bold ${isHourLeft ? 'text-yellow-500' : 'text-green-300'}`}>{time ? pad(time[unit.toLowerCase()]) : '00'}</span>
             </span>
             <span className="mt-8 text-lg">{unit}</span>
-
-          </>
+          </span>
         ))}
         <span className="mt-4 text-5xl font-bold text_gradient">
           left...

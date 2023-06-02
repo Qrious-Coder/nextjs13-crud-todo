@@ -122,7 +122,7 @@ const todoReducer = (state = initialState, { type, payload }) => {
         limit: payload,
         loading: false,
       };
-    case todoActionTypes.GET_COMPLETED_TODO_SUCCESS:
+    case todoActionTypes.GET_COMPLETED_TODOS_SUCCESS:
       return {
         ...state,
         doneTodoCount: payload,

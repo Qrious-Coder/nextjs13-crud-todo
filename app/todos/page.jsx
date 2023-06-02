@@ -67,11 +67,6 @@ const TodosPage = () => {
     dispatch(openModal(id))
   };
 
-  //AI suggested to useCallBack
-  // const handleSave = useCallback( () => {
-  //   dispatch(addNote(id, note))
-  //   setNote('')
-  // }, [dispatch])
 
   const handleSave =(id, note) => {
     dispatch(addNote( id, note ))

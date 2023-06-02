@@ -4,7 +4,7 @@ import cs from 'classnames';
 import { FaTimes, FaCheckCircle, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
 
 const Alert = ({ children }) => {
-  const [isShow, setIsShow] = useState(true);
+  const [ isShow, setIsShow ] = useState(true);
   const { alertText, alertType, showAlert } = useSelector((state) => state.common);
 
   const handleClose = () => {

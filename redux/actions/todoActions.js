@@ -30,7 +30,7 @@ export const todoActionTypes = {
 
   GET_TODO_BY_ID_SUCCESS: 'GET_TODO_BY_ID_SUCCESS',
 
-  GET_COMPLETED_TODO_SUCCESS: 'GET_COMPLETED_TODO_SUCCESS',
+  GET_COMPLETED_TODOS_SUCCESS: 'GET_COMPLETED_TODOS_SUCCESS',
 }
 
 // export const getAllTodos = () => async(dispatch) => {
@@ -107,7 +107,7 @@ export const getCompletedTodosCount = () => async(dispatch) => {
     })
     const { doneTodoCount } = res.data
     dispatch({
-      type: todoActionTypes.GET_COMPLETED_TODO_SUCCESS,
+      type: todoActionTypes.GET_COMPLETED_TODOS_SUCCESS,
       payload: doneTodoCount
     })
   }catch(err){

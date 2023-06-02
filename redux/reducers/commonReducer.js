@@ -1,7 +1,6 @@
 import { commonActionTypes } from "@/redux/actions/commonActions";
 
 const initialState = {
-  // isLoading: false,
   showAlert: false,
   alertText: '',
   alertType: '',
@@ -14,7 +13,6 @@ const commonReducer = (state = initialState, action) => {
       const { alertText, alertType } = action.payload
       return {
         ...state,
-        // isLoading: false,
         showAlert: true,
         alertText: alertText,
         alertType: alertType
@@ -22,7 +20,6 @@ const commonReducer = (state = initialState, action) => {
     case commonActionTypes.HIDE_ALERT:
       return {
         ...state,
-        // isLoading: false,
         showAlert: false,
         alertText: '',
         alertType: ''

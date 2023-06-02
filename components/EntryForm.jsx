@@ -1,18 +1,31 @@
 'use client'
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import {useEffect, useState} from 'react';
+import { useSession} from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
+import { useDispatch } from "react-redux";
+import { displayAlert } from "@/redux/actions/commonActions";
+import { login, register } from "@/redux/actions/entryActions";
+import Alert from '@/components/Alert'
+import {saveAccessToken} from "@/utils/token";
 
 const EntryForm = () => {
   const router  = useRouter()
+  const dispatch = useDispatch()
+  const { data: session, status } = useSession()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   });
 
-  const [error, setError] = useState(null)
+  useEffect(() => {
+    if(status === 'authenticated'){
+      saveAccessToken(session?.session.accessToken);
+      router.push("/todos");
+    }
+  }, [status]);
+
   const [isLogin, setIsLogin] = useState(true);
 
   const handleFormChange = (e) => {
@@ -27,17 +40,12 @@ const EntryForm = () => {
     const { name, email, password }= formData
     if (!isLogin) {
       if(!name || !email || !password){
-        setError("All fields are required");
+        dispatch(displayAlert({
+          alertText:'All fields are required',
+          alertType: 'error' }))
         return;
       }
-
-      const res = await fetch('/api/auth/register', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({name, email, password}),
-      })
+      dispatch(register({name, email, password }))
 
       const result = await res.json();
       if (res.ok) {
@@ -48,23 +56,14 @@ const EntryForm = () => {
       }
       return result;
     } else {
-      //todo: dispatch alert
       if (!email || !password) {
-        setError("All fields are required");
+        dispatch(displayAlert({
+          alertText:'All fields are required',
+          alertType: 'error' }))
         return;
       }
-
-      const res = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
-      if (res.error) {
-        setError(res.error);
-        return;
-      }
+      dispatch(login({ email, password }))
       setFormData({ email: "", password: "" });
-      router.push("/todos");
     }
   };
 
@@ -77,6 +76,7 @@ const EntryForm = () => {
       <div className="max-w-md w-full p-6 bg-gray-800 rounded-lg shadow-lg">
         <form onSubmit={handleSubmit}>
           <h1 className="text-center text-2xl font-bold mb-4 text-white">{isLogin ? 'Login' : 'Register'}</h1>
+          <Alert />
           {!isLogin && (
             <div className="relative">
               <span className="absolute left-3 top-2">
@@ -118,7 +118,6 @@ const EntryForm = () => {
               required
             />
           </div>
-          {error && <p className="text-danger text-center">{error}</p>}
           <button
             type="submit"
             className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white rounded-md py-2 px-4 mb-4 border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
@@ -126,9 +125,9 @@ const EntryForm = () => {
             {isLogin ? 'Login' : 'Register'}
           </button>
           <p className="text-center text-sm text-gray-400">
-            {isLogin ? "Don't have an account?" : 'Already have an account?'}
-            <span className="text-sm text-gray-200 ml-1 cursor-pointer underline" onClick={toggleForm}>
-              {isLogin ? 'Register here' : 'Login here'}
+            { isLogin ? "Don't have an account?" : 'Already have an account?' }
+            <span className="text-sm text-gray-200 ml-1 cursor-pointer underline" onClick={ toggleForm }>
+              { isLogin ? 'Register here' : 'Login here' }
             </span>
           </p>
         </form>

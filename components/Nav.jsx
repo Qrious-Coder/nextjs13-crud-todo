@@ -1,32 +1,36 @@
-import React, { useEffect } from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import {signOut as nextAuthSignOut, useSession} from 'next-auth/react';
+import { signOut as nextAuthSignOut, useSession } from 'next-auth/react';
 import { FaCheckSquare } from 'react-icons/fa';
-import {removeToken, saveAccessToken, getAccessToken} from "@/utils/token";
-import {useRouter} from "next/navigation";
+import { removeToken, saveAccessToken } from "@/utils/token";
+import { useRouter } from "next/navigation";
 import Loading from '@/components/Loading'
 
 const Nav = () => {
   const router = useRouter();
   const { data: session, status } = useSession()
+  const [ loading, setLoading ] = useState(true)
 
   useEffect(() => {
-    if (!session && status !== 'loading') {
-      router.push('/');
-    } else {
-      saveAccessToken(session?.session.accessToken);
-      router.push('/todos');
+    console.log(`session on Nav:`, session, `status: ${status}` )
+    if(status === 'unauthenticated'){
+      setLoading(false)
+      router.push('/')
+    } else if(status === 'authenticated'){
+      setLoading(false)
+    }else if(status === 'loading'){
+      setLoading(true)
     }
-  }, [session, status]);
 
+  }, [status]);
 
-  if(status === 'loading') {
+  if(loading) {
     return <Loading />
   }
   const signOut = async () => {
     await nextAuthSignOut();
     removeToken();
-    router.push('/entry')
   };
 
   return (
