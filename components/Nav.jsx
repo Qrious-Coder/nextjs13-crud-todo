@@ -3,26 +3,22 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { signOut as nextAuthSignOut, useSession } from 'next-auth/react';
 import { FaCheckSquare } from 'react-icons/fa';
-import { removeToken, saveAccessToken } from "@/utils/token";
-import { useRouter } from "next/navigation";
+import { BsClipboardCheck, BsClipboardCheckFill } from 'react-icons/bs'
+import { AiOutlineHome , AiTwotoneHome } from 'react-icons/ai'
+import { removeToken } from "@/utils/token";
 import Loading from '@/components/Loading'
+import { usePathname, useRouter } from "next/navigation";
 
 const Nav = () => {
-  const router = useRouter();
   const { data: session, status } = useSession()
   const [ loading, setLoading ] = useState(true)
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    console.log(`session on Nav:`, session, `status: ${status}` )
-    if(status === 'unauthenticated'){
+    if(status !== 'loading'){
       setLoading(false)
-      router.push('/')
-    } else if(status === 'authenticated'){
-      setLoading(false)
-    }else if(status === 'loading'){
-      setLoading(true)
     }
-
   }, [status]);
 
   if(loading) {
@@ -32,6 +28,15 @@ const Nav = () => {
     await nextAuthSignOut();
     removeToken();
   };
+
+  const handleTodoClick = () => {
+    if(!session){
+      alert('Register or login to view your Todos!');
+      router.push('/entry');
+    }else{
+      router.push('/todos');
+    }
+  }
 
   return (
     <nav className="fixed top-0 w-full bg-gray-900 bg-opacity-90 shadow-md">
@@ -43,10 +48,21 @@ const Nav = () => {
               Nextjs TODO
             </h1>
           </div>
-          <ul className="flex space-x-4 text-white">
-            <li>Home</li>
-            <li>Today</li>
-            <li>Yesterday</li>
+          <ul className="flex space-x-2">
+            <li>
+              <Link href="/">
+                { pathname === '/' ?
+                  <AiTwotoneHome className="text-purple-600 hover:text-violet-600 transition-all duration-300 transform hover:scale-110" style={{fontSize: '36px'}}/>
+                  : <AiOutlineHome className="text-violet-700 hover:text-violet-900 transition-all duration-300 transform hover:scale-110" style={{fontSize: '36px'}}/>
+                }
+              </Link>
+            </li>
+            <li onClick={ handleTodoClick }>
+              { pathname === '/todos' ?
+                <BsClipboardCheckFill className="text-purple-600 hover:text-violet-600  transition-all duration-300 transform hover:scale-110 cursor-pointer" style={{fontSize: '30px'}}/>
+                : <BsClipboardCheck className="text-violet-700 hover:text-violet-900 transition-all duration-300 transform hover:scale-110 cursor-pointer" style={{fontSize: '30px'}}/>
+              }
+            </li>
           </ul>
         </div>
         <div className="flex items-center space-x-4">
@@ -60,7 +76,7 @@ const Nav = () => {
                 bg-gradient-to-br
                 from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4
                 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-                onClick={() => signOut()}
+                onClick={ signOut }
               >
                 <span
                   className="nav_btn_gradient_span">

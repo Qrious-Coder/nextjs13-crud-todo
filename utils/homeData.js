@@ -1,7 +1,8 @@
 import React from "react";
-import {GiCuckooClock, GiPencil} from "react-icons/gi";
-import {BsClipboard} from "react-icons/bs";
-import {IoMdCheckmarkCircleOutline} from "react-icons/io";
+import { GiCuckooClock, GiPencil } from "react-icons/gi";
+import { BsClipboard, BsCheck2All } from "react-icons/bs";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+
 export const homeLeftData = [
   {
     key: 'objLeft',
@@ -24,7 +25,7 @@ export const homeLeftData = [
   {
     key: 'objCenterOnTop',
     bubble: false,
-    icon: <IoMdCheckmarkCircleOutline className="text-green-400" style={{fontSize: '90px'}}/>,
+    icon: <BsCheck2All className="text-green-400" style={{fontSize: '90px'}}/>,
     position: 'absolute',
     animation: null,
     top: '-20px',

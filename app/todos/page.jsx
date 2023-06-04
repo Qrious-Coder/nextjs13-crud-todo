@@ -19,6 +19,8 @@ import {
   closeModal,
   getTodoById
 } from "@/redux/actions/todoActions";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 const TodosPage = () => {
   const dispatch = useDispatch()
@@ -26,6 +28,13 @@ const TodosPage = () => {
   const [ note, setNote] = useState('')
   const { todoList, showModal, addNoteTodoId,
     currentTodo, loading, doneTodoCount, total } = useSelector(state => state.todo)
+  const { data: session, status } = useSession()
+  const router = useRouter();
+  useEffect(() => {
+    if(status === 'unauthenticated'){
+      router.push('/')
+    }
+  }, [status]);
 
   useEffect(() => {
     dispatch( getAllTodosWithFeatures() )
@@ -82,32 +91,34 @@ const TodosPage = () => {
   }
 
   const progress = todoList?.length > 0 ? parseFloat((( doneTodoCount/total ) * 100).toFixed(2)) : 0
-
   return (
-    <div className="todo-page">
-      <TodoNote isOpen={ showModal }
-                onSave={ () => handleSave( addNoteTodoId, note) }
-                onClose={ handleClose }
-      >
-        { !loading && <textarea
-          className="p-2 mb-4 w-full h-full outline-none resize-none"
-          value={ note }
-          placeholder={`Note something...`}
-          onChange={(e) => setNote(e.target.value)}
-        /> } 
-      </TodoNote>
-      <ProgressBar progress = { progress }/>
-      <TodoForm addTodo={ handleAdd }/>
-      <TodoFilter />
-      <TodoList todos={ todoList }
-                sortedField={ sortedField }
-                onDelete={ handleDelete }
-                onEditableId = { handleEditableId }
-                onEdit={ handleEdit }
-                onSort={ handleSort }
-                onOpenNote = { handleOpenNote } />
-      <Pagination onPaginationChange={ handlePagination } />
-    </div>
+    <>
+      { status === 'authenticated' && <div className="todo-page">
+        <TodoNote isOpen={ showModal }
+                  onSave={ () => handleSave( addNoteTodoId, note) }
+                  onClose={ handleClose }
+        >
+          { !loading && <textarea
+            className="p-2 mb-4 w-full h-full outline-none resize-none"
+            value={ note }
+            placeholder={`Note something...`}
+            onChange={(e) => setNote(e.target.value)}
+          /> }
+        </TodoNote>
+        <ProgressBar progress = { progress }/>
+        <TodoForm addTodo={ handleAdd }/>
+        <TodoFilter />
+        <TodoList todos={ todoList }
+                  sortedField={ sortedField }
+                  onDelete={ handleDelete }
+                  onEditableId = { handleEditableId }
+                  onEdit={ handleEdit }
+                  onSort={ handleSort }
+                  onOpenNote = { handleOpenNote } />
+        <Pagination onPaginationChange={ handlePagination } />
+      </div>}
+    </>
+
   );
 };
 

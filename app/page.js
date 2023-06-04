@@ -1,13 +1,13 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import Clock from "@/components/Clock";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import Loading from '@/components/Loading';
 import { homeLeftData } from "@/utils/homeData";
 
 const Page = () => {
-  const router = useRouter()
   const [isClient, setClient] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setClient(true);
@@ -17,9 +17,9 @@ const Page = () => {
     router.push('/entry')
   }
 
-  const gotoDemoPage = () => {
+  const takeTour = () => {
     alert('Sorry! This feature is still under development')
-    router.push('demoPageLink') //Todo: create demo link
+    // router.push('demoPageLink') //Todo: create demo link
   }
   if (!isClient) {
     return <Loading />
@@ -36,23 +36,23 @@ const Page = () => {
             </button>
             <button
               className="home_btn"
-              onClick={gotoDemoPage}
+              onClick={ takeTour }
             >
               Take a tour
             </button>
           </div>
         </div>
       </div>
-      <div className="w-1/2 flex justify-center items-center relative">
-        {homeLeftData.map((item, idx) => (
-          <div key={idx}
-               className={item.position}
+      <div className="w-1/2 text-green-400 flex justify-center items-center relative">
+        { homeLeftData.map((item, idx) => (
+          <div key={ idx }
+               className={ item.position }
                style={{ top: item.top,
                  left: item.left,
                  animationName: item.animation,
                  animationDuration: '2s',
                  animationIterationCount: 'infinite'}}>
-              {item.icon}
+              { item.icon }
           </div>
         ))}
       </div>
