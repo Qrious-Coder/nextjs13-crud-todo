@@ -47,14 +47,13 @@ const EntryForm = () => {
       }
       dispatch(register({name, email, password }))
 
-      const result = await res.json();
-      if (res.ok) {
-        setFormData({ name: "", email: "", password: "" });
-        router.push("/todos");
-      } else {
-        setError(result.error);
-      }
-      return result;
+      //get callback later
+      // const result = await res.json();
+      // if (res.ok) {
+      //   setFormData({ name: "", email: "", password: "" });
+      //   setIsLogin(true); // Flipping the form to login.
+      // }
+      // return result;
     } else {
       if (!email || !password) {
         dispatch(displayAlert({

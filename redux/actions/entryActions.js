@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {signIn } from 'next-auth/react';
 import { displayAlert } from "@/redux/actions/commonActions";
 
@@ -35,9 +36,9 @@ export const register = ({ name, email, password }) => async(dispatch) => {
     dispatch({
       type: entryActionTypes.ENTRY_FAILURE,
     })
-
+    console.log(`@ ===> /api/auth/register ==>err:`, err.message)
     dispatch(displayAlert({
-      alertText: err,
+      alertText: err.message,
       alertType: 'error'
     }))
   }
