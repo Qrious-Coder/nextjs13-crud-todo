@@ -6,16 +6,21 @@ import store from '@/redux/store';
 import Nav from "@/components/Nav";
 import React from "react";
 import { usePathname } from 'next/navigation';
+import { metadata } from "@/utils/metadata";
 
-export const metadata = {
-  title: 'NextCRUD',
-  description: 'Create a full functional CRUD app with Next.js'
-}
+// export const metadata = {
+//   title: 'NextCRUD',
+//   description: 'Create a full functional CRUD app with Next.js'
+// }
 
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
   return (
     <html lang={'en'}>
+    <head>
+      <title>{metadata.title}</title>
+      <meta name="description" content={metadata.description} />
+    </head>
     <body>
     <Provider>
       <ReduxProvider store={store}>
