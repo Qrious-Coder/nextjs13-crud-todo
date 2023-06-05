@@ -22,7 +22,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
 
   return (
     <>
-      <tr key={curTodo._id} className="border-t">
+      <tr key={curTodo._id} className="border-t text-center">
         {/* ------------- task --------------*/}
         <td className="table_row">
           {IsEditable ? (
@@ -71,17 +71,17 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
           />
         </td>
         {/* ------------- Date --------------*/}
-        <td className="table_row">{curTodo.createdAt}</td>
+        {/*<td className="table_row">{curTodo.createdAt}</td>*/}
         {/* ------------- Add note--------------*/}
         <td className="table_row">
-          <button className="outline_btn flex justify-center" onClick={ () => onOpenNote(curTodo._id) }>
+          <button className="outline_btn" onClick={ () => onOpenNote(curTodo._id) }>
             <FaStickyNote />
           </button>
         </td>
         {/* ------------- Edit --------------*/}
         <td className="table_row">
           {IsEditable ? (
-            <button className="outline_btn flex justify-center" onClick={ () => onEdit(curTodo._id, curTodo)}>
+            <button className="outline_btn " onClick={ () => onEdit(curTodo._id, curTodo)}>
               <AiOutlineSave />
             </button>
           ) : (

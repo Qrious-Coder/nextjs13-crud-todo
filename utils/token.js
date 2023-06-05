@@ -28,12 +28,6 @@ export const saveAccessToken = (accessToken) => {
   if (typeof window !== 'undefined' && typeof accessToken !== 'undefined') {
     localStorage.setItem('token', 'Bearer ' + accessToken);
   }
-  // return new Promise((resolve) => {
-  //   if (typeof window !== 'undefined' && typeof accessToken !== 'undefined') {
-  //     localStorage.setItem('token', 'Bearer ' + accessToken);
-  //   }
-  //   resolve();
-  // });
 }
 
 

@@ -34,14 +34,14 @@ export const tabHeaderData = [
       sortDownIc: <RiArrowDownSLine/>,
       position: 'between'
     },
-    {
-      text: 'date',
-      icon: <AiTwotoneCalendar />,
-      sort: false,
-      sortUpIc: <RiArrowUpSLine/>,
-      sortDownIc: <RiArrowDownSLine/>,
-      position: 'between'
-    },
+    // {
+    //   text: 'date',
+    //   icon: <AiTwotoneCalendar />,
+    //   sort: false,
+    //   sortUpIc: <RiArrowUpSLine/>,
+    //   sortDownIc: <RiArrowDownSLine/>,
+    //   position: 'between'
+    // },
     {
       text: 'note',
       icon: <AiOutlineFileAdd />,

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { RiFilter2Line } from 'react-icons/ri';
 import { prioTypes } from "@/utils/todoTypes";
 import { getAllTodosWithFeatures } from "@/redux/actions/todoActions";
+import {SlRefresh} from "react-icons/sl";
 
 const TodoFilter = () => {
     const dispatch = useDispatch()
@@ -20,19 +21,22 @@ const TodoFilter = () => {
         dispatch(getAllTodosWithFeatures(null, null,null))
       };
 
-      const handlePrioritySubFilterChange = (e) => {
-        setSelectPriority(e.target.value)
-        dispatch(getAllTodosWithFeatures(e.target.value, null, null))
-      }
-    
-      const handleStatusSubFilterChange = (e) =>{
-        // const value = e.target.value
-        setSelectStatus(e.target.value)
-        dispatch(getAllTodosWithFeatures(null,e.target.value, null))
-      }
+    const handlePrioritySubFilterChange = (e) => {
+      setSelectPriority(e.target.value)
+      dispatch(getAllTodosWithFeatures(e.target.value, null, null))
+    }
+
+    const handleStatusSubFilterChange = (e) =>{
+      // const value = e.target.value
+      setSelectStatus(e.target.value)
+      dispatch(getAllTodosWithFeatures(null,e.target.value, null))
+    }
+
+    const clearSort = () => onSort(null);
       
   return (
     <div className="flex justify-end mb-4">
+        <button onClick={clearSort}><SlRefresh className="text-violet-500 text-xl mr-2"/> </button>
         <label htmlFor="filter" className="mt-1 mr-2">
           <RiFilter2Line className="text-purple-500 text-2xl"/>
         </label>

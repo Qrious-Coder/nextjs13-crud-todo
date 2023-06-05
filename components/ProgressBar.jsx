@@ -35,7 +35,6 @@ function ProgressBar({ progress }) {
       </div>
       <div className="absolute top-0 transform -translate-y-3/4 flex justify-between w-full">
         <div className="rounded-full flex justify-center items-center relative mb-2" style={{width: '40px', height: '40px'}}>
-          <FiMapPin className={`${labelColor} text-2xl `}/>
           <span className="text-purple-500 text-xl">{progress}%</span>
         </div>
       </div>
