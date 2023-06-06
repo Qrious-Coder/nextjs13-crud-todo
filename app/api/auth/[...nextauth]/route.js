@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from "next-auth/providers/credentials";
-
 import User from '@/db/models/User'
 import { dbConnect } from "@/db/dbConnect";
 import { generateAccessToken } from "@/utils/token";
@@ -10,7 +9,7 @@ export const authOptions = {
     jwt: true,
     accessToken: true
   },
-
+  secret: process.env.SECRET_KEY,
   providers: [
     CredentialsProvider({
       name: "Sign in with Email",
