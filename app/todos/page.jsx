@@ -90,7 +90,7 @@ const TodosPage = () => {
     dispatch(getAllTodosWithFeatures(null, null, null, currentPage, limitPerPage))
   }
 
-  const progress = todoList?.length > 0 ? parseFloat((( doneTodoCount/total ) * 100).toFixed(2)) : 0
+  const progress = todoList?.length > 0 ? parseFloat((( doneTodoCount/total ) * 100).toFixed(1)) : 0
   return (
     <>
       { status === 'authenticated' && <div className="todo-page">
