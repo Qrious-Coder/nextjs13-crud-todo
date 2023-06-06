@@ -9,10 +9,10 @@ export const prioTypes = {
 }
 
 export const prioIcons = {
-    1: <TbSquareRoundedNumber1 style={{ color: 'red', fontSize: '32px'}}/>,
-    2: <TbSquareRoundedNumber2 style={{ color: 'yellow', fontSize: '32px'}}/>,
-    3: <TbSquareRoundedNumber3 style={{ color: 'green', fontSize: '32px'}}/>,
-    4: <TbSquareRoundedNumber4 style={{ color: 'grey', fontSize: '32px'}}/>
+    1: <TbSquareRoundedNumber1 className={'text-purple-500'} style={{ fontSize: '32px', margin:'auto'}}/>,
+    2: <TbSquareRoundedNumber2 className={'text-indigo-500'} style={{ fontSize: '32px' , margin:'auto'}}/>,
+    3: <TbSquareRoundedNumber3 className={'text-violet-500'} style={{ fontSize: '32px', margin:'auto'}}/>,
+    4: <TbSquareRoundedNumber4 className={'text-blue-500'}  style={{ fontSize: '32px', margin:'auto'}}/>
 }
 
 export const actionTypes = {

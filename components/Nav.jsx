@@ -37,6 +37,9 @@ const Nav = () => {
       router.push('/todos');
     }
   }
+  // avatar: todos: upload your own image
+  const userName = session?.session?.user?.name || 'Unknown';
+  const avatarLetter = userName[0].toUpperCase();
 
   return (
     <nav className="fixed top-0 w-full bg-gray-900 bg-opacity-90 shadow-md">
@@ -68,6 +71,10 @@ const Nav = () => {
         <div className="flex items-center space-x-4">
           {session?.authenticated ? (
             <div className="flex items-center space-x-4">
+              <div className="flex items-center justify-center
+              h-8 w-8 rounded-full bg-gradient-to-r from-indigo-400 to-gray-900 text-white text-lg">
+                {avatarLetter}
+              </div>
               <span className="text-white">Hello, {session?.session?.user?.name || 'Unknown'}</span>
               <button
                 className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2

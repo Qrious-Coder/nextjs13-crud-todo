@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai'
 import { FaStickyNote } from 'react-icons/fa'
 import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
+import {bindActionCreators} from "redux";
 
 const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
   const [ curTodo, setCurTodo ] = useState(todo);
@@ -22,7 +23,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
 
   return (
     <>
-      <tr key={curTodo._id} className="border-t text-center">
+      <tr key={curTodo._id} className="text-center">
         {/* ------------- task --------------*/}
         <td className="table_row">
           {IsEditable ? (
@@ -39,7 +40,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
           )}
         </td>
         {/* ------------- priority --------------*/}
-        <td className="table_row">
+        <td className="table_row text-center">
           {IsEditable ? (
             <select
               className="text_input text-white"
@@ -74,26 +75,27 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
         {/*<td className="table_row">{curTodo.createdAt}</td>*/}
         {/* ------------- Add note--------------*/}
         <td className="table_row">
-          <button className="outline_btn" onClick={ () => onOpenNote(curTodo._id) }>
-            <FaStickyNote />
+          <button className="outline_btn bg-violet-700"
+                  onClick={ () => onOpenNote(curTodo._id) }>
+            <FaStickyNote className='text-amber-200' />
           </button>
         </td>
         {/* ------------- Edit --------------*/}
         <td className="table_row">
           {IsEditable ? (
-            <button className="outline_btn " onClick={ () => onEdit(curTodo._id, curTodo)}>
-              <AiOutlineSave />
+            <button className="outline_btn bg-indigo-700" onClick={ () => onEdit(curTodo._id, curTodo)}>
+              <AiOutlineSave className='text-amber-200'/>
             </button>
           ) : (
-            <button className="outline_btn flex justify-center" onClick={ () => onEditableId(curTodo._id) }>
-              <AiOutlineEdit />
+            <button className="outline_btn bg-indigo-700" onClick={ () => onEditableId(curTodo._id) }>
+              <AiOutlineEdit className='text-amber-200'/>
             </button>
           )}
         </td>
         {/* ------------- Delete --------------*/}
         <td className="table_row">
-          <button className="outline_btn flex justify-center" onClick={() => onDelete(curTodo._id)}>
-            <AiOutlineDelete />
+          <button className="outline_btn bg-blue-700" onClick={() => onDelete(curTodo._id)}>
+            <AiOutlineDelete className='text-amber-200'/>
           </button>
         </td>
       </tr>

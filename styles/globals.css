@@ -79,7 +79,7 @@
 }
 
 .outline_btn {
-  @apply rounded-full border border-purple-700  bg-violet-400 py-1.5 px-5 text-purple-900 transition-all hover:bg-purple-600 hover:text-white text-center text-lg font-inter flex items-center justify-center;
+  @apply rounded-full py-1.5 px-5 text-purple-900 transition-all hover:bg-purple-600 hover:text-white text-center text-lg font-inter;
 }
 
 .head_text {
@@ -412,7 +412,7 @@ nav ul li a:hover {
 /*--------------totoItem----------*/
 
 .table_row {
-  @apply py-2 px-4 text-center border border-violet-400
+  @apply py-2 px-4 text-center border border-dotted border-indigo-400
 }
 
 /*--------------filter----------*/

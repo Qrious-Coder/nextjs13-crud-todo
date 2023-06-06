@@ -40,11 +40,11 @@ const Pagination = ({ onPaginationChange }) => {
 
  return (
    <>
-     { total > 0 && <div className="flex justify-end mt-2">
+     { total > 0 && <div className="flex justify-end mt-6">
        <button
          onClick={ jumpToFirstPage }
          disabled={ localCurPage === 1 }
-         className={`${localCurPage === 1 ? 'text-gray-400' : 'text-purple-700 hover:text-purple-500'}
+         className={`${localCurPage === 1 ? 'text-gray-400' : 'text-indigo-700 hover:text-indigo-500'}
                    transition-colors duration-200`}
        >
          <MdKeyboardDoubleArrowLeft size={24} />
@@ -52,7 +52,7 @@ const Pagination = ({ onPaginationChange }) => {
        <button
          onClick={ handlePrevPage }
          disabled={ localCurPage === 1 }
-         className={`${localCurPage === 1 ? 'text-gray-400' : 'text-purple-400 hover:text-purple-500'}
+         className={`${localCurPage === 1 ? 'text-gray-400' : 'text-indigo-700 hover:text-indigo-500'}
                    transition-colors duration-200`}
        >
          <MdKeyboardArrowLeft size={24} />
@@ -61,8 +61,8 @@ const Pagination = ({ onPaginationChange }) => {
          <button
            key={ idx }
            onClick={ () => handlePageNum(page) }
-           className={`mx-1 px-3 rounded border border-purple-400 
-                     ${ localCurPage === page ? 'bg-purple-400 text-white' : ''}` }
+           className={`mx-1 px-3 rounded border border-indigo-400 
+                     ${ localCurPage === page ? 'bg-indigo-900 accent-amber-200' : ''}` }
          >
            {page}
          </button>

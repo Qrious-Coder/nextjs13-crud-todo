@@ -1,43 +1,99 @@
-'use client'
 import { useEffect, useState } from 'react';
-import { FiMapPin } from 'react-icons/fi'; // import the location pin icon
 
 function ProgressBar({ progress }) {
-  const [color, setColor] = useState('from-gray-800 to-blue-800');
-  const [labelColor, setLabelColor] = useState('text-purple-500');
+  const [labelPosition, setLabelPosition] = useState(0);
 
-  // Update color based on completion percentage
+  // Update label position based on progress
   useEffect(() => {
-    if (progress >= 0 && progress < 25) {
-      setColor('from-red-500 to-red-500');
-      setLabelColor('text-red-500')
-    } else if (progress >= 25 && progress < 50) {
-      setColor('from-yellow-500 to-yellow-500');
-      setLabelColor('text-yellow-500');
-    } else if (progress >= 50 && progress < 75) {
-      setColor('from-blue-500 to-blue-500');
-      setLabelColor('text-blue-500');
-    } else if (progress >= 75 && progress <= 100) {
-      setColor('from-green-500 to-green-500');
-      setLabelColor('text-green-500');
-    }
+    setLabelPosition(progress);
   }, [progress]);
 
   return (
-    <div className="relative mt-20">
-      <div className="w-full h-6 outline outline-purple-400 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur rounded-lg p-0.5 mb-5">
-        <div className={`h-full rounded-lg bg-gradient-to-r ${color}`} style={{width: `${progress}%`}}></div>
-        <div className="absolute inset-0 flex justify-between w-full">
+    <div className="relative mt-28 mb-10">
+      <div className="progress-bar">
+        <div className="progress" style={{width: `${progress}%`}}></div>
+        <div className="markers">
           {[0, 25, 50, 75, 100].map((item, index) => (
-            <div key={index} className="h-2 w-2 bg-purple-500 rounded-full p-1.2 m-1.5"></div>
+            <div key={index} className="marker"></div>
           ))}
         </div>
       </div>
-      <div className="absolute top-0 transform -translate-y-3/4 flex justify-between w-full">
-        <div className="rounded-full flex justify-center items-center relative mb-2" style={{width: '40px', height: '40px'}}>
-          <span className="text-purple-500 text-xl">{progress}%</span>
+      <div className="label" style={{left: `${progress}%`}}>
+        <div className="label-content">
+          <span>{progress}%</span>
         </div>
+        <div className="label-tip"></div>
       </div>
+
+      <style jsx>{`
+        .progress-bar {
+          width: 100%;
+          height: 6px;
+          outline: 1px solid #a78bfa;
+          box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+          backdrop-filter: blur(5px);
+          border-radius: 12px;
+          padding: 0.5px;
+          //margin: 25px 0 3px 0;
+          position: relative;
+        }
+        .progress {
+          height: 100%;
+          background-image: linear-gradient(-45deg, #22c55e 15%, #818cf8 25%, #2563eb 35%);
+          background-size: 200% 100%;
+          animation: progress-bar-stripes 1s linear infinite;
+          border-radius: 12px;
+        }
+        @keyframes progress-bar-stripes {
+          from  { background-position: 200% 0; }
+          to    { background-position: -200% 0; }
+        }
+        .markers {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+        }
+        .marker {
+          height: 2px;
+          width: 2px;
+          background-color: #8b5cf6;
+          border-radius: 50%;
+          padding: 3.2px;
+          margin: -0.5px;
+        }
+        .label {
+          position: absolute;
+          top: -18px;
+          transform: translate(-50%, calc(-100% + 3px));
+          box-shadow: 0px 5px 15px -5px rgba(0, 0, 0, 0.3);
+        }
+        .label-content {
+          width: 47px;
+          height: 47px;
+          border-radius: 50%;
+          background-image: radial-gradient(circle at 50% 120.71%, #fe91ff 0, #ab74ff 25%, #5353f2 50%, #0032b0 75%, #001876 100%);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .label-content span {
+          font-size: 1rem;
+          color: #fe91ff;
+        }
+        .label-tip {
+          width: 0;
+          height: 0;
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          border-top: 12px solid #ab74ff;
+          position: absolute;
+          bottom: -12px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      `}</style>
     </div>
   );
 }

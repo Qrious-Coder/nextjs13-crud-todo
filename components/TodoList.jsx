@@ -9,8 +9,8 @@ const TodoList = ({ todos, onDelete, onEdit, onSort, onEditableId,  onOpenNote, 
     <>
       <table className="w-full border-collapse">
         <thead>
-        <tr className="bg-gray-900 outline text-purple-500 outline-offset-2 outline-purple-400
-          rounded-md divide-purple-400 divide-x divide-dashed">
+        <tr className="bg-gray-900 outline text-indigo-500 outline-offset outline-indigo-500
+          rounded-md divide-indigo-500 divide-x divide-dashed">
           { tabHeaderData.map((item,idx) => {
             const isSortingByThisField = sortedField === item.text || sortedField === `-${item.text}`;
             return (
@@ -47,7 +47,7 @@ const TodoList = ({ todos, onDelete, onEdit, onSort, onEditableId,  onOpenNote, 
         </thead>
         <tbody>
         {todos.length === 0 ? (
-          <tr className="bg-gray-800 text-gray-500 opacity-2 border-x border-b border-dashed border-purple-500">
+          <tr className="bg-gray-800 text-gray-500 opacity-2 border-x border-b border-dashed border-indigo-500">
             <td colSpan={tabHeaderData.length} className="text-center py-5">
               <TfiWrite className="mx-auto text-3xl mb-4" />
               Currently you have no todo
@@ -67,11 +67,6 @@ const TodoList = ({ todos, onDelete, onEdit, onSort, onEditableId,  onOpenNote, 
         )}
         </tbody>
       </table>
-      <style jsx>{`
-        .text-red-500 {
-          color: red; // refactor later
-        }
-      `}</style>
     </>
   );
 };
