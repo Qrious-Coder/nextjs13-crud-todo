@@ -8,33 +8,28 @@ import React from "react";
 import { usePathname } from 'next/navigation';
 import { metadata } from "@/utils/metadata";
 
-// export const metadata = {
-//   title: 'NextCRUD',
-//   description: 'Create a full functional CRUD app with Next.js'
-// }
-
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
   return (
     <html lang={'en'}>
-    <head>
-      <title>{metadata.title}</title>
-      <meta name="description" content={metadata.description} />
-    </head>
-    <body>
-    <Provider>
-      <ReduxProvider store={store}>
-        <div className='main'>
-          <div className='gradient' />
-        </div>
+      <head>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+      </head>
+      <body>
+      <Provider>
+        <ReduxProvider store={store}>
+          <div className='main'>
+            <div className='gradient' />
+          </div>
 
-        <main className='app'>
-          { pathname !== '/entry' && <Nav/> }
-          {children}
-        </main>
-      </ReduxProvider>
-    </Provider>
-    </body>
+          <main className='app'>
+            { pathname !== '/entry' && <Nav/> }
+            {children}
+          </main>
+        </ReduxProvider>
+      </Provider>
+      </body>
     </html>)
 }
 

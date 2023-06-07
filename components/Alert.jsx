@@ -25,41 +25,26 @@ const Alert = ({ children }) => {
     }
   };
 
-  const getAlertBgColor = () => {
+  const getColor = () => {
     switch (alertType) {
-      case 'danger':
-        return "bg-red-300";
+      case 'error':
+        return "red";
       case 'success':
-        return "bg-green-300";
+        return "green";
       case 'warning':
-        return "bg-yellow-300";
+        return "yellow";
       case 'info':
-        return "bg-blue-300";
+        return "blue";
       default:
-        return "bg-gray-300";
-    }
-  };
-
-  const getAlertBorderColor = () => {
-    switch (alertType) {
-      case 'danger':
-        return "border-red-800";
-      case 'success':
-        return "border-green-800";
-      case 'warning':
-        return "border-yellow-800";
-      case 'info':
-        return "border-blue-800";
-      default:
-        return "border-gray-800";
+        return "gray";
     }
   };
 
   return (
     <>
       {showAlert && isShow && (
-        <div className={`alert ${getAlertBgColor()} ${getAlertBorderColor()} 
-        border text-${alertType}-800 mt-4 mb-4 px-3 py-2 relative flex items-center`}
+        <div className={`alert bg-${getColor(alertType)}-400  border border-${getColor(alertType)}-800
+         text-${getColor(alertType)}-800 mt-4 mb-4 px-3 py-2 relative flex items-center`}
              style={{ opacity: 0.75 }}>
           {getIcon()}
           <span>

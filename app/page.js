@@ -6,7 +6,7 @@ import Loading from '@/components/Loading';
 import { homeLeftData } from "@/utils/homeData";
 
 const Page = () => {
-  const [isClient, setClient] = useState(false);
+  const [ isClient, setClient ] = useState(false);
   const router = useRouter();
 
   useEffect(() => {

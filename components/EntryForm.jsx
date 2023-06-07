@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import { useSession} from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { displayAlert } from "@/redux/actions/commonActions";
 import { login, register } from "@/redux/actions/entryActions";
 import Alert from '@/components/Alert'
@@ -13,11 +13,14 @@ const EntryForm = () => {
   const router  = useRouter()
   const dispatch = useDispatch()
   const { data: session, status } = useSession()
+  const { user } = useSelector( state => state.entry )
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   });
+
+  const [lastEmail, setLastEmail] = useState('')
 
   useEffect(() => {
     if(status === 'authenticated'){
@@ -26,7 +29,7 @@ const EntryForm = () => {
     }
   }, [status]);
 
-  const [isLogin, setIsLogin] = useState(true);
+  const [ isLogin, setIsLogin ] = useState(false);
 
   const handleFormChange = (e) => {
     setFormData((prevFormData) => ({
@@ -35,7 +38,7 @@ const EntryForm = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, password }= formData
     if (!isLogin) {
@@ -45,15 +48,14 @@ const EntryForm = () => {
           alertType: 'error' }))
         return;
       }
-      dispatch(register({name, email, password }))
+      dispatch(register({name, email, password })).then((data) => {
+        if(data){
+          setFormData({ name: "", email: "", password: "" })
+          setLastEmail(email)
+          setIsLogin(true)
+        }
+      })
 
-      //get callback later
-      // const result = await res.json();
-      // if (res.ok) {
-      //   setFormData({ name: "", email: "", password: "" });
-      //   setIsLogin(true); // Flipping the form to login.
-      // }
-      // return result;
     } else {
       if (!email || !password) {
         dispatch(displayAlert({
@@ -61,7 +63,7 @@ const EntryForm = () => {
           alertType: 'error' }))
         return;
       }
-      dispatch(login({ email, password }))
+      dispatch(login({ email: lastEmail, password }))
       setFormData({ email: "", password: "" });
     }
   };
@@ -84,6 +86,7 @@ const EntryForm = () => {
               <input
                 type="text"
                 name="name"
+                value={ formData.name }
                 placeholder="Username"
                 className="w-full border border-gray-300 rounded-md py-2 px-10 mb-4 text-white bg-gray-700"
                 onChange={handleFormChange}
@@ -98,6 +101,7 @@ const EntryForm = () => {
             <input
               type="email"
               name="email"
+              value={isLogin ? lastEmail : formData.email}
               placeholder="Email"
               className="w-full border border-gray-300 rounded-md py-2 px-10 mb-4 text-white bg-gray-700"
               onChange={handleFormChange}
@@ -111,6 +115,7 @@ const EntryForm = () => {
             <input
               type="password"
               name="password"
+              value={ formData.password }
               placeholder="Password"
               className="w-full border border-gray-300 rounded-md py-2 px-10 mb-4 text-white bg-gray-700"
               onChange={handleFormChange}

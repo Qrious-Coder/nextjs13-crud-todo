@@ -31,7 +31,7 @@ export const register = ({ name, email, password }) => async(dispatch) => {
       alertText: 'Registered Successfully',
       alertType: 'success'
     }))
-
+    return data;
   }catch(err){
     dispatch({
       type: entryActionTypes.ENTRY_FAILURE,
@@ -41,6 +41,7 @@ export const register = ({ name, email, password }) => async(dispatch) => {
       alertText: err.message,
       alertType: 'error'
     }))
+    return null;
   }
 }
 

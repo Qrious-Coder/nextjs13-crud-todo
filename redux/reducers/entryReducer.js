@@ -17,7 +17,8 @@ const entryReducer = (state = initialState, { type, payload }) => {
       console.log('REGISTER_SUCCESS Reducer user:', payload)
       return {
         ...state,
-        user: payload
+        user: payload,
+        isLoading: true
       }
     case entryActionTypes.ENTRY_FAILURE:
       return {
