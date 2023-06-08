@@ -36,9 +36,9 @@ export const register = ({ name, email, password }) => async(dispatch) => {
     dispatch({
       type: entryActionTypes.ENTRY_FAILURE,
     })
-    console.log(`@ ===> /api/auth/register ==>err:`, err.message)
+    console.log(`@ ===> /api/auth/register ==>err:`, err )
     dispatch(displayAlert({
-      alertText: err.message,
+      alertText: err?.response.data.error,
       alertType: 'error'
     }))
     return null;
@@ -64,7 +64,7 @@ export const login = ({ email, password }) => async(dispatch) => {
       type: entryActionTypes.ENTRY_FAILURE,
     })
     dispatch(displayAlert({
-      alertText: err,
+      alertText: err?.response.data.error,
       alertType: 'error'
     }))
   }

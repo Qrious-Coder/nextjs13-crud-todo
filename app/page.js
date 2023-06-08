@@ -4,9 +4,11 @@ import Clock from "@/components/Clock";
 import { useRouter } from "next/navigation";
 import Loading from '@/components/Loading';
 import { homeLeftData } from "@/utils/homeData";
+import {useSession} from "next-auth/react";
 
 const Page = () => {
   const [ isClient, setClient ] = useState(false);
+  const { data: session, status } = useSession()
   const router = useRouter();
 
   useEffect(() => {
@@ -15,6 +17,10 @@ const Page = () => {
 
   const gotoEntryPage = () => {
     router.push('/entry')
+  }
+
+  const gotoTodoPage = () => {
+    router.push('/todos')
   }
 
   const takeTour = () => {
@@ -31,15 +37,19 @@ const Page = () => {
         <div className="pl-10">
           <Clock />
           <div className="mt-5">
-            <button className="home_btn show_btn" onClick={ gotoEntryPage }>
-              Yes, show me!
-            </button>
-            <button
-              className="home_btn"
-              onClick={ takeTour }
-            >
-              Take a tour
-            </button>
+            { status !== 'authenticated' ?
+              <>
+                <button className="home_btn show_btn" onClick={ gotoEntryPage }>
+                  Yes, show me!
+                </button>
+                <button className="home_btn" onClick={ takeTour }>
+                  Take a tour
+                </button>
+              </> :
+              <button  className="home_btn" onClick={ gotoTodoPage }>
+                Open my Todo!
+              </button>
+            }
           </div>
         </div>
       </div>
