@@ -70,6 +70,13 @@ const EntryForm = () => {
     setIsLogin((prevIsLogin) => !prevIsLogin);
   };
 
+  const takeTour = async() => {
+    const res = await fetch('/api/todos?demo=true')
+    const data = await res.json()
+    console.log(`demo data: ${data}`)
+    router.push('/todos')
+  }
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="max-w-md w-full p-6 bg-gray-800 rounded-lg shadow-lg">
@@ -115,26 +122,29 @@ const EntryForm = () => {
               value={ formData.password }
               placeholder="Password"
               className="w-full border border-gray-300 rounded-md py-2 px-10 mb-4 text-white bg-gray-700"
-              onChange={handleFormChange}
+              onChange={ handleFormChange }
               required
             />
           </div>
-          <div className="flex justify-between space-x-4">
+          <div className="flex justify-between space-x-4 my-4">
             <button
               type="submit"
-              className="w-6/12 h-10 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-indigo-400 text-white rounded-md py-2 px-4 mb-4 border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+              className="w-6/12 h-12 text-center bg-gradient-to-r from-purple-500 to-pink-500
+              hover:from-purple-600 hover:to-indigo-400 text-white
+              rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
             >
-              {isLogin ? 'Login' : 'Register'}
+              { isLogin ? 'Login' : 'Register' }
             </button>
             <button
               type='button'
-              className="bn30 h-10 w-6/12 py-2 px-4 mb-4 text-white rounded-md focus:outline-none"
+              className="bn30 mt-0.5 w-6/12 px-4 text-white rounded-md focus:outline-none"
+              onClick={ takeTour }
             >
               <span className="text">Take a tour</span>
             </button>
           </div>
           <p className="text-center text-sm text-gray-400">
-            { isLogin ? "Don't have an account?" : 'Already have an account?' }
+              { isLogin ? "Don't have an account?" : 'Already have an account?' }
             <span className="text-sm text-gray-200 ml-1 cursor-pointer underline" onClick={ toggleForm }>
               { isLogin ? 'Register here' : 'Login here' }
             </span>
@@ -146,10 +156,11 @@ const EntryForm = () => {
         cursor: pointer;
         font-size: 16px;
         padding: 0; 
+        height: 44px;
         background-color: transparent;
         border: 5px solid transparent;
         position: relative;
-        box-shadow: 0 0 0 3px rgba(66,153,225, 0.5);
+        box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.8);
         border-radius: 0.375rem;  // match your previous style
       }
       .bn30:before {
@@ -157,20 +168,20 @@ const EntryForm = () => {
         position: absolute;
         top: -5px; right: -5px; bottom: -5px; left: -5px;
         z-index: -1;
-        background: linear-gradient(to right, #4568dc, #b06ab3);
+        background: linear-gradient(to right, #22c55e, #b06ab3);
         border-radius: inherit;
       }
       .bn30 .text {
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-image: linear-gradient(to right, #4568dc, #b06ab3);
+        background-image: linear-gradient(to right, #22c55e, #b06ab3);
       }
       .bn30:hover:before {
-        background: linear-gradient(to left, #4568dc, #b06ab3);
+        background: linear-gradient(to left, #22c55e, #b06ab3);
       }
       .bn30:hover .text {
-        background-image: linear-gradient(to left, #4568dc, #b06ab3);
+        background-image: linear-gradient(to left, #22c55e, #b06ab3);
       }
     `}</style>
     </div>

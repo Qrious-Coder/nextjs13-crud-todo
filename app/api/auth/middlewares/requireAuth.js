@@ -10,8 +10,9 @@ export const requireAuth = (handler) => {
           : req.headers.authorization
       let token = authorizationHeader?.split(' ')[1];
 
-      if (!token) {
-        return new Response( 'No token found!', { status: 401 })
+      if (!token) {//no token use demo data
+        req.user = process.env.DEMO_USER_ID;
+        return handler(req);
       }
 
       const decodedToken = decodeToken(token);
