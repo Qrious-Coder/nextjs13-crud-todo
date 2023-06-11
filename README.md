@@ -55,9 +55,6 @@
     └── tailwind.css
 ```
 ## Credential authentication with next-auth
-### ref1: https://fullstackdigital.io/blog/authentication-starter-kit-for-next-js-and-mongodb/
-### ref2: https://github.com/wpcodevo/nextauth-nextjs13-prisma/blob/main/src/app/api/auth/%5B...nextauth%5D/route.ts
-### ref3: https://github.com/adrianhajdin/project_next_13_ai_prompt_sharing
 #### Database
 1. npm i mongoose next-auth next-connect validator bcrypt
 2. Create a user model with mongoose
@@ -176,3 +173,7 @@ const onAddNote = (id, note) => {
 }
 ```
 ## Create a sticker note 
+## Database
+- Create a demo database on MongoAtlas
+- Connect MongoAtlas with MongoCompass
+- Use MongoCompass to add Demo data
