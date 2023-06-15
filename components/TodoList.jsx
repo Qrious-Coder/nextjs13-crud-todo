@@ -46,7 +46,7 @@ const TodoList = ({ todos, onDelete, onEdit, onSort, onEditableId,  onOpenNote, 
         </tr>
         </thead>
         <tbody>
-        {todos.length === 0 ? (
+        {todos?.length === 0 ? (
           <tr className="bg-gray-800 text-gray-500 opacity-2 border-x border-b border-dashed border-indigo-500">
             <td colSpan={tabHeaderData.length} className="text-center py-5">
               <TfiWrite className="mx-auto text-3xl mb-4" />
@@ -54,7 +54,7 @@ const TodoList = ({ todos, onDelete, onEdit, onSort, onEditableId,  onOpenNote, 
             </td>
           </tr>
         ) : (
-          todos.map((todo) => (
+          todos?.map((todo) => (
             <TodoItem
               todo = { todo }
               key = { todo._id }

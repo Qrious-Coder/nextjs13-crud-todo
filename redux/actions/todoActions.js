@@ -33,31 +33,22 @@ export const todoActionTypes = {
   GET_COMPLETED_TODOS_SUCCESS: 'GET_COMPLETED_TODOS_SUCCESS',
 }
 
-// export const getAllTodos = () => async(dispatch) => {
-//   const accessToken = getAccessToken()
-//   dispatch({
-//     type: todoActionTypes.GET_TODOS_REQUEST
-//   })
-//   try{
-//     const res = await axios.get('/api/todos', {
-//       headers: {
-//         Authorization: accessToken
-//       }
-//     })
-//     const data = res.data
-//
-//     dispatch({
-//       type: todoActionTypes.GET_TODOS_SUCCESS,
-//       payload: data
-//     })
-//
-//   }catch(err){
-//     dispatch({
-//       type: todoActionTypes.GET_TODOS_FAILURE,
-//       payload: err
-//     })
-//   }
-// }
+export const getDemoTodos = () => async(dispatch) => {
+  dispatch({ type: todoActionTypes.SEND_TODOS_REQUEST});
+  try{
+    const res = await axios.get('/api/todos')
+    const { todos, totalCount } = res.data
+    dispatch({
+      type: todoActionTypes.GET_TODOS_SUCCESS,
+      payload: { todos, totalCount }
+    })
+  } catch(err) {
+    dispatch({
+      type: todoActionTypes.SEND_TODOS_FAILURE,
+      payload: err
+    })
+  }
+}
 
 export const getAllTodosWithFeatures = ( priority = null, status = null, sortBy = null, page = 1, limit = 5) => async(dispatch) => {
   const accessToken = getAccessToken()

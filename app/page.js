@@ -8,7 +8,7 @@ import {useSession} from "next-auth/react";
 
 const Page = () => {
   const [ isClient, setClient ] = useState(false);
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const router = useRouter();
 
   useEffect(() => {
@@ -24,8 +24,7 @@ const Page = () => {
   }
 
   const takeTour = () => {
-    alert('Sorry! This feature is still under development')
-    // router.push('demoPageLink') //Todo: create demo link
+    router.push('/todos')
   }
   if (!isClient) {
     return <Loading />

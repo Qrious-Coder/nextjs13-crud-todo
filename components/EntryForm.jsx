@@ -71,10 +71,7 @@ const EntryForm = () => {
   };
 
   const takeTour = async() => {
-    const res = await fetch('/api/todos?demo=true')
-    const data = await res.json()
-    console.log(`demo data: ${data}`)
-    router.push('/todos')
+    router.push('/')
   }
 
   return (

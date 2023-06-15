@@ -12,12 +12,13 @@ import {
   editTodo,
   deleteTodo,
   createTodo,
+  getDemoTodos,
   getAllTodosWithFeatures,
   getCompletedTodosCount,
   addNote,
   openModal,
   closeModal,
-  getTodoById
+  getTodoById,
 } from "@/redux/actions/todoActions";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
@@ -28,17 +29,24 @@ const TodosPage = () => {
   const [ note, setNote] = useState('')
   const { todoList, showModal, addNoteTodoId,
     currentTodo, loading, doneTodoCount, total } = useSelector(state => state.todo)
-  const { data: session, status } = useSession()
+  const { status } = useSession()
+  const [ isDemo, setIsDemo ] = useState(false)
   const router = useRouter();
-  useEffect(() => {
-    if(status === 'unauthenticated'){
-      router.push('/')
-    }
-  }, [status]);
 
   useEffect(() => {
-    dispatch( getAllTodosWithFeatures() )
-  }, [])
+    if(status ==='unauthenticated'){
+      // router.push('/');
+      setIsDemo(true)
+    }
+  }, [status])
+
+  useEffect(() => {
+    if(isDemo){
+      dispatch(getDemoTodos())
+    }else{
+      dispatch(getAllTodosWithFeatures())
+    }
+  }, [isDemo])
 
   useEffect(() => {
     dispatch( getCompletedTodosCount() )
@@ -92,8 +100,7 @@ const TodosPage = () => {
 
   const progress = todoList?.length > 0 ? parseFloat((( doneTodoCount/total ) * 100).toFixed(1)) : 0
   return (
-    <>
-      { status === 'authenticated' && <div className="todo-page">
+  <div className="todo-page">
         <TodoNote isOpen={ showModal }
                   onSave={ () => handleSave( addNoteTodoId, note) }
                   onClose={ handleClose }
@@ -116,9 +123,7 @@ const TodosPage = () => {
                   onSort={ handleSort }
                   onOpenNote = { handleOpenNote } />
         <Pagination onPaginationChange={ handlePagination } />
-      </div>}
-    </>
-
+  </div>
   );
 };
 
