@@ -4,12 +4,13 @@ import { useSelector } from 'react-redux'
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai'
 import { FaStickyNote } from 'react-icons/fa'
 import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
-import {bindActionCreators} from "redux";
+import { useIsLogin } from "@/utils/useIsLogin";
 
-const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
+const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote, openEntryModal} ) => {
   const [ curTodo, setCurTodo ] = useState(todo);
   const { editableTodoId } = useSelector(state => state.todo)
   const IsEditable = editableTodoId === curTodo._id;
+  const isLogin = useIsLogin()
 
   const handleInputChange = (e) => {
     setCurTodo({ ...curTodo, [e.target.name]: e.target.value });
@@ -19,6 +20,14 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
     const updatedTodo = { ...curTodo, status: !curTodo.status };
     setCurTodo(updatedTodo);
     onEdit(curTodo._id, updatedTodo);
+  }
+
+  const handleOpenNote = (id) => {
+    if(isLogin){
+      onOpenNote(id)
+    }else{
+      openEntryModal()
+    }
   }
 
   return (
@@ -76,7 +85,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote }) => {
         {/* ------------- Add note--------------*/}
         <td className="table_row">
           <button className="outline_btn bg-violet-700"
-                  onClick={ () => onOpenNote(curTodo._id) }>
+                  onClick={ handleOpenNote }>
             <FaStickyNote className='text-amber-200' />
           </button>
         </td>

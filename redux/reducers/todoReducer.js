@@ -8,6 +8,7 @@ const initialState = {
   currentTodo: null,
   error: null,
   loading: false,
+  showNote: false,
   showModal: false,
   doneTodoCount: 0,
   curPage: 1,
@@ -89,26 +90,40 @@ const todoReducer = (state = initialState, { type, payload }) => {
       Object.assign(state.todoList[editNoteId], payload )
       return {
         ...state,
-        showModal: false,
+        showNote: false,
         addNoteTodoId: '',
         loading: false,
       };
 
-    case todoActionTypes.SHOW_MODAL:
+    case todoActionTypes.SHOW_NOTE:
       return {
         ...state,
-        showModal: true,
+        showNote: true,
         addNoteTodoId: payload,
         loading: false,
       }
 
-    case todoActionTypes.CLOSE_MODAL:
+    case todoActionTypes.CLOSE_NOTE:
+      return {
+        ...state,
+        showNote: false,
+        addNoteTodoId: '',
+        loading: false,
+      }
+
+    case todoActionTypes.SHOW_ENTRY_MODAL:
+      return {
+        ...state,
+        showModal: true,
+        loading: false,
+      }
+
+    case todoActionTypes.CLOSE_ENTRY_MODAL:
       return {
         ...state,
         showModal: false,
-        addNoteTodoId: '',
         loading: false,
-      }  
+      }
 
     case todoActionTypes.SAVE_CURRENT_PAGE:
       return {
@@ -116,6 +131,7 @@ const todoReducer = (state = initialState, { type, payload }) => {
         curPage: payload,
         loading: false,
       };
+
     case todoActionTypes.SAVE_CURRENT_LIMIT:
       return {
         ...state,

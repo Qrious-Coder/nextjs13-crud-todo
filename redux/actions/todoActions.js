@@ -22,8 +22,11 @@ export const todoActionTypes = {
 
   ADD_NOTE_SUCCESS: 'ADD_NOTE_SUCCESS',
 
-  SHOW_MODAL: 'SHOW_MODAL',
-  CLOSE_MODAL: 'CLOSE_MODAL',
+  SHOW_NOTE: 'SHOW_NOTE',
+  CLOSE_NOTE: 'CLOSE_NOTE',
+
+  SHOW_ENTRY_MODAL: 'SHOW_ENTRY_MODAL',
+  CLOSE_ENTRY_MODAL: 'CLOSE_ENTRY_MODAL',
 
   SAVE_CURRENT_PAGE: 'SAVE_CURRENT_PAGE',
   SAVE_CURRENT_LIMIT: 'SAVE_CURRENT_LIMIT',
@@ -227,19 +230,30 @@ export const addNote = (id, note) => async(dispatch) => {
   }
 }
 
-export const openModal = (id) => async(dispatch) => {
+export const openNote = (id) => async(dispatch) => {
   dispatch({
-    type: todoActionTypes.SHOW_MODAL,
+    type: todoActionTypes.SHOW_NOTE,
     payload: id
   })
 }
 
-export const closeModal = () => {
+export const closeNote = () => {
   return{
-    type: todoActionTypes.CLOSE_MODAL
+    type: todoActionTypes.CLOSE_NOTE
   }
 }
 
+export const openEntryModal = () => async(dispatch) => {
+  dispatch({
+    type: todoActionTypes.SHOW_ENTRY_MODAL
+  })
+}
+
+export const closeEntryModal = () => {
+  return{
+    type: todoActionTypes.CLOSE_ENTRY_MODAL
+  }
+}
 export const saveCurPage = (curPage) => async(dispatch) => {
   dispatch({
     type: todoActionTypes.SAVE_CURRENT_PAGE,

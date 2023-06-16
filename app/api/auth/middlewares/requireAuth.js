@@ -9,8 +9,9 @@ export const requireAuth = (handler) => {
           ? req.headers.get('authorization')
           : req.headers.authorization
       let token = authorizationHeader?.split(' ')[1];
+      // if no token, use demo data
 
-      if (!token) {//no token use demo data
+      if (!token) {
         req.user = process.env.DEMO_USER_ID;
         return handler(req);
       }

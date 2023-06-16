@@ -1,10 +1,12 @@
 'use client'
-import React from 'react';
+import React from 'react'
 import TodoItem from './TodoItem'
 import { tabHeaderData } from '@/utils/todoData'
 import { TfiWrite } from 'react-icons/tfi'
 
-const TodoList = ({ todos, onDelete, onEdit, onSort, onEditableId,  onOpenNote, sortedField}) => {
+const TodoList = ({ todos, onDelete, onEdit, onSort,
+                    onEditableId,  onOpenNote, openEntryModal, sortedField}) => {
+
   return (
     <>
       <table className="w-full border-collapse">
@@ -62,6 +64,7 @@ const TodoList = ({ todos, onDelete, onEdit, onSort, onEditableId,  onOpenNote, 
               onEditableId = { onEditableId }
               onEdit = { onEdit }
               onOpenNote = { onOpenNote }
+              openEntryModal = { openEntryModal }
             />
           ))
         )}
