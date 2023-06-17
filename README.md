@@ -74,8 +74,6 @@
 3. Save accessToken to localStorage. //***Todo: Optimized later with refreshToken saved to cookies
 
 ## GET/PATCH/POST/DELETT/UPDATE todos with token
-#### ref1: https://github.com/MelvinManni/next-mongoose 
-#### ref2: https://remaster.com/blog/next-auth-jwt-session 
 1. On client-side, and add accessToken to `headers: { 'Authorization': accessToken}` GET/PATCH/POST/DELETT/UPDATE 
 2. On server-side:
     - create api/auth/middlewares/requireAtth.js
