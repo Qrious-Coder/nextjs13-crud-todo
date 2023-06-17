@@ -286,7 +286,7 @@ button[type="submit"], .nav_btn_signIn {
 }
 
 .form_btn {
-  @apply text-sm px-5 py-2.5 font-medium bg-blue-200 hover:bg-blue-300 hover:text-blue-600 text-blue-500 rounded-lg mb-2;
+  @apply border border-purple-500 text-sm px-5 py-3 font-medium hover:bg-purple-200 bg-gray-800 hover:text-blue-600 text-purple-500 rounded-lg mb-2;
 }
 .card p {
   @apply text-center text-sm text-gray-400;

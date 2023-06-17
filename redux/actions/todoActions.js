@@ -194,12 +194,12 @@ export const deleteTodo = (id) => async(dispatch) => {
 }
 
 export const searchTodo = (title) => async (dispatch) => {
-  dispatch({ type: todoActionTypes.SEND_TODOS_REQUEST});
-  try {
+  // dispatch({ type: todoActionTypes.SEND_TODOS_REQUEST});
+  // try {
     dispatch({ type: todoActionTypes.SEARCH_TODO_SUCCESS, payload: { title } });
-  } catch (err) {
-    dispatch({ type: todoActionTypes.SEND_TODOS_FAILURE, payload: err });
-  }
+  // } catch (err) {
+  //   dispatch({ type: todoActionTypes.SEND_TODOS_FAILURE, payload: err });
+  // }
 };
 
 export const addNote = (id, note) => async(dispatch) => {
@@ -230,7 +230,7 @@ export const addNote = (id, note) => async(dispatch) => {
   }
 }
 
-export const openNote = (id) => async(dispatch) => {
+export const openNote = (id) => (dispatch) => {
   dispatch({
     type: todoActionTypes.SHOW_NOTE,
     payload: id

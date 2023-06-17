@@ -63,7 +63,7 @@ const todoReducer = (state = initialState, { type, payload }) => {
     case todoActionTypes.DELETE_TODO_SUCCESS:
       return {
         ...state,
-        todos: state.todoList.filter((todo) => todo._id !== payload),
+        todoList: state.todoList.filter((todo) => todo._id !== payload),
         loading: false,
       };
     
@@ -72,9 +72,11 @@ const todoReducer = (state = initialState, { type, payload }) => {
       const filteredList = state.todoList.filter(
         (todo) => todo.title.toLowerCase().includes(title.toLowerCase())
       );
+
+      console.log(`filteredList:`, filteredList)
       return {
         ...state,
-        todos: filteredList,
+        todoList: filteredList,
         loading: false,
       };
 

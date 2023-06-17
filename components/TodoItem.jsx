@@ -6,7 +6,7 @@ import { FaStickyNote } from 'react-icons/fa'
 import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
 import { useIsLogin } from "@/utils/useIsLogin";
 
-const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote, openEntryModal} ) => {
+const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote } ) => {
   const [ curTodo, setCurTodo ] = useState(todo);
   const { editableTodoId } = useSelector(state => state.todo)
   const IsEditable = editableTodoId === curTodo._id;
@@ -20,14 +20,6 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote, openEntryM
     const updatedTodo = { ...curTodo, status: !curTodo.status };
     setCurTodo(updatedTodo);
     onEdit(curTodo._id, updatedTodo);
-  }
-
-  const handleOpenNote = (id) => {
-    if(isLogin){
-      onOpenNote(id)
-    }else{
-      openEntryModal()
-    }
   }
 
   return (
@@ -85,7 +77,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote, openEntryM
         {/* ------------- Add note--------------*/}
         <td className="table_row">
           <button className="outline_btn bg-violet-700"
-                  onClick={ handleOpenNote }>
+                  onClick={ () => onOpenNote(curTodo._id) }>
             <FaStickyNote className='text-amber-200' />
           </button>
         </td>

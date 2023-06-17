@@ -20,9 +20,8 @@ import {
   openNote,
   openEntryModal,
   closeNote,
-  getTodoById, closeEntryModal,
+  getTodoById, closeEntryModal, searchTodo,
 } from "@/redux/actions/todoActions";
-import {useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
 import {useIsLogin} from "@/utils/useIsLogin";
 
@@ -68,6 +67,7 @@ const TodosPage = () => {
     dispatch(setEditableTodo(id))
   };
 
+  //Todo: bug disable open input/click after open the modal
   const handleEdit = (id, todo) => {
     if(isLogin){
       dispatch(editTodo(id, todo))
@@ -76,27 +76,27 @@ const TodosPage = () => {
     }
   };
 
-  const handleAdd = async (formData) => {
+  const handleAdd = (formData) => {
     dispatch(createTodo(formData))
   };
+
+  const handleSearchTodo = (title) => {
+    dispatch(searchTodo(title));
+  }
+
 
   const handleSort = (sortBy) => {
     dispatch(getAllTodosWithFeatures(null,null, sortBy))
     setSortedField(sortBy); // update the sortedField state
   }
 
-  const handleOpenNote = async (id) => {
+  const handleOpenNote = (id) => {
     if(isLogin){
       dispatch(getTodoById(id))
       dispatch(openNote(id))
     }else{
       dispatch(openEntryModal())
     }
-
-  };
-
-  const handleOpenEntryModal = async (id) => {
-    dispatch(openEntryModal())
   };
 
 
@@ -139,7 +139,10 @@ const TodosPage = () => {
           /> }
         </TodoNote>
         <ProgressBar progress = { progress }/>
-        <TodoForm addTodo={ handleAdd }/>
+        <TodoForm
+          onAddTodo={ handleAdd }
+          onSearch={ handleSearchTodo }
+        />
         <TodoFilter />
         <TodoList todos={ todoList }
                   sortedField={ sortedField }
@@ -147,7 +150,7 @@ const TodosPage = () => {
                   onEditableId = { handleEditableId }
                   onEdit={ handleEdit }
                   onSort={ handleSort }
-                  openEntryModal = { handleOpenEntryModal }
+                  onOpenNote = { handleOpenNote }
         />
         <Pagination onPaginationChange={ handlePagination } />
   </div>

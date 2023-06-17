@@ -64,7 +64,6 @@ const TodoList = ({ todos, onDelete, onEdit, onSort,
               onEditableId = { onEditableId }
               onEdit = { onEdit }
               onOpenNote = { onOpenNote }
-              openEntryModal = { openEntryModal }
             />
           ))
         )}

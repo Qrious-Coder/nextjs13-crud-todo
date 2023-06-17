@@ -1,16 +1,17 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RiFileTextLine, RiFlashlightLine, RiSearchLine, RiAddLine } from 'react-icons/ri';
-import { createTodo, searchTodo } from '@/redux/actions/todoActions';
-import { useDispatch } from 'react-redux';
 import { prioTypes} from '@/utils/todoTypes'
 
-const TodoForm = () => {
-  const dispatch = useDispatch();
+const TodoForm = ({ onSearch, onAddTodo }) => {
   const [formData, setFormData] = useState({
     title: '',
     priority: 4,
   });
+  // Todo: Cause bug, keep the search btn
+  // useEffect(() => {
+  //   onSearch(formData.title);
+  // }, [formData.title, onSearch]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,12 +19,8 @@ const TodoForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createTodo(formData));
+    onAddTodo(formData)
     setFormData({ title: '', priority: 4 });
-  };
-
-  const handleSearch = () => {
-    dispatch(searchTodo(formData.title));
   };
 
   return (
@@ -33,8 +30,8 @@ const TodoForm = () => {
         <input
           type="text"
           name="title"
-          value={formData.title}
-          onChange={handleChange}
+          value={ formData.title }
+          onChange={ handleChange }
           placeholder="Task title"
           className="text_input"
           style={{ color: 'gray', fontSize: '14px', paddingLeft: '30px' }}
@@ -44,8 +41,8 @@ const TodoForm = () => {
         <RiFlashlightLine className="absolute left-3 text-gray-500" />
         <select
           name="priority"
-          value={formData.priority}
-          onChange={handleChange}
+          value={ formData.priority }
+          onChange={ handleChange }
           className="text_input"
           style={{ color: 'gray', fontSize: '14px', paddingLeft: '30px' }}
         >
@@ -55,7 +52,7 @@ const TodoForm = () => {
           <option value={ 4 }> { prioTypes[4] } </option>
         </select>
       </div>
-      <button type="button" className="form_btn mt-3 ml-3" onClick={handleSearch}>
+      <button type="button" className="form_btn mt-3 ml-3" onClick={ () => onSearch(formData.title) }>
         <RiSearchLine />
       </button>
       <button type="submit" className="form_btn gradient_btn mt-3 ml-3">
