@@ -6,20 +6,26 @@ import { FaStickyNote } from 'react-icons/fa'
 import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
 import { useIsLogin } from "@/utils/useIsLogin";
 
-const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote } ) => {
+const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote, isDemo }) => {
   const [ curTodo, setCurTodo ] = useState(todo);
   const { editableTodoId } = useSelector(state => state.todo)
-  const IsEditable = editableTodoId === curTodo._id;
-  const isLogin = useIsLogin()
+  const IsEditable = !isDemo && editableTodoId === curTodo._id;
 
   const handleInputChange = (e) => {
+    e.preventDefault();
     setCurTodo({ ...curTodo, [e.target.name]: e.target.value });
   };
 
-  const handleCheckboxChange = () => {
-    const updatedTodo = { ...curTodo, status: !curTodo.status };
-    setCurTodo(updatedTodo);
-    onEdit(curTodo._id, updatedTodo);
+  const handleCheckboxChange = (e) => {
+    e.preventDefault()
+    let updatedTodo
+    if(isDemo) {
+      updatedTodo = { ...curTodo }
+    } else {
+      updatedTodo = { ...curTodo, status: !curTodo.status }
+    }
+    setCurTodo(updatedTodo)
+    onEdit(curTodo._id, updatedTodo)
   }
 
   return (
@@ -34,7 +40,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote } ) => {
               name="title"
               style={{ color: '#ffffff' }}
               value={curTodo.title}
-              onChange={(e) => handleInputChange(e)}
+              onChange={ handleInputChange }
             />
           ) : (
             curTodo.title
@@ -42,7 +48,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote } ) => {
         </td>
         {/* ------------- priority --------------*/}
         <td className="table_row text-center">
-          {IsEditable ? (
+          {IsEditable? (
             <select
               className="text_input text-white"
               name="priority"

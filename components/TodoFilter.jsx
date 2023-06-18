@@ -13,11 +13,8 @@ const TodoFilter = () => {
 
     const handleFilterChange = (e) => {
         setFilter(e.target.value);
-
-        //Default
         setSelectPriority('All')
         setSelectStatus('All')
-    
         dispatch(getAllTodosWithFeatures(null, null,null))
       };
 
@@ -27,16 +24,17 @@ const TodoFilter = () => {
     }
 
     const handleStatusSubFilterChange = (e) =>{
-      // const value = e.target.value
       setSelectStatus(e.target.value)
       dispatch(getAllTodosWithFeatures(null,e.target.value, null))
     }
 
-    const clearSort = () => onSort(null);
+    const clearSort = () => {
+      dispatch(getAllTodosWithFeatures())
+    };
       
   return (
     <div className="flex justify-end mb-4">
-        <button onClick={clearSort}><SlRefresh className="text-violet-500 text-xl mr-2"/> </button>
+        <button onClick={ clearSort }><SlRefresh className="text-violet-500 text-xl mr-2"/> </button>
         <label htmlFor="filter" className="mt-1 mr-2">
           <RiFilter2Line className="text-purple-500 text-2xl"/>
         </label>

@@ -4,9 +4,8 @@ import TodoItem from './TodoItem'
 import { tabHeaderData } from '@/utils/todoData'
 import { TfiWrite } from 'react-icons/tfi'
 
-const TodoList = ({ todos, onDelete, onEdit, onSort,
-                    onEditableId,  onOpenNote, openEntryModal, sortedField}) => {
-
+const TodoList = ({ todos, onDelete, onEdit, onSort, isDemo,
+                    onEditableId,  onOpenNote, sortedField}) => {
   return (
     <>
       <table className="w-full border-collapse">
@@ -64,6 +63,7 @@ const TodoList = ({ todos, onDelete, onEdit, onSort,
               onEditableId = { onEditableId }
               onEdit = { onEdit }
               onOpenNote = { onOpenNote }
+              isDemo = { isDemo }
             />
           ))
         )}

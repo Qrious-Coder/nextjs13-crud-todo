@@ -26,12 +26,13 @@ const Page = () => {
   const takeTour = () => {
     router.push('/todos')
   }
+
   if (!isClient) {
     return <Loading />
   }
 
   return (
-    <section className='flex w-full h-screen items-center'>
+    <section className='page-container flex w-full h-screen items-center'>
       <div className="w-1/2">
         <div className="pl-10">
           <Clock />
@@ -66,6 +67,12 @@ const Page = () => {
         ))}
       </div>
       <style jsx>{`
+        @media (max-width: 1100px) {
+          .page-container {
+            width: 1100px;
+            min-width: 1100px;
+          }
+        }
         .home_btn {
           --b: 3px;   /* border thickness */
           --s: .45em; /* size of the corner */

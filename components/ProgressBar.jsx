@@ -1,26 +1,26 @@
+'use client'
 import { useEffect, useState } from 'react';
 
 function ProgressBar({ progress }) {
   const [labelPosition, setLabelPosition] = useState(0);
-
-  // Update label position based on progress
   useEffect(() => {
     setLabelPosition(progress);
   }, [progress]);
 
-  return (
-    <div className="relative mt-28 mb-10">
+  if (isNaN(progress)) return null;
+
+  return (<div className="relative mt-28 mb-10">
       <div className="progress-bar">
-        <div className="progress" style={{width: `${progress}%`}}></div>
+        <div className="progress" style={{width: `${ labelPosition }%`}}></div>
         <div className="markers">
           {[0, 25, 50, 75, 100].map((item, index) => (
             <div key={index} className="marker"></div>
           ))}
         </div>
       </div>
-      <div className="label" style={{left: `${progress}%`}}>
+      <div className="label" style={{left: `${ labelPosition }%`}}>
         <div className="label-content">
-          <span>{progress}%</span>
+          <span>{labelPosition}%</span>
         </div>
         <div className="label-tip"></div>
       </div>
@@ -29,12 +29,11 @@ function ProgressBar({ progress }) {
         .progress-bar {
           width: 100%;
           height: 6px;
-          outline: 1px solid #a78bfa;
+          outline: 1px solid #2dd4bf;
           box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
           backdrop-filter: blur(5px);
           border-radius: 12px;
           padding: 0.5px;
-          //margin: 25px 0 3px 0;
           position: relative;
         }
         .progress {
@@ -67,20 +66,20 @@ function ProgressBar({ progress }) {
           position: absolute;
           top: -18px;
           transform: translate(-50%, calc(-100% + 3px));
-          box-shadow: 0px 5px 15px -5px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.3);
         }
         .label-content {
           width: 47px;
           height: 47px;
           border-radius: 50%;
-          background-image: radial-gradient(circle at 50% 120.71%, #fe91ff 0, #ab74ff 25%, #5353f2 50%, #0032b0 75%, #001876 100%);
+          background-image: radial-gradient(circle at 50% 120.71%, #0ea5e9 0, #ab74ff 25%, #5353f2 50%, #10b981 75%, #4c1d95 100%);
           display: flex;
           justify-content: center;
           align-items: center;
         }
         .label-content span {
           font-size: 1rem;
-          color: #fe91ff;
+          color: #fef08a;
         }
         .label-tip {
           width: 0;

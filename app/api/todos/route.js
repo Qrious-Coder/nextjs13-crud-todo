@@ -14,7 +14,6 @@ export const GET = requireAuth(async (req) => {
     const sortBy = queryParams.get('sortBy') || null;
 
     const query = { user: req.user };
-    console.log(`@@@ =========> req.user`, query)
     if(priority){
       query.priority = priority
     }

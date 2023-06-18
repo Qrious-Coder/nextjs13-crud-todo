@@ -44,7 +44,10 @@ const Alert = ({ children }) => {
   return (
     <>
       {showAlert && isShow && (
-        <div className={`fixed top-0 left-1/2 transform -translate-x-1/2 bg-${getColor(alertType)}-700 text-center border border-${getColor(alertType)}-800 text-${getColor(alertType)}-800 mt-4 mb-4 px-5 py-2 relative flex items-center justify-center`}
+        <div className={`fixed top-0 left-1/2 
+        transform -translate-x-1/2 bg-${getColor(alertType)}-700 
+        text-center border border-${getColor(alertType)}-800 
+        text-${getColor(alertType)}-800 mt-4 mb-4 px-5 py-2 relative flex items-center justify-center`}
              style={{ opacity: 0.75, zIndex: 10, maxWidth: '90vw' }}
         >
           {getIcon()}

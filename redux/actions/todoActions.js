@@ -36,10 +36,15 @@ export const todoActionTypes = {
   GET_COMPLETED_TODOS_SUCCESS: 'GET_COMPLETED_TODOS_SUCCESS',
 }
 
-export const getDemoTodos = () => async(dispatch) => {
+export const getDemoTodos = (page = 1, limit = 5) => async(dispatch) => {
   dispatch({ type: todoActionTypes.SEND_TODOS_REQUEST});
   try{
-    const res = await axios.get('/api/todos')
+    const res = await axios.get('/api/todos', {
+      params: {
+        page,
+        limit,
+      }
+    })
     const { todos, totalCount } = res.data
     dispatch({
       type: todoActionTypes.GET_TODOS_SUCCESS,
@@ -194,12 +199,7 @@ export const deleteTodo = (id) => async(dispatch) => {
 }
 
 export const searchTodo = (title) => async (dispatch) => {
-  // dispatch({ type: todoActionTypes.SEND_TODOS_REQUEST});
-  // try {
-    dispatch({ type: todoActionTypes.SEARCH_TODO_SUCCESS, payload: { title } });
-  // } catch (err) {
-  //   dispatch({ type: todoActionTypes.SEND_TODOS_FAILURE, payload: err });
-  // }
+  dispatch({ type: todoActionTypes.SEARCH_TODO_SUCCESS, payload: { title } });
 };
 
 export const addNote = (id, note) => async(dispatch) => {

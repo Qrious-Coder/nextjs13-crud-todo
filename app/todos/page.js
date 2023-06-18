@@ -27,17 +27,17 @@ import {useIsLogin} from "@/utils/useIsLogin";
 
 const TodosPage = () => {
   const dispatch = useDispatch()
-  const [ sortedField, setSortedField ] = useState(null);
+  const router = useRouter()
+  const isLogin = useIsLogin()
+  const [ sortedField, setSortedField ] = useState(null)
   const [ note, setNote] = useState('')
+  const [ isDemo, setIsDemo ] = useState(true)
   const { todoList, showModal, showNote, addNoteTodoId,
     currentTodo, loading, doneTodoCount, total } = useSelector(state => state.todo)
-  const [ isDemo, setIsDemo ] = useState(false)
-  const router = useRouter();
-  const isLogin = useIsLogin()
 
   useEffect(() => {
     if(isLogin){
-      setIsDemo(true)
+      setIsDemo(false)
     }
   }, [isLogin])
 
@@ -60,45 +60,42 @@ const TodosPage = () => {
   }, [currentTodo])
 
   const handleDelete = async (id) => {
-    dispatch(deleteTodo(id))
+    isDemo ? dispatch(openEntryModal()) : dispatch(deleteTodo(id))
   };
 
   const handleEditableId = async (id) => {
-    dispatch(setEditableTodo(id))
+    isDemo ? dispatch(openEntryModal()) :  dispatch(setEditableTodo(id))
   };
 
-  //Todo: bug disable open input/click after open the modal
-  const handleEdit = (id, todo) => {
-    if(isLogin){
-      dispatch(editTodo(id, todo))
-    }else{
-      dispatch(openEntryModal())
-    }
+  const handleEdit = (id, todo ) => {
+    isDemo ? dispatch(openEntryModal()) : dispatch(editTodo(id, todo))
   };
 
   const handleAdd = (formData) => {
-    dispatch(createTodo(formData))
+    isDemo ? dispatch(openEntryModal()) : dispatch(createTodo(formData))
   };
 
   const handleSearchTodo = (title) => {
-    dispatch(searchTodo(title));
+    if (title.trim() === '') {
+      isDemo ? dispatch(getDemoTodos()):dispatch(getAllTodosWithFeatures())
+    } else {
+      dispatch(searchTodo(title));
+    }
   }
-
 
   const handleSort = (sortBy) => {
     dispatch(getAllTodosWithFeatures(null,null, sortBy))
-    setSortedField(sortBy); // update the sortedField state
+    setSortedField(sortBy);
   }
 
   const handleOpenNote = (id) => {
-    if(isLogin){
+    if(isDemo){
+      dispatch(openEntryModal())
+    }else{
       dispatch(getTodoById(id))
       dispatch(openNote(id))
-    }else{
-      dispatch(openEntryModal())
     }
   };
-
 
   const handleSave =(id, note) => {
     dispatch(addNote( id, note ))
@@ -109,23 +106,26 @@ const TodosPage = () => {
     dispatch(closeNote())
   }
 
+  const handleModalOk = () => {
+    router.push('./entry')
+    dispatch(closeEntryModal())
+  }
+
   const handleModalClose =() => {
     dispatch(closeEntryModal())
   }
 
-  const handleModalOk = () => {
-    router.push('./entry')
-  }
   const handlePagination = ( currentPage, limitPerPage  ) => {
     dispatch(getAllTodosWithFeatures(null, null, null, currentPage, limitPerPage))
   }
 
-  const progress = todoList?.length > 0 ? parseFloat((( doneTodoCount/total ) * 100).toFixed(1)) : 0
+  const progress = (total && total > 0) ? parseFloat((( doneTodoCount/total ) * 100).toFixed(1)) : 0;
+  console.log(`doneTodoCount: ${doneTodoCount}`, `total ${total}`)
   return (
   <div className="todo-page">
         <Modal show = { showModal }
-               onClose = { handleModalClose }
                onOK = { handleModalOk }
+               onClose = { handleModalClose }
         />
         <TodoNote isOpen={ showNote }
                   onSave={ () => handleSave( addNoteTodoId, note) }
@@ -151,6 +151,7 @@ const TodosPage = () => {
                   onEdit={ handleEdit }
                   onSort={ handleSort }
                   onOpenNote = { handleOpenNote }
+                  isDemo = { isDemo }
         />
         <Pagination onPaginationChange={ handlePagination } />
   </div>

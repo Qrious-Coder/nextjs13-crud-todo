@@ -8,6 +8,15 @@ import { displayAlert } from "@/redux/actions/commonActions";
 import { login, register } from "@/redux/actions/entryActions";
 import {saveAccessToken} from "@/utils/token";
 
+const commonClasses = {
+  input: 'w-full border border-gray-300 rounded-md py-2 px-10 mb-4 text-white bg-gray-700',
+  icon: 'absolute left-3 top-2',
+  entryBtn: 'w-6/12 h-12 text-center bg-gradient-to-r from-purple-500 to-pink-500\n' +
+    'hover:from-purple-600 hover:to-indigo-400 text-white\n' +
+    'rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500',
+  tourBtn: 'bn30 mt-0.5 w-6/12 px-4 text-white rounded-md focus:outline-none'
+};
+
 const EntryForm = () => {
   const router  = useRouter()
   const dispatch = useDispatch()
@@ -17,8 +26,10 @@ const EntryForm = () => {
     email: '',
     password: ''
   });
-
   const [lastEmail, setLastEmail] = useState('')
+  const [ isLoginForm, setIsLoginForm ] = useState(false);
+  const [isEmailActive, setEmailActive] = useState(false)
+  const [isPasswordActive, setPasswordActive] = useState(false)
 
   useEffect(() => {
     if(status === 'authenticated'){
@@ -27,19 +38,27 @@ const EntryForm = () => {
     }
   }, [status]);
 
-  const [ isLogin, setIsLogin ] = useState(false);
-
   const handleFormChange = (e) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [e.target.name]: e.target.value,
-    }));
+    setFormData((prevFormData) => {
+      const newFormData = {
+        ...prevFormData,
+        [e.target.name]: e.target.value,
+      };
+
+      if (e.target.name === 'email') {
+        setLastEmail(e.target.value);
+        setEmailActive(!!e.target.value);
+      } else if (e.target.name === 'password') {
+        setPasswordActive(!!e.target.value);
+      }
+      return newFormData;
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, password }= formData
-    if (!isLogin) {
+    if (!isLoginForm) {
       if(!name || !email || !password){
         dispatch(displayAlert({
           alertText:'All fields are required',
@@ -50,7 +69,7 @@ const EntryForm = () => {
         if(data){
           setFormData({ name: "", email: "", password: "" })
           setLastEmail(email)
-          setIsLogin(true)
+          setIsLoginForm(true)
         }
       })
 
@@ -67,7 +86,7 @@ const EntryForm = () => {
   };
 
   const toggleForm = () => {
-    setIsLogin((prevIsLogin) => !prevIsLogin);
+    setIsLoginForm((prevIsLoginForm) => !prevIsLoginForm);
   };
 
   const takeTour = async() => {
@@ -78,10 +97,12 @@ const EntryForm = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="max-w-md w-full p-6 bg-gray-800 rounded-lg shadow-lg">
         <form onSubmit={handleSubmit}>
-          <h1 className="text-center text-2xl font-bold mb-4 text-white">{isLogin ? 'Login' : 'Register'}</h1>
-          {!isLogin && (
+          <h1 className="text-center text-2xl font-bold mb-4 text-white">
+            {isLoginForm ? 'Login' : 'Register'}
+          </h1>
+          {!isLoginForm && (
             <div className="relative">
-              <span className="absolute left-3 top-2">
+              <span className={ commonClasses.icon }>
                 <AiOutlineUser />
               </span>
               <input
@@ -89,28 +110,31 @@ const EntryForm = () => {
                 name="name"
                 value={ formData.name }
                 placeholder="Username"
-                className="w-full border border-gray-300 rounded-md py-2 px-10 mb-4 text-white bg-gray-700"
-                onChange={handleFormChange}
+                className={ commonClasses.input }
+                onChange={ handleFormChange }
                 required
               />
             </div>
           )}
           <div className="relative">
-            <span className="absolute left-3 top-2">
+            <span className={ commonClasses.icon }
+                  style={{color: isEmailActive ? '#7c3aed' : 'white'}}>
               <AiOutlineMail />
             </span>
             <input
               type="email"
               name="email"
-              value={isLogin ? lastEmail : formData.email}
+              value={ formData.email }
               placeholder="Email"
               className="w-full border border-gray-300 rounded-md py-2 px-10 mb-4 text-white bg-gray-700"
-              onChange={handleFormChange}
+              onChange={ handleFormChange }
               required
             />
           </div>
           <div className="relative">
-            <span className="absolute left-3 top-2">
+            <span className={ commonClasses.icon }
+                  style={{color: isPasswordActive ? '#7c3aed' : 'white'}}
+            >
               <AiOutlineLock />
             </span>
             <input
@@ -118,7 +142,7 @@ const EntryForm = () => {
               name="password"
               value={ formData.password }
               placeholder="Password"
-              className="w-full border border-gray-300 rounded-md py-2 px-10 mb-4 text-white bg-gray-700"
+              className={ commonClasses.input }
               onChange={ handleFormChange }
               required
             />
@@ -126,24 +150,22 @@ const EntryForm = () => {
           <div className="flex justify-between space-x-4 my-4">
             <button
               type="submit"
-              className="w-6/12 h-12 text-center bg-gradient-to-r from-purple-500 to-pink-500
-              hover:from-purple-600 hover:to-indigo-400 text-white
-              rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+              className={ commonClasses.entryBtn }
             >
-              { isLogin ? 'Login' : 'Register' }
+              { isLoginForm ? 'Login' : 'Register' }
             </button>
             <button
               type='button'
-              className="bn30 mt-0.5 w-6/12 px-4 text-white rounded-md focus:outline-none"
+              className= { commonClasses.tourBtn }
               onClick={ takeTour }
             >
               <span className="text">Take a tour</span>
             </button>
           </div>
           <p className="text-center text-sm text-gray-400">
-              { isLogin ? "Don't have an account?" : 'Already have an account?' }
+              { isLoginForm ? "Don't have an account?" : 'Already have an account?' }
             <span className="text-sm text-gray-200 ml-1 cursor-pointer underline" onClick={ toggleForm }>
-              { isLogin ? 'Register here' : 'Login here' }
+              { isLoginForm ? 'Register here' : 'Login here' }
             </span>
           </p>
         </form>
@@ -158,7 +180,7 @@ const EntryForm = () => {
         border: 5px solid transparent;
         position: relative;
         box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.8);
-        border-radius: 0.375rem;  // match your previous style
+        border-radius: 0.375rem;  
       }
       .bn30:before {
         content: "";
