@@ -5,16 +5,28 @@ import { useRouter } from "next/navigation";
 import Loading from '@/components/Loading';
 import { homeLeftData } from "@/utils/homeData";
 import {useSession} from "next-auth/react";
+import RoundClock from "@/components/RoundClock";
 
 const Page = () => {
   const [ isClient, setClient ] = useState(false);
+  const [ screenWidth, setScreenWidth ] =useState(null);
   const { status } = useSession()
   const router = useRouter();
 
   useEffect(() => {
     setClient(true);
+    if(typeof window !== 'undefined'){
+      const handleResize = () => setScreenWidth(window.innerWidth);
+      setScreenWidth(window.innerWidth)
+      window.addEventListener('resize', handleResize)
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      }
+    }
   }, []);
 
+  console.log('screenWidth:', screenWidth)
   const gotoEntryPage = () => {
     router.push('/entry')
   }
@@ -27,50 +39,56 @@ const Page = () => {
     router.push('/todos')
   }
 
-  if (!isClient) {
+  if (!isClient || screenWidth === null) {
     return <Loading />
   }
 
   return (
-    <section className='page-container flex w-full h-screen items-center'>
-      <div className="w-1/2">
+    <section className={ screenWidth <1000
+      ? 'page-container flex w-screen h-screen justify-center items-center'
+      : 'page-container flex w-full h-screen items-center'}>
+      <div className={ screenWidth <1000 ? "w-full text-center" : "w-1/2 pl-10"}>
         <div className="pl-10">
-          <Clock />
+          { screenWidth < 1000 ? <RoundClock /> : <Clock />}
           <div className="mt-5">
             { status !== 'authenticated' ?
-              <>
+              (<>
                 <button className="home_btn show_btn" onClick={ gotoEntryPage }>
                   Yes, show me!
                 </button>
                 <button className="home_btn" onClick={ takeTour }>
                   Take a tour
                 </button>
-              </> :
-              <button  className="home_btn" onClick={ gotoTodoPage }>
+              </>) :
+              (<button  className="home_btn" onClick={ gotoTodoPage }>
                 Open my Todo!
-              </button>
+              </button>)
             }
           </div>
         </div>
       </div>
-      <div className="w-1/2 text-green-400 flex justify-center items-center relative">
-        { homeLeftData.map((item, idx) => (
-          <div key={ idx }
-               className={ item.position }
-               style={{ top: item.top,
-                 left: item.left,
-                 animationName: item.animation,
-                 animationDuration: '2s',
-                 animationIterationCount: 'infinite'}}>
-              { item.icon }
+      {
+        screenWidth >= 1000 && (
+          <div className="w-1/2 text-green-400 flex justify-center items-center relative">
+            { homeLeftData.map((item, idx) => (
+              <div key={ idx }
+                   className={ item.position }
+                   style={{ top: item.top,
+                     left: item.left,
+                     animationName: item.animation,
+                     animationDuration: '2s',
+                     animationIterationCount: 'infinite'}}>
+                { item.icon }
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        )
+      }
       <style jsx>{`
-        @media (max-width: 1100px) {
+        @media (max-width: 1000px) {
           .page-container {
-            width: 1100px;
-            min-width: 1100px;
+            width: 1000px;
+            min-width: 1000px;
           }
         }
         .home_btn {

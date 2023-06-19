@@ -28,7 +28,9 @@ const Clock = () => {
         {['hours', 'minutes', 'seconds'].map((unit, i) => (
           <span className="flex" key={i} >
             <span className="flex items-center justify-center relative bg-gray-700 shadow-lg rounded-lg h-24 w-16 p-2">
-              <span className={`text-3xl font-bold ${isHourLeft ? 'text-yellow-500' : 'text-green-300'}`}>{time ? pad(time[unit.toLowerCase()]) : '00'}</span>
+              <span className={`text-3xl font-bold ${isHourLeft 
+                ? 'text-yellow-500' 
+                : 'text-green-300'}`}>{time ? pad(time[unit.toLowerCase()]) : '00'}</span>
             </span>
             <span className="ml-2 mt-8 text-lg">{unit}</span>
           </span>
