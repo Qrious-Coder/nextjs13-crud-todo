@@ -120,7 +120,6 @@ const TodosPage = () => {
   }
 
   const progress = (total && total > 0) ? parseFloat((( doneTodoCount/total ) * 100).toFixed(1)) : 0;
-  console.log(`doneTodoCount: ${doneTodoCount}`, `total ${total}`)
   return (
   <div className="todo-page">
         <Modal show = { showModal }

@@ -6,27 +6,20 @@ import Loading from '@/components/Loading';
 import { homeLeftData } from "@/utils/homeData";
 import {useSession} from "next-auth/react";
 import RoundClock from "@/components/RoundClock";
+import useWinWidth from "@/utils/useWinWidth";
 
 const Page = () => {
   const [ isClient, setClient ] = useState(false);
-  const [ screenWidth, setScreenWidth ] =useState(null);
+  const screenWidth = useWinWidth();
   const { status } = useSession()
   const router = useRouter();
 
   useEffect(() => {
     setClient(true);
-    if(typeof window !== 'undefined'){
-      const handleResize = () => setScreenWidth(window.innerWidth);
-      setScreenWidth(window.innerWidth)
-      window.addEventListener('resize', handleResize)
 
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      }
-    }
   }, []);
 
-  console.log('screenWidth:', screenWidth)
+  console.log(`screenWidth:`, screenWidth)
   const gotoEntryPage = () => {
     router.push('/entry')
   }
@@ -45,7 +38,7 @@ const Page = () => {
 
   return (
     <section className={ screenWidth <1000
-      ? 'page-container flex w-screen h-screen justify-center items-center'
+      ? 'page-container flex w-screen h-screen justify-center items-center my-auto'
       : 'page-container flex w-full h-screen items-center'}>
       <div className={ screenWidth <1000 ? "w-full text-center" : "w-1/2 pl-10"}>
         <div className="pl-10">
@@ -89,6 +82,7 @@ const Page = () => {
           .page-container {
             width: 1000px;
             min-width: 1000px;
+            height: 100vh;
           }
         }
         .home_btn {

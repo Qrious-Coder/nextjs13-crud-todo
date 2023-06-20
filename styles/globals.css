@@ -16,6 +16,10 @@
   --color-text-secondary: #8b949e;
   --color-text-link: #58a6ff;
 }
+body {
+  overflow-x: hidden;  /* Hide horizontal scrollbar */
+  overflow-y: auto;    /* Add vertical scrollbar as needed */
+}
 
 .main {
   width: 100vw;
@@ -176,10 +180,6 @@ button[type="submit"], .nav_btn_signIn {
 
 .btn {
   padding: 0.5rem 1rem;
-}
-
-.nav_btn_gradient_span {
-  @apply relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0
 }
 
 .btn-sm {
