@@ -1,42 +1,46 @@
 import { RiArrowUpSLine, RiArrowDownSLine} from 'react-icons/ri';
-import { AiOutlineFlag,  AiOutlineThunderbolt, AiOutlineCheckCircle, AiFillDownSquare, AiTwotoneCalendar,
+import { AiOutlineFlag,  AiOutlineThunderbolt, AiFillDownSquare,
   AiOutlineFileAdd, AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { BiTask } from 'react-icons/bi';
 
 export const tabHeaderData = [
   {
     text: 'task',
-    icon: <BiTask />,
+    icon: (size) => <BiTask size={size} />,
     sort: true,
     position: 'center',
     smallScreen: true,
+    width: '40%',
   },
   {
     text: 'priority',
-    icon: <AiOutlineFlag />,
+    icon: (size) => <AiOutlineFlag size={size} />,
     sort: true,
     sortUpIc: <RiArrowUpSLine/>,
     sortDownIc: <RiArrowDownSLine/>,
     position: 'between',
-    smallScreen: false,
+    smallScreen: true,
+    width: '10%',
   },
   {
     text: 'action',
-    icon: <AiOutlineThunderbolt />,
+    icon: (size) => <AiOutlineThunderbolt size={size} />,
     sort: false,
     sortUpIc: <RiArrowUpSLine/>,
     sortDownIc: <RiArrowDownSLine/>,
     position: 'between',
     smallScreen: false,
+    width: '10%',
   },
   {
     text: 'completed',
-    icon: <AiFillDownSquare />,
+    icon: (size) => <AiFillDownSquare size={size}/>,
     sort: true,
     sortUpIc: <RiArrowUpSLine/>,
     sortDownIc: <RiArrowDownSLine/>,
     position: 'between',
     smallScreen: true,
+    width: '10%',
   },
   // {
   //   text: 'date',
@@ -48,23 +52,26 @@ export const tabHeaderData = [
   // },
   {
     text: 'note',
-    icon: <AiOutlineFileAdd />,
+    icon: (size) => <AiOutlineFileAdd size={size}/>,
     sort: false,
     position: 'center',
     smallScreen: false,
+    width: '10%',
   },
   {
     text: 'edit',
-    icon: <AiOutlineEdit />,
+    icon: (size) => <AiOutlineEdit size={size}/>,
     sort: false,
     position: 'center',
     smallScreen: true,
+    width: '10%',
   },
   {
     text: 'delete',
-    icon: <AiOutlineDelete />,
+    icon: (size) => <AiOutlineDelete size={size}/>,
     sort: false,
     position: 'center',
     smallScreen: true,
+    width: '10%',
   },
 ]

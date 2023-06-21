@@ -24,6 +24,7 @@ import {
 } from "@/redux/actions/todoActions";
 import {useRouter} from "next/navigation";
 import {useIsLogin} from "@/utils/useIsLogin";
+import useWinWidth from "@/utils/useWinWidth";
 
 const TodosPage = () => {
   const dispatch = useDispatch()
@@ -34,7 +35,7 @@ const TodosPage = () => {
   const [ isDemo, setIsDemo ] = useState(true)
   const { todoList, showModal, showNote, addNoteTodoId,
     currentTodo, loading, doneTodoCount, total } = useSelector(state => state.todo)
-
+  const screenWidth = useWinWidth();
   useEffect(() => {
     if(isLogin){
       setIsDemo(false)
@@ -141,6 +142,7 @@ const TodosPage = () => {
         <TodoForm
           onAddTodo={ handleAdd }
           onSearch={ handleSearchTodo }
+          screenWidth={ screenWidth }
         />
         <TodoFilter />
         <TodoList todos={ todoList }
@@ -151,6 +153,7 @@ const TodosPage = () => {
                   onSort={ handleSort }
                   onOpenNote = { handleOpenNote }
                   isDemo = { isDemo }
+                  screenWidth = { screenWidth }
         />
         <Pagination onPaginationChange={ handlePagination } />
   </div>

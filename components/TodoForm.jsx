@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { RiFileTextLine, RiFlashlightLine, RiSearchLine, RiAddLine } from 'react-icons/ri';
 import { prioTypes} from '@/utils/todoTypes'
 
-const TodoForm = ({ onSearch, onAddTodo }) => {
+const TodoForm = ({ onSearch, onAddTodo, screenWidth }) => {
   const [formData, setFormData] = useState({
     title: '',
     priority: 4,

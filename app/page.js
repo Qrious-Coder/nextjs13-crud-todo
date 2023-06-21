@@ -19,7 +19,6 @@ const Page = () => {
 
   }, []);
 
-  console.log(`screenWidth:`, screenWidth)
   const gotoEntryPage = () => {
     router.push('/entry')
   }

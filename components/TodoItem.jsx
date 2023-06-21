@@ -6,11 +6,12 @@ import { FaStickyNote } from 'react-icons/fa'
 import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
 import { useIsLogin } from "@/utils/useIsLogin";
 
-const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote, isDemo }) => {
+const TodoItem = ({ todo, onEditableId, onEdit, onDelete,
+                    onOpenNote, isDemo, screenWidth }) => {
   const [ curTodo, setCurTodo ] = useState(todo);
   const { editableTodoId } = useSelector(state => state.todo)
   const IsEditable = !isDemo && editableTodoId === curTodo._id;
-
+  const smallScreen = screenWidth < 1000;
   const handleInputChange = (e) => {
     e.preventDefault();
     setCurTodo({ ...curTodo, [e.target.name]: e.target.value });
@@ -29,24 +30,23 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote, isDemo }) 
   }
 
   return (
-    <>
-      <tr key={curTodo._id} className="text-center">
-        {/* ------------- task --------------*/}
-        <td className="table_row">
-          {IsEditable ? (
-            <input
-              className="text_input"
-              type="text"
-              name="title"
-              style={{ color: '#ffffff' }}
-              value={curTodo.title}
-              onChange={ handleInputChange }
-            />
-          ) : (
-            curTodo.title
-          )}
-        </td>
-        {/* ------------- priority --------------*/}
+    <tr key={curTodo._id} className="text-center">
+      {/* ------------- task --------------*/}
+      <td className="table_row">
+        {IsEditable ? (
+          <input
+            className="text_input"
+            type="text"
+            name="title"
+            style={{ color: '#ffffff' }}
+            value={curTodo.title}
+            onChange={ handleInputChange }
+          />
+        ) : (
+          curTodo.title
+        )}
+      </td>
+      {/* ------------- priority --------------*/}
         <td className="table_row text-center">
           {IsEditable? (
             <select
@@ -65,48 +65,49 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete, onOpenNote, isDemo }) 
             prioIcons[curTodo.priority]
           )}
         </td>
-        {/* ------------- action --------------*/}
+      {/* ------------- action --------------*/}
+      {!smallScreen &&
         <td className="table_row">
           {actionTypes[ curTodo.action ]}
-        </td>
-        {/* ------------- status --------------*/}
-        <td className="table_row">
-          <input
-            className="text_input"
-            type="checkbox"
-            checked={curTodo.status === true}
-            onChange={ handleCheckboxChange }
-          />
-        </td>
-        {/* ------------- Date --------------*/}
-        {/*<td className="table_row">{curTodo.createdAt}</td>*/}
-        {/* ------------- Add note--------------*/}
+        </td>}
+      {/* ------------- status --------------*/}
+      <td className="table_row">
+        <input
+          className="text_input"
+          type="checkbox"
+          checked={curTodo.status === true}
+          onChange={ handleCheckboxChange }
+        />
+      </td>
+      {/* ------------- Date --------------*/}
+      {/*<td className="table_row">{curTodo.createdAt}</td>*/}
+      {/* ------------- Add note--------------*/}
+      {!smallScreen &&
         <td className="table_row">
           <button className="outline_btn bg-violet-700"
                   onClick={ () => onOpenNote(curTodo._id) }>
             <FaStickyNote className='text-amber-200' />
           </button>
-        </td>
-        {/* ------------- Edit --------------*/}
-        <td className="table_row">
-          {IsEditable ? (
-            <button className="outline_btn bg-indigo-700" onClick={ () => onEdit(curTodo._id, curTodo)}>
-              <AiOutlineSave className='text-amber-200'/>
-            </button>
-          ) : (
-            <button className="outline_btn bg-indigo-700" onClick={ () => onEditableId(curTodo._id) }>
-              <AiOutlineEdit className='text-amber-200'/>
-            </button>
-          )}
-        </td>
-        {/* ------------- Delete --------------*/}
-        <td className="table_row">
-          <button className="outline_btn bg-blue-700" onClick={() => onDelete(curTodo._id)}>
-            <AiOutlineDelete className='text-amber-200'/>
+        </td>}
+      {/* ------------- Edit --------------*/}
+      <td className="table_row">
+        {IsEditable ? (
+          <button className="outline_btn bg-indigo-700" onClick={ () => onEdit(curTodo._id, curTodo)}>
+            <AiOutlineSave className='text-amber-200'/>
           </button>
-        </td>
-      </tr>
-    </>
+        ) : (
+          <button className="outline_btn bg-indigo-700" onClick={ () => onEditableId(curTodo._id) }>
+            <AiOutlineEdit className='text-amber-200'/>
+          </button>
+        )}
+      </td>
+      {/* ------------- Delete --------------*/}
+      <td className="table_row">
+        <button className="outline_btn bg-blue-700" onClick={() => onDelete(curTodo._id)}>
+          <AiOutlineDelete className='text-amber-200'/>
+        </button>
+      </td>
+    </tr>
   );
 };
 
