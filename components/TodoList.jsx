@@ -5,10 +5,9 @@ import { tabHeaderData } from '@/utils/todoData'
 import { TfiWrite } from 'react-icons/tfi'
 
 const TodoList = ({ todos, onDelete, onEdit, onSort, isDemo,
-                    onEditableId,  onOpenNote, sortedField, screenWidth }) => {
-  const smallScreen = screenWidth < 1000;
-  const filteredTabHeaderData = tabHeaderData.filter(item => !smallScreen || item.smallScreen);
-  const iconSize = screenWidth < 1000 ? '0.8em' : '1em';
+                    onEditableId,  onOpenNote, sortedField, isSmallScreen }) => {
+  const filteredTabHeaderData = tabHeaderData.filter(item => !isSmallScreen || item.smallScreen );
+  const iconSize = isSmallScreen ? '0.8em' : '1em';
   return (
     <>
       <table className="w-full border-collapse">
@@ -18,27 +17,27 @@ const TodoList = ({ todos, onDelete, onEdit, onSort, isDemo,
           { filteredTabHeaderData.map((item,idx) => {
             const isSortingByThisField = sortedField === item.text || sortedField === `-${item.text}`;
             return (
-              <th key={idx} className="py-2 px-4" style={{ width: tabHeaderData[idx].width }}>
+              <th key={idx} className="py-2 px-4" style={{ width: item.width(isSmallScreen) }}>
                 <div className={`flex items-center justify-${item.position}`}>
                   <div>
                     <span className="text-3xl text-blue-500">
-                      {item.icon(iconSize)}
+                      { item.icon(iconSize)}
                     </span>
                   </div>
                   {<div>
-                    { !smallScreen && item.sort &&
+                    { !isSmallScreen && item.sort &&
                       <span className="flex flex-col">
                         <button
                           className={`${isSortingByThisField && sortedField === `-${item.text}` ? 'text-blue-500' : ''}`}
                           onClick={() => onSort(`-${item.text}`)}
                         >
-                          {item.sortUpIc}
+                          { item.sortUpIc }
                         </button>
                         <button
                           className={`${isSortingByThisField && sortedField === `${item.text}` ? 'text-blue-500' : ''}`}
                           onClick={() => onSort(`${item.text}`)}
                         >
-                          {item.sortDownIc}
+                          { item.sortDownIc }
                         </button>
                       </span>
                     }
@@ -54,7 +53,7 @@ const TodoList = ({ todos, onDelete, onEdit, onSort, isDemo,
           <tr className="bg-gray-800 text-gray-500 opacity-2 border-x border-b border-dashed border-indigo-500">
             <td colSpan={tabHeaderData.length} className="text-center py-5">
               <TfiWrite className="mx-auto text-3xl mb-4" />
-              Currently you have no todo
+              Currently you have nothing todo...
             </td>
           </tr>
         ) : (
@@ -67,7 +66,7 @@ const TodoList = ({ todos, onDelete, onEdit, onSort, isDemo,
               onEdit = { onEdit }
               onOpenNote = { onOpenNote }
               isDemo = { isDemo }
-              screenWidth = { screenWidth }
+              isSmallScreen = { isSmallScreen }
             />
           ))
         )}

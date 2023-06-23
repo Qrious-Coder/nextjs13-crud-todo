@@ -4,14 +4,13 @@ import { useSelector } from 'react-redux'
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineSave } from 'react-icons/ai'
 import { FaStickyNote } from 'react-icons/fa'
 import { actionTypes, prioTypes, prioIcons } from '@/utils/todoTypes'
-import { useIsLogin } from "@/utils/useIsLogin";
 
 const TodoItem = ({ todo, onEditableId, onEdit, onDelete,
-                    onOpenNote, isDemo, screenWidth }) => {
+                    onOpenNote, isDemo, isSmallScreen }) => {
   const [ curTodo, setCurTodo ] = useState(todo);
   const { editableTodoId } = useSelector(state => state.todo)
   const IsEditable = !isDemo && editableTodoId === curTodo._id;
-  const smallScreen = screenWidth < 1000;
+
   const handleInputChange = (e) => {
     e.preventDefault();
     setCurTodo({ ...curTodo, [e.target.name]: e.target.value });
@@ -66,7 +65,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete,
           )}
         </td>
       {/* ------------- action --------------*/}
-      {!smallScreen &&
+      {!isSmallScreen &&
         <td className="table_row">
           {actionTypes[ curTodo.action ]}
         </td>}
@@ -82,7 +81,7 @@ const TodoItem = ({ todo, onEditableId, onEdit, onDelete,
       {/* ------------- Date --------------*/}
       {/*<td className="table_row">{curTodo.createdAt}</td>*/}
       {/* ------------- Add note--------------*/}
-      {!smallScreen &&
+      {!isSmallScreen &&
         <td className="table_row">
           <button className="outline_btn bg-violet-700"
                   onClick={ () => onOpenNote(curTodo._id) }>

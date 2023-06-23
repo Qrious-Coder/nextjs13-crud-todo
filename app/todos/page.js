@@ -22,8 +22,8 @@ import {
   closeNote,
   getTodoById, closeEntryModal, searchTodo,
 } from "@/redux/actions/todoActions";
-import {useRouter} from "next/navigation";
-import {useIsLogin} from "@/utils/useIsLogin";
+import { useRouter } from "next/navigation";
+import { useIsLogin } from "@/utils/useIsLogin";
 import useWinWidth from "@/utils/useWinWidth";
 
 const TodosPage = () => {
@@ -32,13 +32,15 @@ const TodosPage = () => {
   const isLogin = useIsLogin()
   const [ sortedField, setSortedField ] = useState(null)
   const [ note, setNote] = useState('')
-  const [ isDemo, setIsDemo ] = useState(true)
+  const [ isDemo, setIsDemo ] = useState(null)
+
   const { todoList, showModal, showNote, addNoteTodoId,
     currentTodo, loading, doneTodoCount, total } = useSelector(state => state.todo)
   const screenWidth = useWinWidth();
+  const isSmallScreen = screenWidth < 1000;
   useEffect(() => {
-    if(isLogin){
-      setIsDemo(false)
+    if(isLogin !== null) { // run this effect only when isLogin is not null
+      setIsDemo(!isLogin)
     }
   }, [isLogin])
 
@@ -120,16 +122,18 @@ const TodosPage = () => {
     dispatch(getAllTodosWithFeatures(null, null, null, currentPage, limitPerPage))
   }
 
-  const progress = (total && total > 0) ? parseFloat((( doneTodoCount/total ) * 100).toFixed(1)) : 0;
+  const progress = (total && total > 0) ?
+    parseFloat((( doneTodoCount/total ) * 100).toFixed(1)) : 0;
+
   return (
   <div className="todo-page">
         <Modal show = { showModal }
-               onOK = { handleModalOk }
-               onClose = { handleModalClose }
+           onOK = { handleModalOk }
+           onClose = { handleModalClose }
         />
         <TodoNote isOpen={ showNote }
-                  onSave={ () => handleSave( addNoteTodoId, note) }
-                  onClose={ handleClose }
+          onSave={ () => handleSave( addNoteTodoId, note) }
+          onClose={ handleClose }
         >
           { !loading && <textarea
             className="p-2 mb-4 w-full h-full outline-none resize-none"
@@ -142,18 +146,18 @@ const TodosPage = () => {
         <TodoForm
           onAddTodo={ handleAdd }
           onSearch={ handleSearchTodo }
-          screenWidth={ screenWidth }
+          isSmallScreen={ isSmallScreen }
         />
         <TodoFilter />
         <TodoList todos={ todoList }
-                  sortedField={ sortedField }
-                  onDelete={ handleDelete }
-                  onEditableId = { handleEditableId }
-                  onEdit={ handleEdit }
-                  onSort={ handleSort }
-                  onOpenNote = { handleOpenNote }
-                  isDemo = { isDemo }
-                  screenWidth = { screenWidth }
+          sortedField={ sortedField }
+          onDelete={ handleDelete }
+          onEditableId = { handleEditableId }
+          onEdit={ handleEdit }
+          onSort={ handleSort }
+          onOpenNote = { handleOpenNote }
+          isDemo = { isDemo }
+          isSmallScreen = { isSmallScreen }
         />
         <Pagination onPaginationChange={ handlePagination } />
   </div>

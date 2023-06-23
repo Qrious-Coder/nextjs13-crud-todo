@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaTimes, FaCheckCircle, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
+import { CgCloseR } from 'react-icons/cg'
 
 const Alert = ({ children }) => {
   const [ isShow, setIsShow ] = useState(true);
@@ -14,13 +15,13 @@ const Alert = ({ children }) => {
   const getIcon = () => {
     switch (alertType) {
       case 'error':
-        return <FaExclamationTriangle className="text-red-800 mr-2 text-3xl"/>;
+        return <FaExclamationTriangle className="text-red-800 text-2xl"/>;
       case 'success':
-        return <FaCheckCircle className="text-green-800 mr-2 text-3xl"/>;
+        return <FaCheckCircle className="text-green-800 text-2xl"/>;
       case 'warning':
-        return <FaExclamationTriangle className="text-yellow-800 mr-2 text-3xl"/>;
+        return <FaExclamationTriangle className="text-yellow-800 text-2xl"/>;
       case 'info':
-        return <FaInfoCircle className="text-blue-800 mr-2 text-3xl"/>;
+        return <FaInfoCircle className="text-blue-800 text-2xl"/>;
       default:
         return null;
     }
@@ -29,41 +30,32 @@ const Alert = ({ children }) => {
   const getColor = () => {
     switch (alertType) {
       case 'error':
-        return "red";
+        return "bg-red-950/50 border-red-800 text-red-200";
       case 'success':
-        return "green";
+        return "bg-green-950/50 border-green-800 text-green-200";
       case 'warning':
-        return "yellow";
+        return "bg-yellow-950/50 border-yellow-800 text-yellow-200";
       case 'info':
-        return "blue";
+        return "bg-blue-950/50 border-blue-800 text-blue-200";
       default:
-        return "gray";
+        return "bg-gray-950/50 border-gray-800 text-gray-200";
     }
   };
 
   return (
     <>
       {showAlert && isShow && (
-        <div className={`fixed top-0 left-1/2 
-        transform -translate-x-1/2 bg-${getColor(alertType)}-700 
-        text-center border border-${getColor(alertType)}-800 
-        text-${getColor(alertType)}-800 mt-4 mb-4 px-5 py-2 relative flex items-center justify-center`}
-             style={{ opacity: 0.75, zIndex: 10, maxWidth: '90vw' }}
+        <div className={`fixed top-0 left-1/2 transform -translate-x-1/2 text-center border border-dashed 
+        rounded-lg ${getColor()} mt-4 mb-4 px-5 py-2 relative flex items-center justify-center`}
+             style={{ zIndex: 10, maxWidth: '90vw' }}
         >
           {getIcon()}
-          <span className={'pt-3'}>
+          <span className={'p-3'}>
             {children ? children : alertText}
           </span>
-          <FaTimes className="absolute right-2 top-2 cursor-pointer text-2xl" onClick={handleClose} />
+          <CgCloseR className={`absolute right-2 top-2 cursor-pointer text-lg ${getColor()}`} onClick={handleClose} />
         </div>
       )}
-      <style jsx>{`
-        .red { background-color: #f56565; border-color: #c53030; color: #c53030; }
-        .green { background-color: #48bb78; border-color: #2f855a; color: #2f855a; }
-        .yellow { background-color: #ed8936; border-color: #c05621; color: #c05621; }
-        .blue { background-color: #4299e1; border-color: #2b6cb0; color: #2b6cb0; }
-        .gray { background-color: #a0aec0; border-color: #718096; color: #718096; }
-      `}</style>
     </>
   );
 };

@@ -10,7 +10,7 @@ export const tabHeaderData = [
     sort: true,
     position: 'center',
     smallScreen: true,
-    width: '40%',
+    width: (isSmallScreen) => { return isSmallScreen ? '40%' : '60%'} ,
   },
   {
     text: 'priority',
@@ -20,7 +20,7 @@ export const tabHeaderData = [
     sortDownIc: <RiArrowDownSLine/>,
     position: 'between',
     smallScreen: true,
-    width: '10%',
+    width: (isSmallScreen) => { return isSmallScreen ? '10%' : '5%'} ,
   },
   {
     text: 'action',
@@ -30,7 +30,7 @@ export const tabHeaderData = [
     sortDownIc: <RiArrowDownSLine/>,
     position: 'between',
     smallScreen: false,
-    width: '10%',
+    width: (isSmallScreen) => { return isSmallScreen ? '10%' : '20%'} ,
   },
   {
     text: 'completed',
@@ -40,23 +40,15 @@ export const tabHeaderData = [
     sortDownIc: <RiArrowDownSLine/>,
     position: 'between',
     smallScreen: true,
-    width: '10%',
+    width: (isSmallScreen) => { return isSmallScreen ? '10%' : '5%'} ,
   },
-  // {
-  //   text: 'date',
-  //   icon: <AiTwotoneCalendar />,
-  //   sort: false,
-  //   sortUpIc: <RiArrowUpSLine/>,
-  //   sortDownIc: <RiArrowDownSLine/>,
-  //   position: 'between'
-  // },
   {
     text: 'note',
     icon: (size) => <AiOutlineFileAdd size={size}/>,
     sort: false,
     position: 'center',
     smallScreen: false,
-    width: '10%',
+    width: (isSmallScreen) => { return isSmallScreen ? '10%' : '5%'} ,
   },
   {
     text: 'edit',
@@ -64,7 +56,7 @@ export const tabHeaderData = [
     sort: false,
     position: 'center',
     smallScreen: true,
-    width: '10%',
+    width: (isSmallScreen) => { return isSmallScreen ? '10%' : '5%'} ,
   },
   {
     text: 'delete',
@@ -72,6 +64,7 @@ export const tabHeaderData = [
     sort: false,
     position: 'center',
     smallScreen: true,
-    width: '10%',
+    width: (isSmallScreen) => { return isSmallScreen ? '10%' : '5%'} ,
   },
 ]
+

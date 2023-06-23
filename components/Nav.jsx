@@ -37,12 +37,7 @@ const Nav = () => {
   };
 
   const handleTodoNav = () => {
-    if(!session){
-      alert('Register or login to view your Todos!');
-      router.push('/entry');
-    }else{
-      router.push('/todos');
-    }
+    router.push('/todos');
   }
 
   const userName = session?.session?.user?.name || 'Unknown';

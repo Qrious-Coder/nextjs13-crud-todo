@@ -3,7 +3,7 @@ import { useSession} from "next-auth/react";
 
 export const useIsLogin = () => {
   const { status, loading } = useSession();
-  const [ isLogin, setIsLogin ] = useState(false)
+  const [ isLogin, setIsLogin ] = useState(null)
 
   useEffect(() => {
     if(!loading && status ==='authenticated'){

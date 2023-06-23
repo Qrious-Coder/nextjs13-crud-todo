@@ -34,7 +34,6 @@ const Page = () => {
   if (!isClient || screenWidth === null) {
     return <Loading />
   }
-
   return (
     <section className={ screenWidth <1000
       ? 'page-container flex w-screen h-screen justify-center items-center my-auto'
